@@ -21,7 +21,7 @@
 
 ### 브렌치 관리 전략
 Git Flow를 사용하여 branch를 관리   
-모든 branch는 pull request 리뷰 완료후 merge   ##
+모든 branch는 pull request 리뷰 완료후 merge   
 
 ![git-flow-strategy](https://user-images.githubusercontent.com/29122916/83837107-79166100-a730-11ea-8744-3761ad01ca96.png)
 
