@@ -41,6 +41,10 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
+        <!-- lombok 의존성
+        model(dto, vo)의 생성자, getter, setter, toString 등 반복되는 코드를 어노테이션을 통해 줄여주는 라이브러리
+        어노테이션을 붙이면 컴파일시에 어노테이션에 해당하는 코드를 추가한다.
+        -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
