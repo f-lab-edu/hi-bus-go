@@ -18,3 +18,7 @@
 
 ### 사용 기술
 + Spring Boot, Maven, Mybatis, Mysql, Redis, Java8
+
+### 브렌치 관리 전략
+Git Flow를 사용하여 branch를 관리
+모든 branch는 pull request 리뷰 완료후 merge
