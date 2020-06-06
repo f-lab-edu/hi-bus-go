@@ -3,6 +3,7 @@ package com.younghun.hibusgo.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
+import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,5 +86,43 @@ class AccountControllerTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().isCreated());
+    }
+
+
+    @DisplayName("로그인")
+    @Test
+    void account_login() throws Exception {
+//        AccountDto accountDto = AccountDto.builder()
+//                .id("abcd1234")
+//                .password("dudgns1234!")
+//                .name("younghun")
+//                .email("whdudgns2654@naver.com")
+//                .phoneNumber("010-1234-5678")
+//                .build();
+//
+//        Account account = accountDto.toEntity();
+//        account.setStatus(Account.Status.DEFAULT);
+//
+//        String AccountJson = objectMapper.writeValueAsString(account);
+//
+//        mockMvc.perform(post("/account/add")
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                .content(AccountJson)
+//                .accept(MediaType.APPLICATION_JSON_VALUE))
+//                .andExpect(status().isCreated());
+
+        LoginDto loginDto = LoginDto.builder()
+                .id("abcd1234")
+                .password("dudgns1234!")
+                .build();
+
+        String loginJson = objectMapper.writeValueAsString(loginDto);
+
+        mockMvc.perform(get("/account/login")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(loginJson)
+                .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

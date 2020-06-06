@@ -12,4 +12,5 @@ public interface AccountMapper {
 
     public boolean existsById(String id);
 
+    public Account findByIdAndPassword(String id, String password);
 }
