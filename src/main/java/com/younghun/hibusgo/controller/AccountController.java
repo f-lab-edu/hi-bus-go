@@ -43,7 +43,7 @@ public class AccountController {
     @PostMapping("/add")
     public ResponseEntity<AccountDto> addAccount(@RequestBody @Valid AccountDto accountDto, Errors errors) {
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().build();
+            new ResponseEntity<>(accountDto, HttpStatus.BAD_REQUEST);
         }
 
         Account account = accountDto.toEntity();
