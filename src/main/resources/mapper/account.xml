@@ -39,12 +39,10 @@
     </select>
 
     <select id="existsById" resultType="boolean">
-        SELECT EXISTS(
             SELECT 1
             FROM ACCOUNT
             WHERE id = #{id}
             AND status != 'DELETE'
-        )
     </select>
 
     <insert id="addAccount" parameterType="com.younghun.hibusgo.mapper.AccountMapper">
