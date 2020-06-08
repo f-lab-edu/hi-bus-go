@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,7 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @AutoConfigureMockMvc - Mock 테스트시 필요한 의존성을 제공. Service에서 호출하는 Bean을 주입해준다. 간단히 컨트롤러 클래스만 테스트 하고
  * 싶다면 Mockup Test를 사용할 수 있는데 service 객체에 @MockBean 어노테이션을 적용하는 것으로 이 어노테이션을 대체할 수 있다.
+ *
  */
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
@@ -56,7 +57,7 @@ class AccountControllerTest {
 
         String json = objectMapper.writeValueAsString(account);
 
-        mockMvc.perform(post("/account/add")
+        mockMvc.perform(post("/accounts/signUp")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(json)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -68,7 +69,7 @@ class AccountControllerTest {
     @Test
     void addAccount_with_correct_input() throws Exception {
         AccountDto accountDto = AccountDto.builder()
-                .id("abcd1234")
+                .id("abcd123455")
                 .password("dudgns1234!")
                 .name("younghun")
                 .email("whdudgns2654@naver.com")
@@ -80,7 +81,7 @@ class AccountControllerTest {
 
         String json = objectMapper.writeValueAsString(account);
 
-        mockMvc.perform(post("/account/add")
+        mockMvc.perform(post("/accounts/signUp")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(json)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -88,41 +89,4 @@ class AccountControllerTest {
                 .andExpect(status().isCreated());
     }
 
-
-    @DisplayName("로그인")
-    @Test
-    void account_login() throws Exception {
-//        AccountDto accountDto = AccountDto.builder()
-//                .id("abcd1234")
-//                .password("dudgns1234!")
-//                .name("younghun")
-//                .email("whdudgns2654@naver.com")
-//                .phoneNumber("010-1234-5678")
-//                .build();
-//
-//        Account account = accountDto.toEntity();
-//        account.setStatus(Account.Status.DEFAULT);
-//
-//        String AccountJson = objectMapper.writeValueAsString(account);
-//
-//        mockMvc.perform(post("/account/add")
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                .content(AccountJson)
-//                .accept(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isCreated());
-
-        LoginDto loginDto = LoginDto.builder()
-                .id("abcd1234")
-                .password("dudgns1234!")
-                .build();
-
-        String loginJson = objectMapper.writeValueAsString(loginDto);
-
-        mockMvc.perform(get("/account/login")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(loginJson)
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
 }

@@ -10,35 +10,35 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpSession;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 @Log4j2
 public class AccountService {
 
     private final AccountMapper accountMapper;
 
-    @Transactional(readOnly = true)
     public Account findById(String id) {
-        Account account = accountMapper.findById(id);
-        return account;
+        return accountMapper.findById(id);
     }
 
     public void addAccount(Account account) {
         accountMapper.addAccount(account);
     }
 
-    @Transactional(readOnly = true)
     public boolean existsById(String id) {
         boolean isExistAccount = accountMapper.existsById(id);
         return isExistAccount;
     }
 
-    public Account login(String accountId, String password) {
-        Account account = accountMapper.findByIdAndPassword(accountId, password);
-        return account;
+    public Account findByIdAndPassword(String accountId, String password) {
+         return accountMapper.findByIdAndPassword(accountId, password);
     }
 
     public void logout(HttpSession session) {
         session.removeAttribute("account");
+    }
+
+
+    public void login(String id, HttpSession httpSession) {
+        httpSession.setAttribute("account", id);
     }
 }
