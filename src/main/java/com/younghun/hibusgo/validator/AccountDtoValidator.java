@@ -1,6 +1,5 @@
 package com.younghun.hibusgo.validator;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.mapper.AccountMapper;

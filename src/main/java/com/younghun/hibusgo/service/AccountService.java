@@ -1,11 +1,11 @@
 package com.younghun.hibusgo.service;
 
 import com.younghun.hibusgo.domain.Account;
+import com.younghun.hibusgo.domain.SessionKeys;
 import com.younghun.hibusgo.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,11 +34,11 @@ public class AccountService {
     }
 
     public void logout(HttpSession session) {
-        session.removeAttribute("account");
+        session.removeAttribute(SessionKeys.ACCOUNT_MEMBER_ID);
     }
 
 
     public void login(String id, HttpSession httpSession) {
-        httpSession.setAttribute("account", id);
+        httpSession.setAttribute(SessionKeys.ACCOUNT_MEMBER_ID, id);
     }
 }
