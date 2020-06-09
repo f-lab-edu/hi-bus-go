@@ -81,9 +81,9 @@ public class LoginController {
 
         if (loginAccount == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        } else {
-            accountService.logout(session);
         }
+
+        accountService.logout(session);
 
         return ResponseEntity.ok().build();
     }
