@@ -34,11 +34,11 @@ public class AccountService {
     }
 
     public void logout(HttpSession session) {
-        session.removeAttribute(SessionKeys.ACCOUNT_MEMBER_ID);
+        session.removeAttribute(String.valueOf(SessionKeys.ACCOUNT_MEMBER_ID));
     }
 
 
     public void login(String id, HttpSession httpSession) {
-        httpSession.setAttribute(SessionKeys.ACCOUNT_MEMBER_ID, id);
+        httpSession.setAttribute(String.valueOf(SessionKeys.ACCOUNT_MEMBER_ID), id);
     }
 }
