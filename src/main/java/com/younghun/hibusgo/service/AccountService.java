@@ -1,7 +1,8 @@
 package com.younghun.hibusgo.service;
 
+import static com.younghun.hibusgo.controller.LoginController.ACCOUNT_MEMBER_ID;
+
 import com.younghun.hibusgo.domain.Account;
-import com.younghun.hibusgo.domain.SessionKeys;
 import com.younghun.hibusgo.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,11 +35,11 @@ public class AccountService {
     }
 
     public void logout(HttpSession session) {
-        session.removeAttribute(String.valueOf(SessionKeys.ACCOUNT_MEMBER_ID));
+        session.removeAttribute(ACCOUNT_MEMBER_ID);
     }
 
 
     public void login(String id, HttpSession httpSession) {
-        httpSession.setAttribute(String.valueOf(SessionKeys.ACCOUNT_MEMBER_ID), id);
+        httpSession.setAttribute(ACCOUNT_MEMBER_ID, id);
     }
 }

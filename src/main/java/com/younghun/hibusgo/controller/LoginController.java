@@ -16,13 +16,18 @@ import javax.validation.constraints.NotNull;
 
 
 /**
- * Controller : 사용자의 요청을 어떻게 처리 결정하는 역할
+ * Controller(controller layer) : 비지니스 로직 처리 흐름 제어 및 데이터 변환 및 연산
+ * Exception, erorr 처리를 한다. 클라이언트에서 전달 받은 요청을 처리 하도록 Business Layer에
+ * 요청을 전달한다. Business Layer에서 전달 받은 응답을 뷰 객체와 연결하거나 응답 타입에 맞게
+ * 변환하여 전달하는 계층 *
  *
- * Service: Controller에서 넘어온 요청을 처리하는 역할
- * service method는 한번에 하나의 비지니스로직만 수행
+ * Service(Business Layer): controller를 통해 전달 받은 클라이언트의 요청을 처리하여 비지니스 로직 수행
+ * contoller layer와 persistence layer 연결, 다른 계층과 통신하기 위해 인터페이스 제공,
+ * transaction 처리 역할을 하는 계층
  *
- * DAO: Service에서 넘어온 요청 값을 기준으로 database 조회
- * 조회 결과를 service로 return
+ * DAO(Persistence Layer) : Business Layer에 전달 받은 데이터를 저장, 수정 ,삭제 하는 계층
+ * db에서 조회한 데이터를 Business Layer에 응답 하기 위해 객체화한다.
+ * db에 관련된 작업을 수행하기 위해 필요한 쿼리문을 관리하는 계층
  */
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +35,7 @@ import javax.validation.constraints.NotNull;
 public class LoginController {
 
     private final AccountService accountService;
+    public static final String ACCOUNT_MEMBER_ID = "ACCOUNT_MEMBER_ID";
 
     /**
      *  - 유저 로그인 메서드
@@ -42,7 +48,8 @@ public class LoginController {
      *  이러한 이유로 새로운 객체롤 최대한 적게 생성하도록 지향.
      * @param loginDto
      * @param httpSession
-     * @return ResponseEntity
+     * @return 로그인 성공시 200 code return
+     * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code teturn
      */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto, HttpSession httpSession) {
@@ -52,12 +59,10 @@ public class LoginController {
         Account account = accountService.findByIdAndPassword(accountId, password);
 
         if (account == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        else if (Account.Status.DEFAULT.equals(account.getStatus())) {
-            ResponseEntity.status(HttpStatus.OK);
-            accountService.login(account.getId(), httpSession);
-        }
+
+        accountService.login(account.getId(), httpSession);
 
         return ResponseEntity.ok().build();
     }
@@ -66,8 +71,8 @@ public class LoginController {
      * 회원 로그아웃 메서드.
      *
      * @param session 현제 접속한 세션
-     * @return 로그인 하지 않았을 시 401 코드를 반환
-     * 로그아웃 성공시 200 코드를 반환
+     * @return 로그인 하지 않았을 시 사용자의 권한이 없어 리소스를 사용할수 없음을 의미하는 403 code return
+     * 로그아웃 성공시 200 code 반환
      */
     @PostMapping("/logout")
     public ResponseEntity logout(HttpSession session) {
@@ -75,7 +80,7 @@ public class LoginController {
         Account loginAccount = accountService.findById(loginId);
 
         if (loginAccount == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         } else {
             accountService.logout(session);
         }
