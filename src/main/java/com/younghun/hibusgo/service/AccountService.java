@@ -1,6 +1,5 @@
 package com.younghun.hibusgo.service;
 
-import static com.younghun.hibusgo.controller.LoginController.ACCOUNT_MEMBER_ID;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.mapper.AccountMapper;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpSession;
 public class AccountService {
 
     private final AccountMapper accountMapper;
+    public static final String ACCOUNT_MEMBER_ID = "ACCOUNT_MEMBER_ID";
 
     public Account findById(String id) {
         return accountMapper.findById(id);
