@@ -17,20 +17,19 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Controller(controller layer) : 비지니스 로직 흐름 제어 및 데이터 변환 및 연산
- * Exception, erorr 처리를 한다. 클라이언트에서 전달 받은 요청을 처리 하도록 Business Layer에
- * 요청을 전달한다. Business Layer에서 전달 받은 응답을 뷰 객체와 연결하거나 응답 타입에 맞게
- * 변환하여 전달하는 계층
+ * Exception, erorr 처리를 한다. 클라이언트에서 전달 받은 요청을 처리 하도록 Business Layer에 요청을 전달
+ * Business Layer에서 전달 받은 응답을 뷰 객체와 연결하거나 응답 타입에 맞게 변환하여 전달하는 계층
  *
  * Service(Business Layer): controller를 통해 전달 받은 클라이언트의 요청을 처리하여 비지니스 로직 수행
  * 다른 계층과 통신하기 위해 인터페이스 제공, transaction 처리 역할을 하는 계층
  *
  * DAO(Persistence Layer) : Business Layer에 전달 받은 데이터를 저장, 수정 ,삭제 하는 계층
- * db에서 조회한 데이터를 Business Layer에 응답 하기 위해 객체화한다.
+ * db에서 조회한 데이터를 Business Layer에 응답 하기 위해 객체화.
  * db에 관련된 작업을 수행하기 위해 필요한 쿼리문을 관리하는 계층
  *
  * 3 계층 아키텍쳐 장점
  *  - 각 계층에 맞는 기능에 집중한 설계 및 개발
- *  - 각 계층별로 역할을 분담하여 동시 다발적인 개발
+ *  - 각 계층별로 역할을 분담하여 동시 다발적인 개
  *  - 각 계층별로 구분 역할이 구분 되어 흐름 및 로직 파악에 좋다.
  * */
 @RestController
