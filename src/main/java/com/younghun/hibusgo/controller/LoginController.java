@@ -23,9 +23,11 @@ import javax.validation.constraints.NotNull;
  * Service(Business Layer): controller를 통해 전달 받은 클라이언트의 요청을 처리하여 비지니스 로직 수행
  * 다른 계층과 통신하기 위해 인터페이스 제공, transaction 처리 역할을 하는 계층
  *
- * DAO(Persistence Layer) : Business Layer에 전달 받은 데이터를 저장, 수정 ,삭제 하는 계층
- * db에서 조회한 데이터를 Business Layer에 응답 하기 위해 객체화.
- * db에 관련된 작업을 수행하기 위해 필요한 쿼리문을 관리하는 계층
+ * DAO(Data Access Layer) : Business Layer에 통 전달 받은 데이터를 저장, 수정 ,삭제 하는 계층
+ * db에서 조회한 데이터를 Business Layer에 응답 하기 위해 객체화
+ * db에 관련된 작업을 수행하기 위해 필요한 쿼리문을 관리
+ * database와 접속을 관리하며, 개방 폐쇄 원칙을 적용하여 데이터베이스의 종류가 바뀌어도
+ * jdbc 인터페이스를 통해 접근하기때문에 connection 정보를 수정하는 것외에는 변경하지 않도록 한다.
  *
  * 3 계층 아키텍쳐 장점
  *  - 각 계층에 맞는 기능에 집중한 설계 및 개발
@@ -38,6 +40,7 @@ import javax.validation.constraints.NotNull;
 public class LoginController {
 
     private final AccountService accountService;
+    public final String ACCOUNT_MEMBER_ID = "ACCOUNT_MEMBER_ID";
 
     /**
      *  - 유저 로그인 메서드
@@ -64,7 +67,7 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        accountService.login(account.getId(), httpSession);
+        httpSession.setAttribute(ACCOUNT_MEMBER_ID, account.getId());
 
         return ResponseEntity.ok().build();
     }
@@ -85,7 +88,7 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        accountService.logout(session);
+        session.removeAttribute(ACCOUNT_MEMBER_ID);
 
         return ResponseEntity.ok().build();
     }

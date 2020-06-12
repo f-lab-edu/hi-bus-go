@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 public class AccountService {
 
     private final AccountMapper accountMapper;
-    public static final String ACCOUNT_MEMBER_ID = "ACCOUNT_MEMBER_ID";
 
     public Account findById(String id) {
         return accountMapper.findById(id);
@@ -34,12 +33,4 @@ public class AccountService {
          return accountMapper.findByIdAndPassword(accountId, password);
     }
 
-    public void logout(HttpSession session) {
-        session.removeAttribute(ACCOUNT_MEMBER_ID);
-    }
-
-
-    public void login(String id, HttpSession httpSession) {
-        httpSession.setAttribute(ACCOUNT_MEMBER_ID, id);
-    }
 }

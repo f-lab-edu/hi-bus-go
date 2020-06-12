@@ -1,7 +1,11 @@
 package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.Account;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
