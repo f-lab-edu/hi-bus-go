@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 
 
 /**
- * Controller(controller layer) : 비지니스 로직 흐름 제어 및 데이터 변환 및 연산
+ * Controller(presntation layer) : 비지니스 로직 흐름 제어 및 데이터 변환 및 연산
  * Exception, erorr 처리를 한다. 클라이언트에서 전달 받은 요청을 처리 하도록 Business Layer에 요청을 전달
  * Business Layer에서 전달 받은 응답을 뷰 객체와 연결하거나 응답 타입에 맞게 변환하여 전달하는 계층
  *
