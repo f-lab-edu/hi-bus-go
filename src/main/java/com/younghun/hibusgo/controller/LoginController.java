@@ -40,6 +40,13 @@ import javax.validation.constraints.NotNull;
 public class LoginController {
 
     private final AccountService accountService;
+
+    /**
+     * session 처리를 controller에서 처리
+     * servlet container가 httpsession을 이용해 session울 생성하고 관리
+     * presentation laeyr에는 servlet container와 controller가 포함 되어 있다
+     * 계층적 관점에서 세션 처리를 presentaion layer중 하나인 controller에서 처리 해야 한다.
+     */
     public final String ACCOUNT_MEMBER_ID = "ACCOUNT_MEMBER_ID";
 
     /**
