@@ -1,8 +1,11 @@
 package com.younghun.hibusgo.controller;
 
+import static com.younghun.hibusgo.utils.SessionUtil.ACCOUNT_MEMBER_ID;
+
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
+import com.younghun.hibusgo.utils.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -33,21 +36,18 @@ import javax.validation.constraints.NotNull;
  *  - 각 계층에 맞는 기능에 집중한 설계 및 개발
  *  - 각 계층별로 역할을 분담하여 동시 다발적인 개발
  *  - 각 계층별로 구분 역할이 구분 되어 흐름 및 로직 파악에 좋다.
- * */
+*
+ * - session 처리
+ * servlet container가 httpsession을 이용해 session울 생성하고 관리
+ * presentation laeyr에는 servlet container와 controller가 포함 되어 있다
+ * 계층적 관점에서 세션 처리를 presentaion layer중 하나인 controller에서 처리 해야 한다.
+ */
 @RestController
 @RequiredArgsConstructor
 @Log4j2
 public class LoginController {
 
     private final AccountService accountService;
-
-    /**
-     * session 처리를 controller에서 처리
-     * servlet container가 httpsession을 이용해 session울 생성하고 관리
-     * presentation laeyr에는 servlet container와 controller가 포함 되어 있다
-     * 계층적 관점에서 세션 처리를 presentaion layer중 하나인 controller에서 처리 해야 한다.
-     */
-    public final String ACCOUNT_MEMBER_ID = "ACCOUNT_MEMBER_ID";
 
     /**
      *  - 유저 로그인 메서드
@@ -59,12 +59,12 @@ public class LoginController {
      *  GC를 수행하는 동안 많은 메모리 소비와 jvm 수행이 멈추고 요청을 처리하는 동안 대기하는 경우가 발생한다.
      *  이러한 이유로 새로운 객체롤 최대한 적게 생성하도록 지향.
      * @param loginDto
-     * @param httpSession
+     * @param session
      * @return 로그인 성공시 200 code return
      * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code teturn
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto, HttpSession httpSession) {
+    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto, HttpSession session) {
         String accountId = loginDto.getId();
         String password = loginDto.getPassword();
 
@@ -74,7 +74,7 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        httpSession.setAttribute(ACCOUNT_MEMBER_ID, account.getId());
+        SessionUtil.accountLogin(session, account.getId());
 
         return ResponseEntity.ok().build();
     }
@@ -88,14 +88,14 @@ public class LoginController {
      */
     @PostMapping("/logout")
     public ResponseEntity logout(HttpSession session) {
-        String loginId = (String) session.getAttribute("account");
+        String loginId = (String) session.getAttribute(ACCOUNT_MEMBER_ID);
         Account loginAccount = accountService.findById(loginId);
 
         if (loginAccount == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        session.removeAttribute(ACCOUNT_MEMBER_ID);
+        SessionUtil.accountLogout(session);
 
         return ResponseEntity.ok().build();
     }
