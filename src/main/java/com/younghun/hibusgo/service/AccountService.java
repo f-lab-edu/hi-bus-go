@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +24,7 @@ public class AccountService {
     }
 
     public boolean existsById(String id) {
-        boolean isExistAccount = accountMapper.existsById(id);
-        return isExistAccount;
+        return accountMapper.existsById(id);
     }
 
     public Account findByIdAndPassword(String accountId, String password) {
