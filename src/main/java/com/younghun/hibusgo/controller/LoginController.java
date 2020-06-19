@@ -1,11 +1,11 @@
 package com.younghun.hibusgo.controller;
 
-import static com.younghun.hibusgo.utils.SessionUtil.ACCOUNT_MEMBER_ID;
+import static com.younghun.hibusgo.utils.LoginUtil.ACCOUNT_MEMBER_ID;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
-import com.younghun.hibusgo.service.SessionService;
+import com.younghun.hibusgo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -48,7 +48,7 @@ import javax.validation.constraints.NotNull;
 public class LoginController {
 
     private final AccountService accountService;
-    private final SessionService sessionService;
+    private final LoginService loginService;
 
     /**
      *  - 유저 로그인 메서드
@@ -75,7 +75,7 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
 
-        sessionService.accountLogin(session, account.getId());
+        loginService.accountLogin(account.getId());
 
         return ResponseEntity.ok().build();
     }
@@ -96,7 +96,7 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        sessionService.accountLogout(session);
+        loginService.accountLogout();
 
         return ResponseEntity.ok().build();
     }
