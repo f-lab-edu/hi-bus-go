@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.AccountMapper">
+
+    <resultMap id="accountResultMap" type="com.younghun.hibusgo.domain.Account">
+        <result property="id" column="id"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+
+    <select id="findById" resultMap="accountResultMap">
+        SELECT id
+            , password
+            , name
+            , email
+            , phone_number
+            , status
+        FROM ACCOUNT
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </select>
+
+    <select id="existsById" resultType="boolean">
+            SELECT 1
+            FROM ACCOUNT
+            WHERE id = #{id}
+            AND status != 'DELETE'
+    </select>
+
+    <insert id="addAccount" parameterType="com.younghun.hibusgo.mapper.AccountMapper">
+        INSERT INTO ACCOUNT(id, password, name, email, phone_number, created_at)
+        VALUES(#{id}, #{password}, #{name}, #{email}, #{phoneNumber}, #{createdAt})
+    </insert>
+
+</mapper>
