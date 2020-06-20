@@ -1,6 +1,7 @@
 package com.younghun.hibusgo.utils;
 
 import com.younghun.hibusgo.service.LoginService;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -48,7 +49,7 @@ public class LoginUtil implements LoginService {
    */
   @Override
   public String getLoginAccountId() {
-    String accountId = (String) session.getAttribute(ACCOUNT_MEMBER_ID);
-    return accountId != null ? accountId : null;
+    Optional<String> accountId = (Optional<String>) session.getAttribute(ACCOUNT_MEMBER_ID);
+    return accountId.orElse(null);
   }
 }
