@@ -26,6 +26,18 @@
         AND status != 'DELETE'
     </select>
 
+    <select id="findByIdAndPassword" resultMap="accountResultMap">
+        SELECT id
+            , password
+            , name
+            , email
+            , phone_number
+            , status
+        FROM ACCOUNT
+        WHERE id = #{id} and password = #{password}
+        AND status != 'DELETE'
+    </select>
+
     <select id="existsById" resultType="boolean">
             SELECT 1
             FROM ACCOUNT
