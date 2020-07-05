@@ -1,10 +1,20 @@
 package com.younghun.hibusgo.utils;
 
 import com.younghun.hibusgo.service.LoginService;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.stereotype.Component;
 
+/**
+ * @EnableRedisHttpSession : Filter를 구현한 springSessionRepositoryFilter라는 이름의 스프링 빈을 만들어준다.
+ * 이 필터는 HttpSession 구현체를 Spring Session 으로 교체하는 역할을 하고, 이 Spring Session은 Redis에 저장된다.
+ *
+ * session에 저장되는 정보를 redis에 저장한다. 클라이언트의 세션 쿠키값은 따로 설정하지 않으면 session이라는 key값으로 생성된다.
+ */
+
+@EnableRedisHttpSession
 @Component
 @RequiredArgsConstructor
 public class LoginUtil implements LoginService {
@@ -48,7 +58,7 @@ public class LoginUtil implements LoginService {
    */
   @Override
   public String getLoginAccountId() {
-    String accountId = (String) session.getAttribute(ACCOUNT_MEMBER_ID);
-    return accountId != null ? accountId : null;
+    Optional<String> accountId = (Optional<String>) session.getAttribute(ACCOUNT_MEMBER_ID);
+    return accountId.orElse(null);
   }
 }

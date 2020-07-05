@@ -21,6 +21,8 @@
             , email
             , phone_number
             , status
+            , created_at
+            , updated_at
         FROM ACCOUNT
         WHERE id = #{id}
         AND status != 'DELETE'
@@ -33,6 +35,8 @@
             , email
             , phone_number
             , status
+            , created_at
+            , updated_at
         FROM ACCOUNT
         WHERE id = #{id} and password = #{password}
         AND status != 'DELETE'
