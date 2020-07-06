@@ -12,6 +12,11 @@ import org.springframework.stereotype.Component;
  * 이 필터는 HttpSession 구현체를 Spring Session 으로 교체하는 역할을 하고, 이 Spring Session은 Redis에 저장된다.
  *
  * session에 저장되는 정보를 redis에 저장한다. 클라이언트의 세션 쿠키값은 따로 설정하지 않으면 session이라는 key값으로 생성된다.
+ *
+ * session에 string, set, hash로 3가지 데이터 타입으로 저장
+ * spring:session:sessions:expires:(session id) (string) - 세션의 만료
+ * spring:session:expirations (set)키 - 만료 시간에 삭제되는 세션 정보
+ * spring:session:expirations:(expire time) (hash) - 세션의 생성 시간, 마지막 세션 조회 시간, 최대 타임아웃 허용 시간과 해당 세션에 저장한 데이터를 저장
  */
 
 @EnableRedisHttpSession
