@@ -54,4 +54,11 @@
         VALUES(#{id}, #{password}, #{name}, #{email}, #{phoneNumber}, #{createdAt})
     </insert>
 
+    <update id="deleteAccount">
+        UPDATE ACCOUNT
+        SET  status = 'DELETE'
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
+
 </mapper>

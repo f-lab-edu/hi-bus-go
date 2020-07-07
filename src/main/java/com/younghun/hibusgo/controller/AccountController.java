@@ -12,7 +12,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +40,7 @@ public class AccountController {
     }
 
     /**
-     * - 유저 회원 가입 메서드.
+     * 회원 가입 메서드.
      * 객체 validation 후 error가 있으면 400(Bad Request) code return
      * insert 성공시 성공시 201(Created) code return
      *
@@ -57,5 +59,32 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+
+    /**
+     * 회원 로그아웃 메서드.
+     *
+     * @param session 현제 접속한 세션
+     * @return 로그인 하지 않았을 시 사용자의 권한이 없어 리소스를 사용할수 없음을 의미하는 403 code return
+     * 로그아웃 성공시 200 code 반환
+     */
+
+    /**
+     * 회원 탈퇴 메서드
+     * @param id
+     * @return 실제 회원 데이터는 삭제 하지않고 회원 상태를 DELETE로 변경시
+     * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return
+     *
+     * 삭제하려는 id 회원의 데이터가 존재 하지 않을 경우 잘못된 요청을 의미하는 400 code return
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteAccount(@PathVariable String id) {
+        if (id.isEmpty()) {
+            return ResponseEntity.badRequest().body(HttpStatus.BAD_REQUEST);
+        }
+
+        accountService.deleteAccount(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }

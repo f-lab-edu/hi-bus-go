@@ -60,12 +60,11 @@ public class LoginController {
      *  GC를 수행하는 동안 많은 메모리 소비와 jvm 수행이 멈추고 요청을 처리하는 동안 대기하는 경우가 발생한다.
      *  이러한 이유로 새로운 객체롤 최대한 적게 생성하도록 지향.
      * @param loginDto
-     * @param session
      * @return 로그인 성공시 200 code return
      * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code teturn
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto, HttpSession session) {
+    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto) {
         String accountId = loginDto.getId();
         String password = loginDto.getPassword();
 
