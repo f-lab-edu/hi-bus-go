@@ -64,7 +64,7 @@ public class LoginController {
      * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code teturn
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto) {
+    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto, HttpSession session) {
         String accountId = loginDto.getId();
         String password = loginDto.getPassword();
 

@@ -99,7 +99,7 @@ class AccountControllerTest {
                 .andExpect(status().isCreated());
     }
 
-    @DisplayName("회원 삭 처리 - 입력값 정상")
+    @DisplayName("회원 삭제 처리 - 입력값 정상")
     @Test
     void deleteAccount_with_correct_input() throws Exception {
         String id = "abcd1234";
