@@ -86,9 +86,9 @@ public class LoginController {
      */
     @PostMapping("/logout")
     public ResponseEntity logout() {
-        String loginId = loginService.getLoginAccountId();
+        boolean islogin = loginService.isLoginAccount();
 
-        if (loginId.isEmpty()) {
+        if (!islogin) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
