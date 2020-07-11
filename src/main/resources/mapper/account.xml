@@ -21,6 +21,8 @@
             , email
             , phone_number
             , status
+            , created_at
+            , updated_at
         FROM ACCOUNT
         WHERE id = #{id}
         AND status != 'DELETE'
@@ -33,6 +35,8 @@
             , email
             , phone_number
             , status
+            , created_at
+            , updated_at
         FROM ACCOUNT
         WHERE id = #{id} and password = #{password}
         AND status != 'DELETE'
@@ -49,5 +53,12 @@
         INSERT INTO ACCOUNT(id, password, name, email, phone_number, created_at)
         VALUES(#{id}, #{password}, #{name}, #{email}, #{phoneNumber}, #{createdAt})
     </insert>
+
+    <update id="deleteAccount">
+        UPDATE ACCOUNT
+        SET  status = 'DELETE'
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
 
 </mapper>
