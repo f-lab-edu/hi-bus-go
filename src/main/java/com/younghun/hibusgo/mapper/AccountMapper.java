@@ -8,9 +8,11 @@ public interface AccountMapper {
 
     Account findById(String id);
 
-    int addAccount(Account account);
+    void addAccount(Account account);
 
     boolean existsById(String id);
 
     Account findByIdAndPassword(String id, String password);
+
+    void deleteAccount(String id);
 }
