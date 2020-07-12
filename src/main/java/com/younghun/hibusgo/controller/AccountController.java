@@ -1,5 +1,7 @@
 package com.younghun.hibusgo.controller;
 
+import static com.younghun.hibusgo.utils.LoginUtil.responseEntity;
+
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.service.AccountService;
@@ -50,14 +52,14 @@ public class AccountController {
     @PostMapping("/signUp")
     public ResponseEntity addAccount(@RequestBody @Valid AccountDto accountDto, Errors errors) {
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors.getAllErrors());
+            return responseEntity.badRequest().body(errors.getAllErrors());
         }
 
         Account account = accountDto.toEntity();
 
         accountService.addAccount(account);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return responseEntity.status(HttpStatus.CREATED).build();
     }
 
     /**
@@ -72,14 +74,14 @@ public class AccountController {
         String sessionId = loginService.getLoginAccountId();
 
         if (sessionId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return responseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         accountService.deleteAccount(sessionId);
 
         loginService.accountLogout();
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return responseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
