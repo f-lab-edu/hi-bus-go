@@ -17,8 +17,8 @@ import org.springframework.web.bind.WebDataBinder;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -100,7 +100,7 @@ public class AccountController {
      *
      * @param passwordDto 수정할 회원의 비밀번호
      */
-    @PutMapping("/password")
+    @PatchMapping("/password")
     public ResponseEntity updatePassword(@RequestBody @Valid PasswordDto passwordDto, Errors errors) {
         String sessionId = loginService.getLoginAccountId();
 
@@ -124,7 +124,7 @@ public class AccountController {
      * @param errors
      * @return
      */
-    @PutMapping("/myInfo")
+    @PatchMapping("/myInfo")
     public ResponseEntity updateAccountInfo(@RequestBody @Valid AccountDto accountDto, Errors errors) {
         String sessionId = loginService.getLoginAccountId();
 
