@@ -64,7 +64,7 @@ public class LoginController {
      * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code teturn
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto, HttpSession session) {
+    public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto) {
         String accountId = loginDto.getId();
         String password = loginDto.getPassword();
 
@@ -81,18 +81,15 @@ public class LoginController {
 
     /**
      * 회원 로그아웃 메서드.
-     *
-     * @param session 현제 접속한 세션
-     * @return 로그인 하지 않았을 시 사용자의 권한이 없어 리소스를 사용할수 없음을 의미하는 403 code return
+     * @return 로그인 하지 않았을 시 사용자의 권한이 없음을 의미하는 401 code return
      * 로그아웃 성공시 200 code 반환
      */
     @PostMapping("/logout")
-    public ResponseEntity logout(HttpSession session) {
-        String loginId = (String) session.getAttribute(ACCOUNT_MEMBER_ID);
-        Account loginAccount = accountService.findById(loginId);
+    public ResponseEntity logout() {
+        boolean islogin = loginService.isLoginAccount();
 
-        if (loginAccount == null) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        if (!islogin) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         loginService.accountLogout();
