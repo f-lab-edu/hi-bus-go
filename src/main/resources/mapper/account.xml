@@ -69,4 +69,15 @@
         AND status != 'DELETE'
     </update>
 
+    <update id="updateAccountInfo">
+        UPDATE ACCOUNT
+        SET name = #{name}
+        AND email = #{email}
+        AND phone_number = #{phone_number}
+        AND updated_at = NOW()
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
+
+
 </mapper>

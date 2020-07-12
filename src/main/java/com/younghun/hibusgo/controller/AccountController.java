@@ -117,4 +117,35 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
+     *
+     * @param accountDto
+     * @param errors
+     * @return
+     */
+    @PutMapping("/myInfo")
+    public ResponseEntity updateAccountInfo(@RequestBody @Valid AccountDto accountDto, Errors errors) {
+        String sessionId = loginService.getLoginAccountId();
+
+        if (sessionId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Account loginAccount = accountService.findById(sessionId);
+
+        accountDto.setId(sessionId);
+        accountDto.setPassword(loginAccount.getPassword());
+
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors.getAllErrors());
+        }
+
+        loginAccount = accountDto.toEntity();
+
+        accountService.updateAccountInfo(loginAccount);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

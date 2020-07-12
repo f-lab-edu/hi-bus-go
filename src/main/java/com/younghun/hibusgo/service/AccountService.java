@@ -38,4 +38,8 @@ public class AccountService {
     public void updatePassword(String acccountId, String newPassword) {
         accountMapper.updatePassword(acccountId, newPassword);
     }
+
+    public void updateAccountInfo(Account account) {
+        accountMapper.updateAccountInfo(account);
+    }
 }

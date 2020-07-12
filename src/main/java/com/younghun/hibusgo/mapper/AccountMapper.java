@@ -17,4 +17,6 @@ public interface AccountMapper {
     void deleteAccount(String id);
 
     void updatePassword(String id, String password);
+
+    void updateAccountInfo(Account account);
 }
