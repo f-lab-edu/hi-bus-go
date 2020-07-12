@@ -61,4 +61,12 @@
         AND status != 'DELETE'
     </update>
 
+    <update id="updatePassword">
+        UPDATE ACCOUNT
+        SET password = #{password}
+        AND updated_at = NOW()
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
+
 </mapper>

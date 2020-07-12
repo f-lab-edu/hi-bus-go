@@ -15,4 +15,6 @@ public interface AccountMapper {
     Account findByIdAndPassword(String id, String password);
 
     void deleteAccount(String id);
+
+    void updatePassword(String id, String password);
 }
