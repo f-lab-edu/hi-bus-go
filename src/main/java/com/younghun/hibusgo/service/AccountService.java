@@ -31,7 +31,15 @@ public class AccountService {
          return accountMapper.findByIdAndPassword(accountId, password);
     }
 
-  public void deleteAccount(String id) {
-      accountMapper.deleteAccount(id);
-  }
+    public void deleteAccount(String id) {
+        accountMapper.deleteAccount(id);
+    }
+
+    public void updatePassword(String acccountId, String newPassword) {
+        accountMapper.updatePassword(acccountId, newPassword);
+    }
+
+    public void updateAccountInfo(Account account) {
+        accountMapper.updateAccountInfo(account);
+    }
 }

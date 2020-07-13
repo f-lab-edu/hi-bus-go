@@ -2,9 +2,11 @@ package com.younghun.hibusgo.controller;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
+import com.younghun.hibusgo.dto.PasswordDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
+import com.younghun.hibusgo.validator.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +32,7 @@ public class AccountController {
     private final AccountService accountService;
     private final LoginService loginService;
     private final AccountDtoValidator accountDtoValidator;
+    private final PasswordValidator passwordValidator;
 
     /**
      * - InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용
@@ -36,8 +40,13 @@ public class AccountController {
      * @param webDataBinder requestBody에 있는 값을 특정 객체로 바인딩
      */
     @InitBinder("accountDto")
-    public void initBinder(WebDataBinder webDataBinder) {
+    public void accountInitBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(accountDtoValidator);
+    }
+
+    @InitBinder("passwordDto")
+    public void passwordInitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(passwordValidator);
     }
 
     /**
@@ -78,6 +87,63 @@ public class AccountController {
         accountService.deleteAccount(sessionId);
 
         loginService.accountLogout();
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
+     * 회원 비밀번호 수정 메서드
+     * @return 회원 비밀번 수정 성공시
+     * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return
+     * 객체 validation 후 error가 있으면 400(Bad Request) code return
+     * 수정시 로그인한 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
+     *
+     * @param passwordDto 수정할 회원의 비밀번호
+     */
+    @PatchMapping("/password")
+    public ResponseEntity updatePassword(@RequestBody @Valid PasswordDto passwordDto, Errors errors) {
+        String sessionId = loginService.getLoginAccountId();
+
+        if (sessionId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors.getAllErrors());
+        }
+
+        accountService.updatePassword(sessionId, passwordDto.getNewPassword());
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
+     * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
+     *
+     * @param accountDto
+     * @param errors
+     * @return
+     */
+    @PatchMapping("/myInfo")
+    public ResponseEntity updateAccountInfo(@RequestBody @Valid AccountDto accountDto, Errors errors) {
+        String sessionId = loginService.getLoginAccountId();
+
+        if (sessionId.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Account loginAccount = accountService.findById(sessionId);
+
+        accountDto.setId(sessionId);
+        accountDto.setPassword(loginAccount.getPassword());
+
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().body(errors.getAllErrors());
+        }
+
+        loginAccount = accountDto.toEntity();
+
+        accountService.updateAccountInfo(loginAccount);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
