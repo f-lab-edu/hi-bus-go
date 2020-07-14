@@ -8,6 +8,7 @@ import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
+import com.younghun.hibusgo.utils.ResponseUtil;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -53,7 +54,7 @@ public class AccountController {
     @PostMapping("/signUp")
     public ResponseEntity addAccount(@RequestBody @Valid AccountDto accountDto, Errors errors) {
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors.getAllErrors());
+            return ResponseUtil.getBadRequestWithErrors(errors);
         }
 
         Account account = accountDto.toEntity();
