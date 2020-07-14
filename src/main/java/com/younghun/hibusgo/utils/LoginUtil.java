@@ -30,14 +30,6 @@ public class LoginUtil implements LoginService {
   public final HttpSession session;
 
   /**
-   *  ResponseEntity를 build()를 통해 매번 새로 생성하던 객체 대신에 static 객체를 미리 생성하여 사용
-   *  객체를 new로 생성을 많이 하면 다중의 사용자가 접근했을 때 새로운 객체가 자주 생성되고, GC가 자주 발생한다.
-   *  GC를 수행하는 동안 많은 메모리 소비와 jvm 수행이 멈추고 요청을 처리하는 동안 대기하는 경우가 발생한다.
-   *  이러한 이유로 새로운 객체롤 최대한 적게 생성하도록 지향.
-   */
-  public static ResponseEntity responseEntity;
-
-  /**
    * 계정 로그인 메소드
    * @param accountId
    * 계정 로그인 id를 세션으로 등록

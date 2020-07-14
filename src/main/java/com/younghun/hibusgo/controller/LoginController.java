@@ -1,7 +1,9 @@
 package com.younghun.hibusgo.controller;
 
 
-import static com.younghun.hibusgo.utils.LoginUtil.responseEntity;
+import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_OK;
+import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_UNAUTHORIZED;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.LoginDto;
@@ -9,7 +11,6 @@ import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,7 +58,7 @@ public class LoginController {
      *
      * @param loginDto
      * @return 로그인 성공시 200 code return
-     * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code teturn
+     * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code return
      */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto) {
@@ -67,12 +68,12 @@ public class LoginController {
         Account account = accountService.findByIdAndPassword(accountId, password);
 
         if (account == null) {
-            return responseEntity.status(HttpStatus.NO_CONTENT).build();
+            return responseEntity_NO_CONTENT;
         }
 
         loginService.accountLogin(account.getId());
 
-        return responseEntity.ok().build();
+        return responseEntity_OK;
     }
 
     /**
@@ -85,11 +86,11 @@ public class LoginController {
         boolean islogin = loginService.isLoginAccount();
 
         if (!islogin) {
-            return responseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return responseEntity_UNAUTHORIZED;
         }
 
         loginService.accountLogout();
 
-        return responseEntity.ok().build();
+        return responseEntity_OK;
     }
 }

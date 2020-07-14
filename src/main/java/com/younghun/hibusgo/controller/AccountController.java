@@ -1,6 +1,8 @@
 package com.younghun.hibusgo.controller;
 
-import static com.younghun.hibusgo.utils.LoginUtil.responseEntity;
+import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_CREATED;
+import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_UNAUTHORIZED;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
@@ -9,7 +11,6 @@ import com.younghun.hibusgo.service.LoginService;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -52,14 +53,14 @@ public class AccountController {
     @PostMapping("/signUp")
     public ResponseEntity addAccount(@RequestBody @Valid AccountDto accountDto, Errors errors) {
         if (errors.hasErrors()) {
-            return responseEntity.badRequest().body(errors.getAllErrors());
+            return ResponseEntity.badRequest().body(errors.getAllErrors());
         }
 
         Account account = accountDto.toEntity();
 
         accountService.addAccount(account);
 
-        return responseEntity.status(HttpStatus.CREATED).build();
+        return responseEntity_CREATED;
     }
 
     /**
@@ -74,14 +75,14 @@ public class AccountController {
         String sessionId = loginService.getLoginAccountId();
 
         if (sessionId.isEmpty()) {
-            return responseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return responseEntity_UNAUTHORIZED;
         }
 
         accountService.deleteAccount(sessionId);
 
         loginService.accountLogout();
 
-        return responseEntity.status(HttpStatus.NO_CONTENT).build();
+        return responseEntity_NO_CONTENT;
     }
 
 }
