@@ -2,6 +2,7 @@ package com.younghun.hibusgo.controller;
 
 import static com.younghun.hibusgo.utils.LoginUtil.ACCOUNT_MEMBER_ID;
 
+import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
@@ -84,14 +85,9 @@ public class LoginController {
      * @return 로그인 하지 않았을 시 사용자의 권한이 없음을 의미하는 401 code return
      * 로그아웃 성공시 200 code 반환
      */
+    @LoginCheck
     @PostMapping("/logout")
     public ResponseEntity logout() {
-        boolean islogin = loginService.isLoginAccount();
-
-        if (!islogin) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
         loginService.accountLogout();
 
         return ResponseEntity.ok().build();

@@ -1,5 +1,6 @@
 package com.younghun.hibusgo.controller;
 
+import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.dto.PasswordDto;
@@ -76,16 +77,12 @@ public class AccountController {
      *
      * 탈퇴사 로그인한 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
      */
+    @LoginCheck
     @DeleteMapping("/myInfo")
     public ResponseEntity deleteAccount() {
         String sessionId = loginService.getLoginAccountId();
 
-        if (sessionId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
         accountService.deleteAccount(sessionId);
-
         loginService.accountLogout();
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -100,13 +97,10 @@ public class AccountController {
      *
      * @param passwordDto 수정할 회원의 비밀번호
      */
+    @LoginCheck
     @PatchMapping("/password")
     public ResponseEntity updatePassword(@RequestBody @Valid PasswordDto passwordDto, Errors errors) {
         String sessionId = loginService.getLoginAccountId();
-
-        if (sessionId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
 
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors());
@@ -124,14 +118,10 @@ public class AccountController {
      * @param errors
      * @return
      */
+    @LoginCheck
     @PatchMapping("/myInfo")
     public ResponseEntity updateAccountInfo(@RequestBody @Valid AccountDto accountDto, Errors errors) {
         String sessionId = loginService.getLoginAccountId();
-
-        if (sessionId.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
         Account loginAccount = accountService.findById(sessionId);
 
         accountDto.setId(sessionId);

@@ -83,6 +83,12 @@
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
 
+        <!-- AOP 의존성 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
