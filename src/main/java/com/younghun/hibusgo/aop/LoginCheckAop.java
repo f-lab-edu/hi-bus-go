@@ -6,7 +6,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Aspect
 @Component
@@ -24,7 +24,7 @@ public class LoginCheckAop {
     boolean islogin = loginService.isLoginAccount();
 
     if (!islogin) {
-      throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED){};
+      throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
     }
   }
 }

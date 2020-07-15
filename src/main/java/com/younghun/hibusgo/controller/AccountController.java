@@ -4,6 +4,7 @@ import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.dto.PasswordDto;
+import com.younghun.hibusgo.dto.ProfileDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,11 +80,9 @@ public class AccountController {
      * 탈퇴사 로그인한 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
      */
     @LoginCheck
-    @DeleteMapping("/myInfo")
-    public ResponseEntity deleteAccount() {
-        String sessionId = loginService.getLoginAccountId();
-
-        accountService.deleteAccount(sessionId);
+    @DeleteMapping("/myInfo/{loginId}")
+    public ResponseEntity deleteAccount(@PathVariable String loginId) {
+        accountService.deleteAccount(loginId);
         loginService.accountLogout();
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -98,15 +98,13 @@ public class AccountController {
      * @param passwordDto 수정할 회원의 비밀번호
      */
     @LoginCheck
-    @PatchMapping("/password")
-    public ResponseEntity updatePassword(@RequestBody @Valid PasswordDto passwordDto, Errors errors) {
-        String sessionId = loginService.getLoginAccountId();
-
+    @PatchMapping("/password/{loginId}")
+    public ResponseEntity updatePassword(@PathVariable String loginId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors());
         }
 
-        accountService.updatePassword(sessionId, passwordDto.getNewPassword());
+        accountService.updatePassword(loginId, passwordDto.getNewPassword());
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -114,26 +112,20 @@ public class AccountController {
     /**
      * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
      *
-     * @param accountDto
+     * @param ProfileDto
      * @param errors
      * @return
      */
     @LoginCheck
     @PatchMapping("/myInfo")
-    public ResponseEntity updateAccountInfo(@RequestBody @Valid AccountDto accountDto, Errors errors) {
-        String sessionId = loginService.getLoginAccountId();
-        Account loginAccount = accountService.findById(sessionId);
-
-        accountDto.setId(sessionId);
-        accountDto.setPassword(loginAccount.getPassword());
-
+    public ResponseEntity updateAccountInfo(@RequestBody @Valid ProfileDto ProfileDto, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors());
         }
 
-        loginAccount = accountDto.toEntity();
+        Account accountInfo = ProfileDto.toEntity();
 
-        accountService.updateAccountInfo(loginAccount);
+        accountService.updateAccountInfo(accountInfo);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
