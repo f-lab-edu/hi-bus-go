@@ -1,9 +1,10 @@
 package com.younghun.hibusgo.controller;
 
 
-import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_NO_CONTENT;
-import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_OK;
-import static com.younghun.hibusgo.utils.ResponseUtil.responseEntity_UNAUTHORIZED;
+
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSEENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSEENTITY_OK;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSEENTITY_UNAUTHORIZED;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.LoginDto;
@@ -68,12 +69,12 @@ public class LoginController {
         Account account = accountService.findByIdAndPassword(accountId, password);
 
         if (account == null) {
-            return responseEntity_NO_CONTENT;
+            return RESPONSEENTITY_NO_CONTENT;
         }
 
         loginService.accountLogin(account.getId());
 
-        return responseEntity_OK;
+        return RESPONSEENTITY_OK;
     }
 
     /**
@@ -86,11 +87,11 @@ public class LoginController {
         boolean islogin = loginService.isLoginAccount();
 
         if (!islogin) {
-            return responseEntity_UNAUTHORIZED;
+            return RESPONSEENTITY_UNAUTHORIZED;
         }
 
         loginService.accountLogout();
 
-        return responseEntity_OK;
+        return RESPONSEENTITY_OK;
     }
 }
