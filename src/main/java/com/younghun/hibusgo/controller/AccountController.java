@@ -7,6 +7,7 @@ import com.younghun.hibusgo.dto.PasswordDto;
 import com.younghun.hibusgo.dto.ProfileDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
+import com.younghun.hibusgo.utils.SessionId;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import com.younghun.hibusgo.validator.PasswordValidator;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @RestController
 @RequestMapping("/accounts")
@@ -36,6 +38,7 @@ public class AccountController {
     private final LoginService loginService;
     private final AccountDtoValidator accountDtoValidator;
     private final PasswordValidator passwordValidator;
+    private String loginId;
 
     /**
      * - InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용
@@ -80,8 +83,8 @@ public class AccountController {
      * 탈퇴사 로그인한 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
      */
     @LoginCheck
-    @DeleteMapping("/myInfo/{loginId}")
-    public ResponseEntity deleteAccount(@PathVariable String loginId) {
+    @DeleteMapping("/myInfo")
+    public ResponseEntity deleteAccount(@SessionId String loginId) {
         accountService.deleteAccount(loginId);
         loginService.accountLogout();
 
