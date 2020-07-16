@@ -1,14 +1,13 @@
 package com.younghun.hibusgo.controller;
 
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSEENTITY_CREATED;
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSEENTITY_NO_CONTENT;
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSEENTITY_UNAUTHORIZED;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_UNAUTHORIZED;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
-import com.younghun.hibusgo.utils.ResponseConstants;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -54,14 +53,13 @@ public class AccountController {
     @PostMapping("/signUp")
     public ResponseEntity addAccount(@RequestBody @Valid AccountDto accountDto, Errors errors) {
         if (errors.hasErrors()) {
-            return ResponseConstants.getBadRequestWithErrors(errors);
+            return ResponseEntity.badRequest().body(errors.getAllErrors());
         }
 
         Account account = accountDto.toEntity();
-
         accountService.addAccount(account);
 
-        return RESPONSEENTITY_CREATED;
+        return RESPONSE_ENTITY_CREATED;
     }
 
     /**
@@ -76,14 +74,13 @@ public class AccountController {
         String sessionId = loginService.getLoginAccountId();
 
         if (sessionId.isEmpty()) {
-            return RESPONSEENTITY_UNAUTHORIZED;
+            return RESPONSE_ENTITY_UNAUTHORIZED;
         }
 
         accountService.deleteAccount(sessionId);
-
         loginService.accountLogout();
 
-        return RESPONSEENTITY_NO_CONTENT;
+        return RESPONSE_ENTITY_NO_CONTENT;
     }
 
 }

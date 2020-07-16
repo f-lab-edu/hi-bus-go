@@ -2,7 +2,6 @@ package com.younghun.hibusgo.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 
 /**
  *  ResponseEntity를build()를 통해 매번 새로 생성하던 객체 대신에 static 객체를 미리 생성하여 사용
@@ -12,13 +11,8 @@ import org.springframework.validation.Errors;
  */
 public class ResponseConstants {
 
-  public static final ResponseEntity RESPONSEENTITY_NO_CONTENT = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-  public static final ResponseEntity RESPONSEENTITY_UNAUTHORIZED = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-  public static final ResponseEntity RESPONSEENTITY_CREATED = ResponseEntity.status(HttpStatus.CREATED).build();
-  public static final ResponseEntity RESPONSEENTITY_OK = ResponseEntity.ok().build();
-  public static ResponseEntity RESPONSEENTITY_BADREQUEST_WITH_ERRORS;
-
-  public static synchronized ResponseEntity getBadRequestWithErrors(Errors errors) {
-    return RESPONSEENTITY_BADREQUEST_WITH_ERRORS = ResponseEntity.badRequest().body(errors.getAllErrors());
-  }
+  public static final ResponseEntity RESPONSE_ENTITY_NO_CONTENT = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  public static final ResponseEntity RESPONSE_ENTITY_UNAUTHORIZED = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+  public static final ResponseEntity RESPONSE_ENTITY_CREATED = ResponseEntity.status(HttpStatus.CREATED).build();
+  public static final ResponseEntity RESPONSE_ENTITY_OK = ResponseEntity.ok().build();
 }
