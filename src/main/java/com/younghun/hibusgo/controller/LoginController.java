@@ -1,6 +1,10 @@
 package com.younghun.hibusgo.controller;
 
-import static com.younghun.hibusgo.utils.LoginUtil.ACCOUNT_MEMBER_ID;
+
+
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_OK;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_UNAUTHORIZED;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.domain.Account;
@@ -9,13 +13,11 @@ import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
 
@@ -56,13 +58,9 @@ public class LoginController {
      *  login 요청시 id, password로 유저가 있는지 조회
      *  아이디가 있으면 해당 유저 세션 등록
      *
-     *  new ResponseEntity() 새로운 객체를 생성하여 return 하는 대신 ResponseEntity에 상수를 담아 return
-     *  객체를 new로 생성을 많이 하면 다중의 사용자가 접근했을 때 새로운 객체가 자주 생성되고, GC가 자주 발생한다.
-     *  GC를 수행하는 동안 많은 메모리 소비와 jvm 수행이 멈추고 요청을 처리하는 동안 대기하는 경우가 발생한다.
-     *  이러한 이유로 새로운 객체롤 최대한 적게 생성하도록 지향.
      * @param loginDto
      * @return 로그인 성공시 200 code return
-     * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code teturn
+     * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code return
      */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @NotNull LoginDto loginDto) {
@@ -72,12 +70,12 @@ public class LoginController {
         Account account = accountService.findByIdAndPassword(accountId, password);
 
         if (account == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return RESPONSE_ENTITY_NO_CONTENT;
         }
 
         loginService.accountLogin(account.getId());
 
-        return ResponseEntity.ok().build();
+        return RESPONSE_ENTITY_OK;
     }
 
     /**
@@ -90,6 +88,6 @@ public class LoginController {
     public ResponseEntity logout() {
         loginService.accountLogout();
 
-        return ResponseEntity.ok().build();
+        return RESPONSE_ENTITY_OK;
     }
 }

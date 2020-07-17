@@ -1,6 +1,12 @@
 package com.younghun.hibusgo.controller;
 
 import com.younghun.hibusgo.aop.LoginCheck;
+
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_UNAUTHORIZED;
+
+
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.dto.PasswordDto;
@@ -12,7 +18,6 @@ import com.younghun.hibusgo.validator.AccountDtoValidator;
 import com.younghun.hibusgo.validator.PasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -69,10 +74,9 @@ public class AccountController {
         }
 
         Account account = accountDto.toEntity();
-
         accountService.addAccount(account);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return RESPONSE_ENTITY_CREATED;
     }
 
     /**
@@ -88,7 +92,7 @@ public class AccountController {
         accountService.deleteAccount(loginId);
         loginService.accountLogout();
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return RESPONSE_ENTITY_NO_CONTENT;
     }
 
     /**
