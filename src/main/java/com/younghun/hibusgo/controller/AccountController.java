@@ -4,7 +4,6 @@ import com.younghun.hibusgo.aop.LoginCheck;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_UNAUTHORIZED;
 
 
 import com.younghun.hibusgo.domain.Account;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @RestController
 @RequestMapping("/accounts")
@@ -43,7 +41,6 @@ public class AccountController {
     private final LoginService loginService;
     private final AccountDtoValidator accountDtoValidator;
     private final PasswordValidator passwordValidator;
-    private String loginId;
 
     /**
      * - InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용
@@ -113,7 +110,7 @@ public class AccountController {
 
         accountService.updatePassword(loginId, passwordDto.getNewPassword());
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return RESPONSE_ENTITY_NO_CONTENT;
     }
 
     /**
@@ -131,10 +128,9 @@ public class AccountController {
         }
 
         Account accountInfo = ProfileDto.toEntity();
-
         accountService.updateAccountInfo(accountInfo);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return RESPONSE_ENTITY_NO_CONTENT;
     }
 
 }
