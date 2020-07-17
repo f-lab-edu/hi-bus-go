@@ -25,7 +25,6 @@ public class SessionIdResolver implements HandlerMethodArgumentResolver {
       NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
       String loginId = loginService.getLoginAccountId();
-
-    return loginId;
+      return loginId;
   }
 }
