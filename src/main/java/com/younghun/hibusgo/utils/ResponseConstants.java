@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 public class ResponseConstants {
 
   public static final ResponseEntity RESPONSE_ENTITY_NO_CONTENT = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-  public static final ResponseEntity RESPONSE_ENTITY_UNAUTHORIZED = ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
   public static final ResponseEntity RESPONSE_ENTITY_CREATED = ResponseEntity.status(HttpStatus.CREATED).build();
   public static final ResponseEntity RESPONSE_ENTITY_OK = ResponseEntity.ok().build();
 }

@@ -4,7 +4,6 @@ package com.younghun.hibusgo.controller;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_OK;
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_UNAUTHORIZED;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.domain.Account;
