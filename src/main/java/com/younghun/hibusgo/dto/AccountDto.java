@@ -4,7 +4,6 @@ import com.younghun.hibusgo.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,7 +16,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class AccountDto {
 
     // 아이디
