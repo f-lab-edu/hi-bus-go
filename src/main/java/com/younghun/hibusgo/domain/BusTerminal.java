@@ -3,7 +3,6 @@ package com.younghun.hibusgo.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -11,7 +10,9 @@ import lombok.ToString;
 @ToString
 public class BusTerminal {
 
-    public enum Status { DEFAULT, DELETED}
+    public enum Status {
+        DEFAULT, DELETED
+    }
 
     private int id;
 

@@ -1,7 +1,6 @@
 package com.younghun.hibusgo.validator;
 
 import com.younghun.hibusgo.dto.PasswordDto;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

@@ -30,7 +30,7 @@ public class BusTerminalController {
    * @return
    */
   @GetMapping("/{region}/{name}")
-  public ResponseEntity<BusTerminal> getBusTerminal(@PathVariable String region, @PathVariable String name) {
+  public ResponseEntity<?> getBusTerminal(@PathVariable String region, @PathVariable String name) {
     BusTerminal busTerminal = busTerminalService.findByNameAndRegion(name, region);
 
     if (busTerminal == null || busTerminal.getStatus().equals(Status.DELETED)) {

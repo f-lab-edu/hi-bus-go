@@ -22,8 +22,7 @@ public class SessionIdResolver implements HandlerMethodArgumentResolver {
 
   @Override
   public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-      NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-      String loginId = loginService.getLoginAccountId();
-      return loginId;
+      NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+      return loginService.getLoginAccountId();
   }
 }

@@ -35,8 +35,8 @@ public class AccountService {
         accountMapper.deleteAccount(id);
     }
 
-    public void updatePassword(String acccountId, String newPassword) {
-        accountMapper.updatePassword(acccountId, newPassword);
+    public void updatePassword(String accountId, String newPassword) {
+        accountMapper.updatePassword(accountId, newPassword);
     }
 
     public void updateAccountInfo(Account account) {
