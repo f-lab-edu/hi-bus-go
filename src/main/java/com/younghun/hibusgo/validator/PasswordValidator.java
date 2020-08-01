@@ -20,7 +20,6 @@ public class PasswordValidator implements Validator {
   public void validate(Object target, Errors errors) {
     PasswordDto passwordDto = (PasswordDto) target;
     if (!passwordDto.getNewPassword().equals(passwordDto.getNewPasswordConfirm())) {
-      log.error("입력한 새 패스워드가 일치하지 않습니다.");
       errors.rejectValue("newPassword", "wrong.value", "입력한 새 패스워드가 일치하지 않습니다.");
     }
   }

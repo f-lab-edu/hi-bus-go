@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @Builder
 @ToString
 public class BusTerminal {
@@ -24,6 +23,6 @@ public class BusTerminal {
 
     private String region;
 
-    // 상태
+    // 버스 미널 상태 DEFAULT(기본), DELETED(삭제됨)
     private Status status;
 }
