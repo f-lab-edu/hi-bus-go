@@ -79,7 +79,7 @@ public class AccountController {
      * 회원 탈퇴 메서드
      * @return 실제 회원 데이터는 삭제 하지않고 회원 상태를 DELETE로 변경시
      * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return
-     * 탈퇴사 로그인한 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
+     * 탈퇴시 로그인 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
      */
     @LoginCheck
     @DeleteMapping("/myInfo")

@@ -37,7 +37,7 @@ public class BusTerminalController {
         return RESPONSE_ENTITY_NO_CONTENT;
       }
 
-      return ResponseEntity.ok(busTerminal);
+      return ResponseEntity.ok().body(busTerminal);
     }
 
 }
