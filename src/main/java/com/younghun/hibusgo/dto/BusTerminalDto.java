@@ -7,9 +7,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public class BusTerminalDto {
 
-    //터미 이름
-    private String name;
+    //터미널 이름
+    private final String name;
 
     //지역 이름
-    private String region;
+    private final String region;
 }

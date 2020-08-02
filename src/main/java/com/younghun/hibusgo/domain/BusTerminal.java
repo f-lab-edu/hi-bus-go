@@ -3,16 +3,16 @@ package com.younghun.hibusgo.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
-@Setter
 @Builder
 @ToString
 public class BusTerminal {
 
-    public enum Status { DEFAULT, DELETED}
+    public enum Status {
+        DEFAULT, DELETED
+    }
 
     //아이디
     private int id;
@@ -29,6 +29,6 @@ public class BusTerminal {
     //지약
     private String region;
 
-    // 상태
+    // 버스 미널 상태 DEFAULT(기본), DELETED(삭제됨)
     private Status status;
 }

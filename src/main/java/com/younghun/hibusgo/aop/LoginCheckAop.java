@@ -20,7 +20,7 @@ public class LoginCheckAop {
    * @throws Throwable
    */
   @Before("@annotation(LoginCheck)")
-  public void loginCheck() throws Throwable {
+  public void loginCheck() throws HttpClientErrorException {
     boolean islogin = loginService.isLoginAccount();
 
     if (!islogin) {

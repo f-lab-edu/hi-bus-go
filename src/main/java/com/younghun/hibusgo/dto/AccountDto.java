@@ -26,7 +26,7 @@ public class AccountDto {
     // 패스워드
     @NotBlank
     @Length(min = 8, max = 16)
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@!%*#?&])[A-Za-z\\d$@!%*#?&]{8,16}$")
     private String password;
 
     // 이름

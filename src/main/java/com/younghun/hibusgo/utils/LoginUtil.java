@@ -63,7 +63,8 @@ public class LoginUtil implements LoginService {
    */
   @Override
   public String getLoginAccountId() {
-    Optional<String> accountId = (Optional<String>) session.getAttribute(ACCOUNT_MEMBER_ID);
-    return accountId.orElse(null);
+    return Optional.ofNullable(session.getAttribute(ACCOUNT_MEMBER_ID))
+        .map(String::valueOf)
+        .orElse(null);
   }
 }
