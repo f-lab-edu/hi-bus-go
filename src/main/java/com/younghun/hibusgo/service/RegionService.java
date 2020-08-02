@@ -2,7 +2,6 @@ package com.younghun.hibusgo.service;
 
 import com.younghun.hibusgo.domain.Region;
 import com.younghun.hibusgo.mapper.RegionMapper;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,7 +18,7 @@ public class RegionService {
     return regionMapper.findById(id);
   }
 
-  public List<Region> findByName(String name) {
+  public List<Region> searchByName(String name) {
     return regionMapper.findByName(name);
   }
 }

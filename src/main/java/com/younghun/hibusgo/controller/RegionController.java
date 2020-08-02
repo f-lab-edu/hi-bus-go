@@ -29,7 +29,7 @@ public class RegionController {
    */
   @GetMapping
   public ResponseEntity getRegion(String name) {
-    List<Region> regions = regionService.findByName(name);
+    List<Region> regions = regionService.searchByName(name);
 
     if (regions == null || regions.isEmpty()) {
       return RESPONSE_ENTITY_NO_CONTENT;

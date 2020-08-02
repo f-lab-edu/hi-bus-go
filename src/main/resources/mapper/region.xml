@@ -17,7 +17,7 @@
         AND status != 'DELETE'
     </select>
 
-    <select id="findByName" resultMap="regionResultMap" resultType="java.util.ArrayList">
+    <select id="searchByName" resultMap="regionResultMap" resultType="java.util.ArrayList">
         SELECT id
             , name
             , status
