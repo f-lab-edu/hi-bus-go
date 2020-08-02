@@ -12,24 +12,23 @@
     </resultMap>
 
     <select id="findById" resultMap="accountResultMap">
-        SELECT b.id
-        , b.name
-        , b.address
-        , b.tel
-        , r.name region
-        , b.status
+        SELECT b.id,
+            b.name,
+            b.address,
+            b.tel,
+            r.name region,
+            b.status
         FROM busTerminal b
         WHERE b.id = #{id}
-        AND status != 'DELETE'
     </select>
 
     <select id="findByNameAndRegion" resultMap="busTerminalResultMap">
-        SELECT b.id
-        , b.name
-        , b.address
-        , b.tel
-        , r.name region
-        , b.status
+        SELECT b.id,
+            b.name,
+            b.address,
+            b.tel,
+            r.name region,
+            b.status
         FROM BUSTERMINAL b
         LEFT JOIN REGION r
         ON b.region_id = r.id
@@ -40,7 +39,6 @@
         <if test="region !=null and region !=''">
             AND  region LIKE '%' || #{region} || '%'
         </if>
-        AND status != 'DELETE'
     </select>
 
 </mapper>
