@@ -2,7 +2,9 @@ package com.younghun.hibusgo.service;
 
 
 import com.younghun.hibusgo.domain.Account;
+import com.younghun.hibusgo.domain.Account.Status;
 import com.younghun.hibusgo.mapper.AccountMapper;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,9 @@ public class AccountService {
         return accountMapper.existsById(id);
     }
 
-    public Account findByIdAndPassword(String accountId, String password) {
-         return accountMapper.findByIdAndPassword(accountId, password);
+    public Optional<Account> findByIdAndPassword(String accountId, String password) {
+         return Optional.ofNullable(accountMapper.findByIdAndPassword(accountId, password))
+             .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
     public void deleteAccount(String id) {

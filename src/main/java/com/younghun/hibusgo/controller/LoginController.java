@@ -11,6 +11,7 @@ import com.younghun.hibusgo.domain.Account.Status;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -67,13 +68,13 @@ public class LoginController {
         String accountId = loginDto.getId();
         String password = loginDto.getPassword();
 
-        Account account = accountService.findByIdAndPassword(accountId, password);
+        Optional<Account> account = accountService.findByIdAndPassword(accountId, password);
 
-        if (account == null || account.getStatus().equals(Status.DELETED)) {
+        if (!account.isPresent()) {
             return RESPONSE_NOT_FOUND;
         }
 
-        loginService.accountLogin(account.getId());
+        loginService.accountLogin(account.get().getId());
 
         return RESPONSE_ENTITY_OK;
     }
