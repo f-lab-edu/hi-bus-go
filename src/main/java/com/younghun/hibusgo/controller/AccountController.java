@@ -113,7 +113,7 @@ public class AccountController {
     /**
      * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
      * @param ProfileDto 프로필 정보
-     * @param errors 에러 정
+     * @param errors 에러 정보
      * @return ResponseEntity<?>
      */
     @LoginCheck

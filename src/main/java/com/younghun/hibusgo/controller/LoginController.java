@@ -2,14 +2,16 @@ package com.younghun.hibusgo.controller;
 
 
 
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_OK;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.domain.Account;
+import com.younghun.hibusgo.domain.Account.Status;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -59,20 +61,20 @@ public class LoginController {
      *
      * @param loginDto
      * @return 로그인 성공시 200 code return
-     * 로그인 실패시 정상이지만 데이터가 없음을 의미하는 204 code return
+     * 로그인 실패시 데이터가 없음을 의미하는 404 code return
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @NotNull LoginDto loginDto) {
         String accountId = loginDto.getId();
         String password = loginDto.getPassword();
 
-        Account account = accountService.findByIdAndPassword(accountId, password);
+        Optional<Account> account = accountService.findByIdAndPassword(accountId, password);
 
-        if (account == null) {
-            return RESPONSE_ENTITY_NO_CONTENT;
+        if (!account.isPresent()) {
+            return RESPONSE_NOT_FOUND;
         }
 
-        loginService.accountLogin(account.getId());
+        loginService.accountLogin(account.get().getId());
 
         return RESPONSE_ENTITY_OK;
     }
