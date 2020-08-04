@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +28,8 @@ public class RegionController {
    * @param name 조회할 지역 이름
    * @return ResponseEntity
    */
-  @GetMapping
-  public ResponseEntity getRegion(String name) {
+  @GetMapping("/{name}")
+  public ResponseEntity getRegion(@PathVariable String name) {
     List<Region> regions = regionService.searchByName(name);
 
     if (regions == null || regions.isEmpty()) {
