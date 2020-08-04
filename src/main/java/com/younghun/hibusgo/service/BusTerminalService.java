@@ -2,7 +2,9 @@ package com.younghun.hibusgo.service;
 
 
 import com.younghun.hibusgo.domain.BusTerminal;
+import com.younghun.hibusgo.domain.BusTerminal.Status;
 import com.younghun.hibusgo.mapper.BusTerminalMapper;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,9 @@ public class BusTerminalService {
         return terminalMapper.findById(id);
     }
 
-    public BusTerminal findByNameAndRegion(String name, String region) {
-        return terminalMapper.findByNameAndRegion(name, region);
+    public Optional<BusTerminal> findByNameAndRegion(String name, String region) {
+        return Optional.ofNullable(terminalMapper.findByNameAndRegion(name, region))
+            .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
     public void addBusTerminal(BusTerminal busTerminal) {

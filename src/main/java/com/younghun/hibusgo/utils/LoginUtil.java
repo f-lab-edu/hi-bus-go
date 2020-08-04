@@ -62,9 +62,8 @@ public class LoginUtil implements LoginService {
    * @return Account
    */
   @Override
-  public String getLoginAccountId() {
+  public Optional<String> getLoginAccountId() {
     return Optional.ofNullable(session.getAttribute(ACCOUNT_MEMBER_ID))
-        .map(String::valueOf)
-        .orElse(null);
+        .map(String::valueOf);
   }
 }

@@ -3,8 +3,8 @@ package com.younghun.hibusgo.controller;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.domain.BusTerminal;
-import com.younghun.hibusgo.domain.BusTerminal.Status;
 import com.younghun.hibusgo.service.BusTerminalService;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +31,13 @@ public class BusTerminalController {
    */
   @GetMapping("/{region}/{name}")
   public ResponseEntity<?> getBusTerminal(@PathVariable String region, @PathVariable String name) {
-    BusTerminal busTerminal = busTerminalService.findByNameAndRegion(name, region);
+    Optional<BusTerminal> busTerminal = busTerminalService.findByNameAndRegion(name, region);
 
-    if (busTerminal == null || busTerminal.getStatus().equals(Status.DELETED)) {
+    if (!busTerminal.isPresent()) {
       return RESPONSE_NOT_FOUND;
     }
 
-    return ResponseEntity.ok().body(busTerminal);
+    return ResponseEntity.ok().body(busTerminal.get());
   }
 
 }

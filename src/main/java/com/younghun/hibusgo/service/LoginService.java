@@ -1,5 +1,7 @@
 package com.younghun.hibusgo.service;
 
+import java.util.Optional;
+
 public interface LoginService {
 
   void accountLogin(String accountId);
@@ -8,6 +10,6 @@ public interface LoginService {
 
   boolean isLoginAccount();
 
-  String getLoginAccountId();
+  Optional<String> getLoginAccountId();
 
 }
