@@ -4,7 +4,6 @@ import com.younghun.hibusgo.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
@@ -17,7 +16,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 public class AccountDto {
 
     // 아이디
@@ -28,7 +26,7 @@ public class AccountDto {
     // 패스워드
     @NotBlank
     @Length(min = 8, max = 16)
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@!%*#?&])[A-Za-z\\d$@!%*#?&]{8,16}$")
     private String password;
 
     // 이름

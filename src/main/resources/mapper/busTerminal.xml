@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.BusTerminalMapper">
+
+    <resultMap id="busTerminalResultMap" type="com.younghun.hibusgo.domain.BusTerminal">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="tel" column="tel"/>
+        <result property="region" column="region"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="findById" resultMap="accountResultMap">
+        SELECT b.id,
+            b.name,
+            b.address,
+            b.tel,
+            r.name region,
+            b.status
+        FROM busTerminal b
+        WHERE b.id = #{id}
+    </select>
+
+    <select id="findByNameAndRegion" resultMap="busTerminalResultMap">
+        SELECT b.id,
+            b.name,
+            b.address,
+            b.tel,
+            r.name region,
+            b.status
+        FROM BUSTERMINAL b
+        LEFT JOIN REGION r
+        ON b.region_id = r.id
+        WHERE 1=1
+        <if test="name !=null and name !=''">
+            AND  b.name LIKE '%' || #{name} || '%'
+        </if>
+        <if test="region !=null and region !=''">
+            AND  region LIKE '%' || #{region} || '%'
+        </if>
+    </select>
+
+</mapper>

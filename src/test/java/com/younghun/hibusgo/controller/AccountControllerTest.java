@@ -87,7 +87,6 @@ class AccountControllerTest {
                 .build();
 
         Account account = accountDto.toEntity();
-        account.setStatus(Account.Status.DEFAULT);
 
         String json = objectMapper.writeValueAsString(account);
 
