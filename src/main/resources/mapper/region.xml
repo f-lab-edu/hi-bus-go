@@ -9,18 +9,18 @@
     </resultMap>
 
     <select id="findById" resultMap="regionResultMap">
-        SELECT id
-            , name
-            , status
+        SELECT id,
+            name,
+            status
         FROM REGION
         WHERE id = #{id}
         AND status != 'DELETE'
     </select>
 
     <select id="searchByName" resultMap="regionResultMap" resultType="java.util.ArrayList">
-        SELECT id
-            , name
-            , status
+        SELECT id,
+            name,
+            status
         FROM REGION
         WHERE name Like '%' || #{name} || '%'
         AND status != 'DELETE'
