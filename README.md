@@ -36,3 +36,8 @@ Git Flow를 사용하여 branch를 관리
 
 > #### 브렌치 관리 전략 참고 문헌
 + https://riptutorial.com/ko/git/example/4182/gitflow-%EC%9B%8C%ED%81%AC-%ED%94%8C%EB%A1%9C%EC%9A%B0
+
+### ERD
+읽기 전용 url(비밀번호 5ez653)
+https://aquerytool.com:443/aquerymain/index/?rurl=70475dc0-1cb5-4573-a864-93e68f4ddcaa
+![hi-bus-go_20200804_02_33](https://user-images.githubusercontent.com/29122916/89303063-a044cc80-d6a6-11ea-94aa-513058258af7.png)
