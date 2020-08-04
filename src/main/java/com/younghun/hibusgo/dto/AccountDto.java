@@ -1,6 +1,7 @@
 package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.Account;
+import com.younghun.hibusgo.domain.Account.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,6 +44,9 @@ public class AccountDto {
     @Pattern(regexp = "^(01[1|6|7|8|9|0])-(\\d{3,4})-(\\d{4})$")
     private String phoneNumber;
 
+    // 상태 DEFAULT(기본), DELETED(삭제됨)
+    private Status status;
+
     public Account toEntity() {
         return Account.builder()
                 .id(this.id)
@@ -50,6 +54,7 @@ public class AccountDto {
                 .name(this.name)
                 .email(this.email)
                 .phoneNumber(this.phoneNumber)
+                .status(this.status)
                 .build();
     }
 

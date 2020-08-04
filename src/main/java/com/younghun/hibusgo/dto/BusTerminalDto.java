@@ -1,9 +1,13 @@
 package com.younghun.hibusgo.dto;
 
+import com.younghun.hibusgo.domain.BusTerminal;
+import com.younghun.hibusgo.domain.BusTerminal.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class BusTerminalDto {
 
@@ -12,4 +16,15 @@ public class BusTerminalDto {
 
     //지역 이름
     private final String region;
+
+    // 버스 미널 상태 DEFAULT(기본), DELETED(삭제됨)
+    private Status status;
+
+    public BusTerminal toEntity() {
+        return BusTerminal.builder()
+            .name(this.name)
+            .region(this.region)
+            .status(this.status)
+            .build();
+    }
 }
