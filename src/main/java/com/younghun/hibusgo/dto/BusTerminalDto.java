@@ -4,7 +4,6 @@ import com.younghun.hibusgo.domain.BusTerminal;
 import com.younghun.hibusgo.domain.BusTerminal.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
