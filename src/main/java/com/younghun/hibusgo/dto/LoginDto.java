@@ -13,8 +13,8 @@ import lombok.Setter;
 public class LoginDto {
 
     @NotBlank
-    private final String id;
+    private String id;
 
     @NotBlank
-    private final String password;
+    private String password;
 }

@@ -18,15 +18,15 @@ public class ProfileDto {
   @NotBlank
   @Length(min = 3, max = 20)
   @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9_-]{3,20}$")
-  private final String name;
+  private String name;
 
   // 이메일
   @Email
-  private final String email;
+  private String email;
 
   // 핸드폰 번호
   @Pattern(regexp = "^(01[1|6|7|8|9|0])-(\\d{3,4})-(\\d{4})$")
-  private final String phoneNumber;
+  private String phoneNumber;
 
   public Account toEntity() {
     return Account.builder()

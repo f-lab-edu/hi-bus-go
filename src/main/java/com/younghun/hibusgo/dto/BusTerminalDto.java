@@ -12,10 +12,10 @@ import lombok.Setter;
 public class BusTerminalDto {
 
     //터미널 이름
-    private final String name;
+    private String name;
 
     //지역 이름
-    private final String region;
+    private String region;
 
     // 버스 미널 상태 DEFAULT(기본), DELETED(삭제됨)
     private Status status;
