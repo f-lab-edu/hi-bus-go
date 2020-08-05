@@ -12,8 +12,13 @@ import lombok.ToString;
 @Builder
 @ToString
 public class Account {
+
     public enum Status {
-        DEFAULT, DELETED
+        // 기본
+        DEFAULT,
+
+        // 삭제됨
+        DELETED
     }
 
     private String id;
@@ -26,7 +31,7 @@ public class Account {
 
     private String phoneNumber;
 
-    // 상태
+    // 회원 상태 DEFAULT(기본), DELETED(삭제됨)
     private Status status;
 
     // 회원가입일

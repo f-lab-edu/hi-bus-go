@@ -8,7 +8,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.stereotype.Component;
 
 /**
- * @EnableRedisHttpSession : Filter를 구현한 springSessionRepositoryFilter라는 이름의 스프링 빈을 만들어준다.
+ * EnableRedisHttpSession : Filter를 구현한 springSessionRepositoryFilter라는 이름의 스프링 빈을 만들어준다.
  * 이 필터는 HttpSession 구현체를 Spring Session 으로 교체하는 역할을 하고, 이 Spring Session은 Redis에 저장된다.
  *
  * session에 저장되는 정보를 redis에 저장한다. 클라이언트의 세션 쿠키값은 따로 설정하지 않으면 session이라는 key값으로 생성된다.
@@ -30,6 +30,7 @@ public class LoginUtil implements LoginService {
 
   /**
    * 계정 로그인 메소드
+   * @author 조영훈
    * @param accountId
    * 계정 로그인 id를 세션으로 등록
    */
@@ -40,6 +41,7 @@ public class LoginUtil implements LoginService {
 
   /**
    * 계정 로그아웃 메소드
+   * @author 조영훈
    * 계정 로그인 id 세션 정보 삭제
    */
   @Override
@@ -49,6 +51,7 @@ public class LoginUtil implements LoginService {
 
   /**
    * 로그인 여부 확인 메소드
+   * @author 조영훈
    * @return boolean
    */
   @Override
@@ -59,7 +62,12 @@ public class LoginUtil implements LoginService {
 
   /**
    * 로그인된 사용자 정보 가져오는 메소드
-   * @return Account
+   * @author 조영훈
+   * 세션에서 사용자 정보를 가져온다.
+   * 사용자 정보가 존재할 경우 String 변환후 return.
+   * 사용자 정보가 존재하지 않을시, Optional return.
+   *
+   * @return Optional<String>
    */
   @Override
   public Optional<String> getLoginAccountId() {
