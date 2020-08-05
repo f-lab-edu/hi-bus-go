@@ -54,7 +54,7 @@ public class LoginController {
 
     /**
      * 유저 로그인 메서드
-     * @author 조영훈
+     *
      * login 요청시 id, password로 유저가 있는지 조회
      * 아이디가 있으면 해당 유저 세션 등록
      *
@@ -80,7 +80,7 @@ public class LoginController {
 
     /**
      * 회원 로그아웃 메소드
-     * @author 조영훈
+     *
      * @return ResponseEntity(성공시 200 code)
      */
     @LoginCheck

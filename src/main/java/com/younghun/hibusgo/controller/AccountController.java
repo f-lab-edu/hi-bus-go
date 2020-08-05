@@ -43,7 +43,7 @@ public class AccountController {
 
     /**
      * accountDto객체에 바인딩된 값을 검증
-     * @author 조영훈
+     *
      * InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용한다.
      * @param webDataBinder requestBody에 있는 값을 특정 객체로 바인딩
      */
@@ -54,7 +54,7 @@ public class AccountController {
 
     /**
      * passwordDto객체에 바인딩 된 값을 검증
-     * @author 조영훈
+     *
      * @param webDataBinder requestBody에 있는 값을 특정 객체로 바인딩
      */
     @InitBinder("passwordDto")
@@ -64,7 +64,7 @@ public class AccountController {
 
     /**
      * 회원 가입 메소드
-     * @author 조영훈
+     *
      * 회원 가입 성공시 201(Created) code return.
      * 객체 valitaion 실패시 에러 정보와 400(Bad Request) code return.
      *
@@ -86,7 +86,7 @@ public class AccountController {
 
     /**
      * 회원 탈퇴 메소드
-     * @author 조영훈
+     *
      * @param loginId 로그인된 사용자 아이디
      * @return ResponseEntity(성공시 204 code)
      */
@@ -101,7 +101,7 @@ public class AccountController {
 
     /**
      * 회원 비밀번호 수정 메소드
-     * @author 조영훈
+     *
      * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
      * 객체 validation 실패시 에러정보와 400(Bad Request) code return.
      *
@@ -124,7 +124,7 @@ public class AccountController {
 
     /**
      * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
-     * @author 조영훈
+     *
      * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
      * 객체 validation 실패시 에러 정보와 400(Bad Request) code return.
      *

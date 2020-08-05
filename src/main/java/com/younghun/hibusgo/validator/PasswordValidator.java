@@ -21,7 +21,7 @@ public class PasswordValidator implements Validator {
 
   /**
    * 비밀번호 검증 메소드
-   * @author 조영훈
+   *
    * 새 패스워드, 새 패스워드 확인이 같은지 검증한다.
    * 입력한 두 패스워드가 다르다면 에러 정보를 넣는다.
    *

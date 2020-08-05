@@ -30,7 +30,7 @@ public class LoginUtil implements LoginService {
 
   /**
    * 계정 로그인 메소드
-   * @author 조영훈
+   *
    * @param accountId
    * 계정 로그인 id를 세션으로 등록
    */
@@ -41,7 +41,7 @@ public class LoginUtil implements LoginService {
 
   /**
    * 계정 로그아웃 메소드
-   * @author 조영훈
+   *
    * 계정 로그인 id 세션 정보 삭제
    */
   @Override
@@ -51,7 +51,7 @@ public class LoginUtil implements LoginService {
 
   /**
    * 로그인 여부 확인 메소드
-   * @author 조영훈
+   *
    * @return boolean
    */
   @Override
@@ -62,7 +62,7 @@ public class LoginUtil implements LoginService {
 
   /**
    * 로그인된 사용자 정보 가져오는 메소드
-   * @author 조영훈
+   *
    * 세션에서 사용자 정보를 가져온다.
    * 사용자 정보가 존재할 경우 String 변환후 return.
    * 사용자 정보가 존재하지 않을시, Optional return.

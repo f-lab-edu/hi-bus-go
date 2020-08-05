@@ -23,7 +23,7 @@ public class SessionIdResolver implements HandlerMethodArgumentResolver {
 
   /**
    * SessionId 어노테이션 파라미터로 등록하는 메소드
-   * @author 조영훈
+   *
    * @param parameter
    * @return boolean
    */
@@ -34,7 +34,7 @@ public class SessionIdResolver implements HandlerMethodArgumentResolver {
 
   /**
    * SessionId 어노테이션 파라미터에 사용시, 사용자의 아이디를 리턴하는 메소드
-   * @author 조영훈
+   *
    * @return Object(사용자의 아이디)
    */
   @Override

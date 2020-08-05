@@ -27,7 +27,7 @@ public class AccountDtoValidator implements Validator {
 
     /**
      * 회원 AccountDto 검증 메소드
-     * @author 조영훈
+     *
      * 회원 아이디가 이미 존재하는지 확인한다.
      *
      * @param object 검증 대상

@@ -23,7 +23,7 @@ public class BusTerminalController {
 
   /**
    * 터미널 조회 메소드
-   * @author 조영훈
+   *
    * 값이 있으면 ResponseEntity Body에 busTerminal return.
    * 조회후 값이 없으면 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
    *
