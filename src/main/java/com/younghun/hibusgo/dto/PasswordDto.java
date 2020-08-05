@@ -2,10 +2,14 @@ package com.younghun.hibusgo.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
+@Builder
+@AllArgsConstructor
 public class PasswordDto {
 
   // 패스워드

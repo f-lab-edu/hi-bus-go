@@ -2,6 +2,8 @@ package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.domain.Account.Status;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
@@ -11,6 +13,8 @@ import javax.validation.constraints.Pattern;
 
 // 유저 생성시 유효성 검사를 위한 class
 @Getter
+@Builder
+@AllArgsConstructor
 public class AccountDto {
 
     // 아이디

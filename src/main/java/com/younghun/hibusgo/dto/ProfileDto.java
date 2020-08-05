@@ -4,10 +4,14 @@ import com.younghun.hibusgo.domain.Account;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 @Getter
+@Builder
+@AllArgsConstructor
 public class ProfileDto {
 
   // 이름
