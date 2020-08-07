@@ -1,17 +1,18 @@
 package com.younghun.hibusgo.dto;
 
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class LoginDto {
 
     @NotBlank
-    private final String id;
+    private String id;
+
     @NotBlank
-    private final String password;
+    private String password;
 }
