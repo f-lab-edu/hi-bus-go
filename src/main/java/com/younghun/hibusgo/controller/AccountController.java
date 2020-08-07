@@ -60,7 +60,6 @@ public class AccountController {
      * 회원 가입 메서드.
      * 객체 validation 후 error가 있으면 400(Bad Request) code return
      * insert 성공시 성공시 201(Created) code return
-     *
      * @param accountDto 저장할 회원의 정보
      */
     @PostMapping("/signUp")
@@ -79,7 +78,6 @@ public class AccountController {
      * 회원 탈퇴 메서드
      * @return 실제 회원 데이터는 삭제 하지않고 회원 상태를 DELETED로 변경시
      * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return
-     *
      * 탈퇴시 로그인 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
      */
     @LoginCheck
@@ -115,7 +113,7 @@ public class AccountController {
     /**
      * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
      * @param ProfileDto 프로필 정보
-     * @param errors 에러 정
+     * @param errors 에러 정보
      * @return ResponseEntity<?>
      */
     @LoginCheck
