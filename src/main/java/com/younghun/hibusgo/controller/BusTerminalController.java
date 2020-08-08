@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/terminal")
+@RequestMapping("/terminals")
 @RequiredArgsConstructor
 @Log4j2
 public class BusTerminalController {
@@ -23,11 +23,11 @@ public class BusTerminalController {
 
   /**
    * 터미널 조회 메서드
-   * 조회후 값이 없으면 컨텐츠를 리턴하지 않음을 의미하는 204 code return
+   * 조회후 값이 없으면 404 code return
    * 값이 있으면 ResponseEntity Body에 busTerminal return
    * @param region 지역 이름
    * @param name 터미널 이름
-   * @return
+   * @return ResponseEntity
    */
   @GetMapping("/{region}/{name}")
   public ResponseEntity<?> getBusTerminal(@PathVariable String region, @PathVariable String name) {
