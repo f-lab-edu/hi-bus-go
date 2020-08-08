@@ -1,10 +1,9 @@
 package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.Account;
-import lombok.AllArgsConstructor;
+import com.younghun.hibusgo.domain.Account.Status;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -13,9 +12,7 @@ import javax.validation.constraints.Pattern;
 
 // 유저 생성시 유효성 검사를 위한 class
 @Getter
-@Setter
 @Builder
-@AllArgsConstructor
 public class AccountDto {
 
     // 아이디
@@ -43,6 +40,9 @@ public class AccountDto {
     @Pattern(regexp = "^(01[1|6|7|8|9|0])-(\\d{3,4})-(\\d{4})$")
     private String phoneNumber;
 
+    // 상태 DEFAULT(기본), DELETED(삭제됨)
+    private Status status;
+
     public Account toEntity() {
         return Account.builder()
                 .id(this.id)
@@ -50,6 +50,7 @@ public class AccountDto {
                 .name(this.name)
                 .email(this.email)
                 .phoneNumber(this.phoneNumber)
+                .status(this.status)
                 .build();
     }
 
