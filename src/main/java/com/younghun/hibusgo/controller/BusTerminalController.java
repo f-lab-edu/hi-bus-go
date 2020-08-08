@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/terminal")
+@RequestMapping("/terminals")
 @RequiredArgsConstructor
 @Log4j2
 public class BusTerminalController {
