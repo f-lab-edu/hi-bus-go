@@ -12,7 +12,11 @@ import lombok.ToString;
 public class Account {
 
     public enum Status {
-        DEFAULT, DELETED
+        // 기본
+        DEFAULT,
+
+        // 삭제됨
+        DELETED
     }
 
     //아이디
@@ -30,7 +34,7 @@ public class Account {
     //휴대폰 번호
     private String phoneNumber;
 
-    // 상태 DEFAULT(기본), DELETED(삭제됨)
+    // 회원 상태 DEFAULT(기본), DELETED(삭제됨)
     private Status status;
 
     // 회원가입일

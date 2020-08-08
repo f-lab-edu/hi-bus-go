@@ -42,8 +42,8 @@ import javax.validation.constraints.NotNull;
  *  - 각 계층별로 구분 역할이 구분 되어 흐름 및 로직 파악에 좋다.
 *
  * - session 처리
- * servlet container가 httpsession을 이용해 session울 생성하고 관리
- * presentation laeyr에는 servlet container와 controller가 포함 되어 있다
+ * servlet container가 httpsession을 이용해 session울 생성하고 관리한다.
+ * presentation laeyr에는 servlet container와 controller가 포함 되어 있다.
  * 계층적 관점에서 세션 처리를 presentaion layer중 하나인 controller에서 처리 해야 한다.
  */
 @RestController
@@ -55,9 +55,10 @@ public class LoginController {
     private final LoginService loginService;
 
     /**
-     *  - 유저 로그인 메서드
-     *  login 요청시 id, password로 유저가 있는지 조회
-     *  아이디가 있으면 해당 유저 세션 등록
+     * 유저 로그인 메서드
+     *
+     * login 요청시 id, password로 유저가 있는지 조회
+     * 아이디가 있으면 해당 유저 세션 등록
      *
      * @param loginDto
      * @return 로그인 성공시 200 code return
@@ -80,9 +81,9 @@ public class LoginController {
     }
 
     /**
-     * 회원 로그아웃 메서드.
-     * @return 로그인 하지 않았을 시 사용자의 권한이 없음을 의미하는 401 code return
-     * 로그아웃 성공시 200 code 반환
+     * 회원 로그아웃 메소드
+     *
+     * @return ResponseEntity(성공시 200 code)
      */
     @LoginCheck
     @PostMapping("/logout")

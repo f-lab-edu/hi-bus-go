@@ -42,8 +42,9 @@ public class AccountController {
     private final PasswordValidator passwordValidator;
 
     /**
-     * - InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용
-     *  accountDto로 객체에만 바인딩 또는 Validator 설정 적
+     * accountDto객체에 바인딩된 값을 검증
+     *
+     * InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용한다.
      * @param webDataBinder requestBody에 있는 값을 특정 객체로 바인딩
      */
     @InitBinder("accountDto")
@@ -51,16 +52,25 @@ public class AccountController {
         webDataBinder.addValidators(accountDtoValidator);
     }
 
+    /**
+     * passwordDto객체에 바인딩 된 값을 검증
+     *
+     * @param webDataBinder requestBody에 있는 값을 특정 객체로 바인딩
+     */
     @InitBinder("passwordDto")
     public void passwordInitBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(passwordValidator);
     }
 
     /**
-     * 회원 가입 메서드.
-     * 객체 validation 후 error가 있으면 400(Bad Request) code return
-     * insert 성공시 성공시 201(Created) code return
+     * 회원 가입 메소드
+     *
+     * 회원 가입 성공시 201(Created) code return.
+     * 객체 valitaion 실패시 에러 정보와 400(Bad Request) code return.
+     *
      * @param accountDto 저장할 회원의 정보
+     * @param errors 객체 validation 에러 정보
+     * @return ResponseEntity(성공시 201 code, 실패시 400 code)
      */
     @PostMapping("/signUp")
     public ResponseEntity<?> addAccount(@RequestBody @Valid AccountDto accountDto, Errors errors) {
@@ -75,10 +85,10 @@ public class AccountController {
     }
 
     /**
-     * 회원 탈퇴 메서드
-     * @return 실제 회원 데이터는 삭제 하지않고 회원 상태를 DELETED로 변경시
-     * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return
-     * 탈퇴시 로그인 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
+     * 회원 탈퇴 메소드
+     *
+     * @param loginId 로그인된 사용자 아이디
+     * @return ResponseEntity(성공시 204 code)
      */
     @LoginCheck
     @DeleteMapping("/myInfo")
@@ -90,13 +100,15 @@ public class AccountController {
     }
 
     /**
-     * 회원 비밀번호 수정 메서드
-     * @return 회원 비밀번 수정 성공시
-     * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return
-     * 객체 validation 후 error가 있으면 400(Bad Request) code return
-     * 수정시 로그인한 사용자가 인증이 실패한다면 인증된 상태가 않음을 의미하는  401 code return
+     * 회원 비밀번호 수정 메소드
      *
-     * @param passwordDto 수정할 회원의 비밀번호
+     * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
+     * 객체 validation 실패시 에러정보와 400(Bad Request) code return.
+     *
+     * @param loginId 로그인한 사용자 아이디
+     * @param passwordDto 이전 패스워드, 새로운 패스워드
+     * @param errors 패스워드 validation 에러 정보
+     * @return ResponseEntity(성공시 201 code, 실패시 2004 code)
      */
     @LoginCheck
     @PatchMapping("/password/{loginId}")
@@ -112,10 +124,14 @@ public class AccountController {
 
     /**
      * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
+     *
+     * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
+     * 객체 validation 실패시 에러 정보와 400(Bad Request) code return.
+     *
      * @param ProfileDto 프로필 정보
      * @param errors 에러 정보
-     * @return ResponseEntity<?>
-     */
+     * @return ResponseEntity(성공시 204 code, 실패시 400 code)
+     * */
     @LoginCheck
     @PatchMapping("/myInfo")
     public ResponseEntity<?> updateAccountInfo(@RequestBody @Valid ProfileDto ProfileDto, Errors errors) {

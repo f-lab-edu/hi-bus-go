@@ -22,12 +22,14 @@ public class BusTerminalController {
   private final BusTerminalService busTerminalService;
 
   /**
-   * 터미널 조회 메서드
-   * 조회후 값이 없으면 404 code return
-   * 값이 있으면 ResponseEntity Body에 busTerminal return
+   * 터미널 조회 메소드
+   *
+   * 값이 있으면 ResponseEntity Body에 busTerminal return.
+   * 조회후 값이 없으면 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
+   *
    * @param region 지역 이름
    * @param name 터미널 이름
-   * @return ResponseEntity
+   * @return ResponseEntity(성공시 204 code, 실패시 204 code)
    */
   @GetMapping("/{region}/{name}")
   public ResponseEntity<?> getBusTerminal(@PathVariable String region, @PathVariable String name) {

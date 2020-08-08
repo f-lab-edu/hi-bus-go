@@ -11,7 +11,11 @@ import lombok.ToString;
 public class BusTerminal {
 
     public enum Status {
-        DEFAULT, DELETED
+        // 기본
+        DEFAULT,
+
+        // 삭제됨
+        DELETED
     }
 
     //아이디
@@ -29,6 +33,6 @@ public class BusTerminal {
     //지약
     private String region;
 
-    // 버스 미널 상태 DEFAULT(기본), DELETED(삭제됨)
+    // 버스 터미널 상태 DEFAULT(기본), DELETED(삭제됨)
     private Status status;
 }
