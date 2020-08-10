@@ -7,6 +7,7 @@ import com.younghun.hibusgo.mapper.AccountMapper;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 
     private final AccountMapper accountMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public Account findById(String id) {
         return accountMapper.findById(id);
     }
 
     public void addAccount(Account account) {
+        account.encodePassword(passwordEncoder);
         accountMapper.addAccount(account);
     }
 
@@ -30,7 +33,8 @@ public class AccountService {
     }
 
     public Optional<Account> findByIdAndPassword(String accountId, String password) {
-         return Optional.ofNullable(accountMapper.findByIdAndPassword(accountId, password))
+        String encodePassword = passwordEncoder.encode(password);
+         return Optional.ofNullable(accountMapper.findByIdAndPassword(accountId, encodePassword))
              .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
@@ -39,7 +43,8 @@ public class AccountService {
     }
 
     public void updatePassword(String accountId, String newPassword) {
-        accountMapper.updatePassword(accountId, newPassword);
+        String encodePassword = passwordEncoder.encode(newPassword);
+        accountMapper.updatePassword(accountId, encodePassword);
     }
 
     public void updateAccountInfo(Account account) {
