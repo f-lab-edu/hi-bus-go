@@ -44,7 +44,7 @@ public class Account {
     // 최종 수정일
     private LocalDateTime updatedAt;
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
+    public void setEncodePassword(String encodePassword) {
+        this.password = encodePassword;
     }
 }

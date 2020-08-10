@@ -24,7 +24,8 @@ public class AccountService {
     }
 
     public void addAccount(Account account) {
-        account.encodePassword(passwordEncoder);
+        String encodePassword = account.getPassword();
+        account.setEncodePassword(encodePassword);
         accountMapper.addAccount(account);
     }
 
