@@ -70,7 +70,7 @@
         UPDATE ACCOUNT
         SET password = #{password}
         AND updated_at = NOW()
-        WHERE user_id = #{loginId}
+        WHERE id = #{accountId}
         AND status != 'DELETE'
     </update>
 
