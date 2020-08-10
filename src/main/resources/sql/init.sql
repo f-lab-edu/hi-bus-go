@@ -14,8 +14,11 @@ create table account
 )
     comment '회원';
 
-create index account_id_name_phone_number_email_index
-    on account (id, name, phone_number, email);
+create index account_id_password_index
+    on account (id, password);
+
+create index account_id_user_id_name_phone_number_email_index
+    on account (id, user_id, name, phone_number, email);
 
 create table region
 (
