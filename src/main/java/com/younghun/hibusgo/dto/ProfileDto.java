@@ -12,6 +12,10 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 public class ProfileDto {
 
+  // 사용자 아이디
+  @NotBlank
+  private String userId;
+
   // 이름
   @NotBlank
   @Length(min = 3, max = 20)
@@ -28,6 +32,7 @@ public class ProfileDto {
 
   public Account toEntity() {
     return Account.builder()
+        .userId(this.userId)
         .name(this.name)
         .email(this.email)
         .phoneNumber(this.phoneNumber)

@@ -6,17 +6,17 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AccountMapper {
 
-    Account findById(String id);
+    Account findById(Long id);
 
     void addAccount(Account account);
 
-    boolean existsById(String id);
+    boolean existsByUserId(String id);
 
-    Account findByIdAndPassword(String id, String password);
+    Account findByUserIdAndPassword(String userId, String password);
 
-    void deleteAccount(String id);
+    void deleteAccount(Long id);
 
-    void updatePassword(String id, String password);
+    void updatePassword(String userId, String password);
 
     void updateAccountInfo(Account account);
 }

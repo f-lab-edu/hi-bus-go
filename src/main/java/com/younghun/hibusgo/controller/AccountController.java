@@ -87,13 +87,13 @@ public class AccountController {
     /**
      * 회원 탈퇴 메소드
      *
-     * @param loginId 로그인된 사용자 아이디
+     * @param accountId 로그인된 사용자 id
      * @return ResponseEntity(성공시 204 code)
      */
     @LoginCheck
     @DeleteMapping("/myInfo")
-    public ResponseEntity<?> deleteAccount(@SessionId String loginId) {
-        accountService.deleteAccount(loginId);
+    public ResponseEntity<?> deleteAccount(@SessionId Long accountId) {
+        accountService.deleteAccount(accountId);
         loginService.accountLogout();
 
         return RESPONSE_ENTITY_NO_CONTENT;
@@ -105,19 +105,19 @@ public class AccountController {
      * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
      * 객체 validation 실패시 에러정보와 400(Bad Request) code return.
      *
-     * @param loginId 로그인한 사용자 아이디
+     * @param userId 로그인한 사용자 아이디
      * @param passwordDto 이전 패스워드, 새로운 패스워드
      * @param errors 패스워드 validation 에러 정보
-     * @return ResponseEntity(성공시 201 code, 실패시 2004 code)
+     * @return ResponseEntity(성공시 201 code, 실패시 204 code)
      */
     @LoginCheck
-    @PatchMapping("/password/{loginId}")
-    public ResponseEntity<?> updatePassword(@PathVariable String loginId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
+    @PatchMapping("/password/{userId}")
+    public ResponseEntity<?> updatePassword(@PathVariable String userId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors());
         }
 
-        accountService.updatePassword(loginId, passwordDto.getNewPassword());
+        accountService.updatePassword(userId, passwordDto.getNewPassword());
 
         return RESPONSE_ENTITY_NO_CONTENT;
     }
