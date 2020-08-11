@@ -17,7 +17,7 @@ public class AccountService {
 
     private final AccountMapper accountMapper;
 
-    public Account findById(Long id) {
+    public Account findById(long id) {
         return accountMapper.findById(id);
     }
 
@@ -34,11 +34,11 @@ public class AccountService {
              .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
-    public void deleteAccount(Long id) {
+    public void deleteAccount(long id) {
         accountMapper.deleteAccount(id);
     }
 
-    public void updatePassword(Long accountId, String newPassword) {
+    public void updatePassword(long accountId, String newPassword) {
         accountMapper.updatePassword(accountId, newPassword);
     }
 

@@ -111,7 +111,7 @@ public class AccountController {
      * @return ResponseEntity(성공시 201 code, 실패시 204 code)
      */
     @LoginCheck
-    @PatchMapping("/password")
+    @PatchMapping("/myInfo/password")
     public ResponseEntity<?> updatePassword(@SessionId Long accountId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors());
