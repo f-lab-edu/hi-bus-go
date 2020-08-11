@@ -2,7 +2,7 @@ create table account
 (
     id           bigint auto_increment comment '아이디'
         primary key,
-    user_id      varchar(100) not null comment '회원 아이디(이메일)',
+    user_id      varchar(255) not null comment '회원 아이디(이메일)',
     password     varchar(30)  not null comment '패스워드',
     name         varchar(60)  not null comment '이름',
     phone_number varchar(20)  not null comment '휴대폰번호',
