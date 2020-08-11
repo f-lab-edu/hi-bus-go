@@ -15,8 +15,8 @@ create table account
 )
     comment '회원';
 
-create index account_id_user_id_name_index
-    on account (id, user_id, name);
+create index account_id_name_index
+    on account (id, name);
 
 create table region
 (
