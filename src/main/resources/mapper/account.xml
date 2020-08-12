@@ -7,7 +7,6 @@
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
-        <result property="email" column="email"/>
         <result property="phoneNumber" column="phone_number"/>
         <result property="userLevel" column="user_level"/>
         <result property="status" column="status"/>
@@ -21,7 +20,6 @@
             , user_id
             , password
             , name
-            , email
             , phone_number
             , user_level
             , status
@@ -36,7 +34,6 @@
             , user_id
             , password
             , name
-            , email
             , phone_number
             , user_level
             , status
@@ -44,19 +41,19 @@
             , updated_at
         FROM ACCOUNT
         WHERE user_id = #{userId}
-        and password = #{password}
+        AND password = #{password}
     </select>
 
     <select id="existsByUserId" resultType="boolean">
-            SELECT 1
-            FROM ACCOUNT
-            WHERE user_id = #{userId}
-            AND status != 'DELETE'
+        SELECT 1
+        FROM ACCOUNT
+        WHERE user_id = #{userId}
+        AND status != 'DELETE'
     </select>
 
     <insert id="addAccount" parameterType="com.younghun.hibusgo.mapper.AccountMapper">
-        INSERT INTO ACCOUNT(user_id, password, name, email, phone_number, user_level, status, created_at)
-        VALUES(#{userId}, #{password}, #{name}, #{email}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt})
+        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at)
+        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt})
     </insert>
 
     <update id="deleteAccount">
@@ -77,8 +74,7 @@
     <update id="updateAccountInfo">
         UPDATE ACCOUNT
         SET name = #{name}
-        AND email = #{email}
-        AND phone_number = #{phone_number}
+        AND phone_number = #{phoneNumber}
         AND updated_at = NOW()
         WHERE user_id = #{userId}
         AND status != 'DELETE'

@@ -28,9 +28,9 @@ public class Account {
     }
 
     // 아이디(pk)
-   private long id;
+    private long id;
 
-    // 회원 아이디
+    // 회원 아이디(이메일)
     private String userId;
 
     //비밀번호
@@ -38,9 +38,6 @@ public class Account {
 
     //이름
     private String name;
-
-    //이메일
-    private String email;
 
     //휴대폰 번호
     private String phoneNumber;

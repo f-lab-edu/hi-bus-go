@@ -123,7 +123,7 @@ public class AccountController {
     }
 
     /**
-     * 회원 정보(이름, 이메일, 폰번호) 수정 메소드
+     * 회원 정보(이름, 폰번호) 수정 메소드
      *
      * 서버가 요청을 성공적으로 처리했지만 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
      * 객체 validation 실패시 에러 정보와 400(Bad Request) code return.
