@@ -25,15 +25,7 @@ public class AccountService {
 
     public void addAccount(Account account) {
         String encodePassword = account.getPassword();
-
-        Account newAccount = Account.builder()
-            .password(encodePassword)
-            .name(account.getName())
-            .email(account.getEmail())
-            .phoneNumber(account.getPhoneNumber())
-            .status(account.getStatus())
-            .build();
-
+        Account newAccount = account.passwordEncodedAccount(account, encodePassword);
         accountMapper.addAccount(newAccount);
     }
 

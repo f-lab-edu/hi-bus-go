@@ -43,4 +43,14 @@ public class Account {
     // 최종 수정일
     private LocalDateTime updatedAt;
 
+    public Account passwordEncodedAccount(Account account, String encodePassword) {
+        return Account.builder()
+            .password(encodePassword)
+            .name(account.getName())
+            .email(account.getEmail())
+            .phoneNumber(account.getPhoneNumber())
+            .status(account.getStatus())
+            .build();
+    }
+
 }
