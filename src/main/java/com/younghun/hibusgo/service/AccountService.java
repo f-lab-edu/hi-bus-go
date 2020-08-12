@@ -25,8 +25,12 @@ public class AccountService {
 
     public void addAccount(Account account) {
         String encodePassword = passwordEncoder.encode(account.getPassword());
-        Account newAccount = account.passwordEncodedAccount(encodePassword);
-        accountMapper.addAccount(newAccount);
+        String rawPassword = account.getPassword();
+
+        if (passwordEncoder.matches(rawPassword, encodePassword)) {
+            Account newAccount = account.passwordEncodedAccount(encodePassword);
+            accountMapper.addAccount(newAccount);
+        }
     }
 
     public boolean existsById(String id) {
