@@ -4,10 +4,11 @@
 
     <resultMap id="accountResultMap" type="com.younghun.hibusgo.domain.Account">
         <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
-        <result property="email" column="email"/>
         <result property="phoneNumber" column="phone_number"/>
+        <result property="userLevel" column="user_level"/>
         <result property="status" column="status"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
@@ -16,10 +17,11 @@
 
     <select id="findById" resultMap="accountResultMap">
         SELECT id
+            , user_id
             , password
             , name
-            , email
             , phone_number
+            , user_level
             , status
             , created_at
             , updated_at
@@ -27,28 +29,31 @@
         WHERE id = #{id}
     </select>
 
-    <select id="findByIdAndPassword" resultMap="accountResultMap">
+    <select id="findByUserIdAndPassword" resultMap="accountResultMap">
         SELECT id
+            , user_id
             , password
             , name
-            , email
             , phone_number
+            , user_level
             , status
             , created_at
             , updated_at
         FROM ACCOUNT
-        WHERE id = #{id} and password = #{password}
+        WHERE user_id = #{userId}
+        AND password = #{password}
     </select>
 
-    <select id="existsById" resultType="boolean">
-            SELECT 1
-            FROM ACCOUNT
-            WHERE id = #{id}
+    <select id="existsByUserId" resultType="boolean">
+        SELECT 1
+        FROM ACCOUNT
+        WHERE user_id = #{userId}
+        AND status != 'DELETE'
     </select>
 
     <insert id="addAccount" parameterType="com.younghun.hibusgo.mapper.AccountMapper">
-        INSERT INTO ACCOUNT(id, password, name, email, phone_number, created_at)
-        VALUES(#{id}, #{password}, #{name}, #{email}, #{phoneNumber}, #{createdAt})
+        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at)
+        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt})
     </insert>
 
     <update id="deleteAccount">
@@ -62,17 +67,16 @@
         UPDATE ACCOUNT
         SET password = #{password}
         AND updated_at = NOW()
-        WHERE id = #{id}
+        WHERE id = #{accountId}
         AND status != 'DELETE'
     </update>
 
     <update id="updateAccountInfo">
         UPDATE ACCOUNT
         SET name = #{name}
-        AND email = #{email}
-        AND phone_number = #{phone_number}
+        AND phone_number = #{phoneNumber}
         AND updated_at = NOW()
-        WHERE id = #{id}
+        WHERE user_id = #{userId}
         AND status != 'DELETE'
     </update>
 

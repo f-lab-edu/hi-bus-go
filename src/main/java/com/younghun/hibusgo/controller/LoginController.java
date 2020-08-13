@@ -66,10 +66,10 @@ public class LoginController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @NotNull LoginDto loginDto) {
-        String accountId = loginDto.getId();
+        String userId = loginDto.getUserId();
         String password = loginDto.getPassword();
 
-        Optional<Account> account = accountService.findByIdAndPassword(accountId, password);
+        Optional<Account> account = accountService.findByUserIdAndPassword(userId, password);
 
         if (!account.isPresent()) {
             return RESPONSE_NOT_FOUND;

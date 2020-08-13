@@ -17,7 +17,7 @@ public class AccountService {
 
     private final AccountMapper accountMapper;
 
-    public Account findById(String id) {
+    public Account findById(long id) {
         return accountMapper.findById(id);
     }
 
@@ -25,20 +25,20 @@ public class AccountService {
         accountMapper.addAccount(account);
     }
 
-    public boolean existsById(String id) {
-        return accountMapper.existsById(id);
+    public boolean existsByUserId(String id) {
+        return accountMapper.existsByUserId(id);
     }
 
-    public Optional<Account> findByIdAndPassword(String accountId, String password) {
-         return Optional.ofNullable(accountMapper.findByIdAndPassword(accountId, password))
+    public Optional<Account> findByUserIdAndPassword(String userId, String password) {
+         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, password))
              .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
-    public void deleteAccount(String id) {
+    public void deleteAccount(long id) {
         accountMapper.deleteAccount(id);
     }
 
-    public void updatePassword(String accountId, String newPassword) {
+    public void updatePassword(long accountId, String newPassword) {
         accountMapper.updatePassword(accountId, newPassword);
     }
 
