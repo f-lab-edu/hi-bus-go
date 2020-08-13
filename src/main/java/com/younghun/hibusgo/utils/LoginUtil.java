@@ -32,17 +32,17 @@ public class LoginUtil implements LoginService {
    * 계정 로그인 메소드
    *
    * @param accountId
-   * 계정 로그인 id를 세션으로 등록
+   * 계정 id를 세션으로 등록
    */
   @Override
-  public void accountLogin(String accountId) {
+  public void accountLogin(Long accountId) {
     session.setAttribute(ACCOUNT_MEMBER_ID, accountId);
   }
 
   /**
    * 계정 로그아웃 메소드
    *
-   * 계정 로그인 id 세션 정보 삭제
+   * 계정 id 세션 정보 삭제
    */
   @Override
   public void accountLogout() {
@@ -56,7 +56,7 @@ public class LoginUtil implements LoginService {
    */
   @Override
   public boolean isLoginAccount() {
-    String accountId = (String) session.getAttribute(ACCOUNT_MEMBER_ID);
+    Long accountId = (Long) session.getAttribute(ACCOUNT_MEMBER_ID);
     return accountId != null ? true : false;
   }
 
@@ -67,11 +67,12 @@ public class LoginUtil implements LoginService {
    * 사용자 정보가 존재할 경우 String 변환후 return.
    * 사용자 정보가 존재하지 않을시, Optional return.
    *
-   * @return Optional<String>
+   * @return Optional<Long>
    */
   @Override
-  public Optional<String> getLoginAccountId() {
+  public Optional<Long> getLoginAccountId() {
     return Optional.ofNullable(session.getAttribute(ACCOUNT_MEMBER_ID))
-        .map(String::valueOf);
+        .map(String::valueOf).map(Long::valueOf);
+
   }
 }

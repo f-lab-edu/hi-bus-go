@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  *  SessionId annotion
- *  현재 로그인한 사용자의 아이디를 세션에서 불러온다.
+ *  현재 로그인한 사용자의 id를 세션에서 불러온다.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

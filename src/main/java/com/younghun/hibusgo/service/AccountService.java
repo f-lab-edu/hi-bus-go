@@ -19,7 +19,7 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public Account findById(String id) {
+    public Account findById(long id) {
         return accountMapper.findById(id);
     }
 
@@ -33,23 +33,21 @@ public class AccountService {
         }
     }
 
-    public boolean existsById(String id) {
-        return accountMapper.existsById(id);
+    public boolean existsByUserId(String id) {
+        return accountMapper.existsByUserId(id);
     }
 
-    public Optional<Account> findByIdAndPassword(String accountId, String password) {
-        String encodePassword = passwordEncoder.encode(password);
-         return Optional.ofNullable(accountMapper.findByIdAndPassword(accountId, encodePassword))
+    public Optional<Account> findByUserIdAndPassword(String userId, String password) {
+         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, password))
              .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
-    public void deleteAccount(String id) {
+    public void deleteAccount(long id) {
         accountMapper.deleteAccount(id);
     }
 
-    public void updatePassword(String accountId, String newPassword) {
-        String encodePassword = passwordEncoder.encode(newPassword);
-        accountMapper.updatePassword(accountId, encodePassword);
+    public void updatePassword(long accountId, String newPassword) {
+        accountMapper.updatePassword(accountId, newPassword);
     }
 
     public void updateAccountInfo(Account account) {
