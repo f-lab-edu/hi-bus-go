@@ -2,6 +2,8 @@ package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.domain.Account.Status;
+import com.younghun.hibusgo.domain.Account.UserLevel;
+import javax.validation.constraints.Max;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
@@ -15,10 +17,11 @@ import javax.validation.constraints.Pattern;
 @Builder
 public class AccountDto {
 
-    // 아이디
+    // 회원 아이디(이메일)
     @NotBlank
-    @Length(min = 5, max = 20)
-    private String id;
+    @Email
+    @Max(255)
+    private String userId;
 
     // 패스워드
     @NotBlank
@@ -32,25 +35,23 @@ public class AccountDto {
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9_-]{3,20}$")
     private String name;
 
-    // 이메일
-    @Email
-    private String email;
-
     // 핸드폰 번호
     @Pattern(regexp = "^(01[1|6|7|8|9|0])-(\\d{3,4})-(\\d{4})$")
     private String phoneNumber;
+
+    private UserLevel userLevel;
 
     // 상태 DEFAULT(기본), DELETED(삭제됨)
     private Status status;
 
     public Account toEntity() {
         return Account.builder()
-                .id(this.id)
+                .userId(this.userId)
                 .password(this.password)
                 .name(this.name)
-                .email(this.email)
                 .phoneNumber(this.phoneNumber)
-                .status(this.status)
+                .userLevel(UserLevel.USER)
+                .status(Status.DEFAULT)
                 .build();
     }
 

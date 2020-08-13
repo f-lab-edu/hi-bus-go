@@ -38,7 +38,7 @@ public class AccountDtoValidator implements Validator {
         AccountDto AccountDto = (AccountDto)object;
         Account account = AccountDto.toEntity();
 
-        if (accountMapper.existsById(account.getId())) {
+        if (accountMapper.existsByUserId(account.getUserId())) {
             log.error("이미 사용중인 아이디입니다.");
             errors.rejectValue("id", "invalid.id", new Object[]{account.getId()}, "이미 사용중인 아이디입니다.");
         }
