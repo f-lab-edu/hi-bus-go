@@ -61,11 +61,11 @@ public class LoginUtil implements LoginService {
   }
 
   /**
-   * 로그인된 사용자 정보 가져오는 메소드
+   * 로그인된 사용자 정보(id) 가져오는 메소드
    *
-   * 세션에서 사용자 정보를 가져온다.
-   * 사용자 정보가 존재할 경우 String 변환후 return.
-   * 사용자 정보가 존재하지 않을시, Optional return.
+   * 세션에서 사용자 정보(id)를 가져온다.
+   * 사용자 정보(id)가 존재할 경우 String 변환후 return.
+   * 사용자 정보(id)가 존재하지 않을시, Optional return.
    *
    * @return Optional<Long>
    */
@@ -73,6 +73,5 @@ public class LoginUtil implements LoginService {
   public Optional<Long> getLoginAccountId() {
     return Optional.ofNullable(session.getAttribute(ACCOUNT_MEMBER_ID))
         .map(String::valueOf).map(Long::valueOf);
-
   }
 }

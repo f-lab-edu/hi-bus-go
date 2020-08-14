@@ -1,6 +1,7 @@
 package com.younghun.hibusgo.domain;
 
 
+import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,14 +18,6 @@ public class Account {
 
         // 삭제됨
         DELETED
-    }
-
-    public enum UserLevel {
-        // 사용자
-        USER,
-
-        // 관리자
-        ADMIN
     }
 
     // 아이디(pk)

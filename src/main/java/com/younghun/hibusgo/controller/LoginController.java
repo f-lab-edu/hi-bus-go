@@ -6,8 +6,8 @@ import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_OK;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.aop.LoginCheck;
+import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Account;
-import com.younghun.hibusgo.domain.Account.Status;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
@@ -85,7 +85,7 @@ public class LoginController {
      *
      * @return ResponseEntity(성공시 200 code)
      */
-    @LoginCheck
+    @LoginCheck(userLevel = UserLevel.DEFAULT)
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
         loginService.accountLogout();

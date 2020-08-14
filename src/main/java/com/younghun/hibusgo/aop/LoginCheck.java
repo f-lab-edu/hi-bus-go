@@ -15,4 +15,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface LoginCheck {
 
+  UserLevel userLevel();
+
+  enum UserLevel {
+    //기본
+    DEFAULT,
+
+    // 사용자
+    USER,
+
+    // 관리자
+    ADMIN,
+  }
+
 }

@@ -6,6 +6,7 @@ import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREAT
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 
 
+import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.dto.PasswordDto;
@@ -25,7 +26,6 @@ import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor // 초기화 되지 않은 final field에 대해 생성자를 생성. final field에 의존성 주입
 @Log4j2
 public class AccountController {
+
     private final AccountService accountService;
     private final LoginService loginService;
     private final AccountDtoValidator accountDtoValidator;
@@ -90,7 +91,7 @@ public class AccountController {
      * @param accountId 로그인된 사용자 id
      * @return ResponseEntity(성공시 204 code)
      */
-    @LoginCheck
+    @LoginCheck(userLevel = UserLevel.USER)
     @DeleteMapping("/myInfo")
     public ResponseEntity<?> deleteAccount(@SessionId Long accountId) {
         accountService.deleteAccount(accountId);
@@ -110,7 +111,7 @@ public class AccountController {
      * @param errors 패스워드 validation 에러 정보
      * @return ResponseEntity(성공시 201 code, 실패시 204 code)
      */
-    @LoginCheck
+    @LoginCheck(userLevel = UserLevel.USER)
     @PatchMapping("/myInfo/password")
     public ResponseEntity<?> updatePassword(@SessionId Long accountId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
         if (errors.hasErrors()) {
@@ -132,7 +133,7 @@ public class AccountController {
      * @param errors 에러 정보
      * @return ResponseEntity(성공시 204 code, 실패시 400 code)
      * */
-    @LoginCheck
+    @LoginCheck(userLevel = UserLevel.USER)
     @PatchMapping("/myInfo")
     public ResponseEntity<?> updateAccountInfo(@RequestBody @Valid ProfileDto ProfileDto, Errors errors) {
         if (errors.hasErrors()) {
