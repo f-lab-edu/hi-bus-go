@@ -33,7 +33,7 @@ public class AccountService {
             throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "암호화된 비밀번호가 일치하지 않아, 회원 가입에 실패하였습니다.");
         }
 
-        Account newAccount = account.passwordEncodedAccount(encodePassword);
+        Account newAccount = account.passwordEncodeCopyAccount(encodePassword);
         accountMapper.addAccount(newAccount);
     }
 

@@ -54,11 +54,11 @@ public class Account {
     // 최종 수정일
     private LocalDateTime updatedAt;
 
-    public Account passwordEncodedAccount(String encodePassword) {
+    public Account passwordEncodeCopyAccount(String encodePassword) {
         return Account.builder()
+            .userId(this.userId)
             .password(encodePassword)
             .name(this.name)
-            .email(this.email)
             .phoneNumber(this.phoneNumber)
             .status(this.status)
             .build();
