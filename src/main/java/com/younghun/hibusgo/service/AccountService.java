@@ -42,7 +42,8 @@ public class AccountService {
     }
 
     public Optional<Account> findByUserIdAndPassword(String userId, String password) {
-         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, password))
+        String encodePassword = passwordEncoder.encode(password);
+         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, encodePassword))
              .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
@@ -51,7 +52,8 @@ public class AccountService {
     }
 
     public void updatePassword(long accountId, String newPassword) {
-        accountMapper.updatePassword(accountId, newPassword);
+        String encodePassword = passwordEncoder.encode(newPassword);
+        accountMapper.updatePassword(accountId, encodePassword);
     }
 
     public void updateAccountInfo(Account account) {
