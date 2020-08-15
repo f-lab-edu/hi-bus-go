@@ -7,10 +7,8 @@ import com.younghun.hibusgo.mapper.AccountMapper;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 
 
 @Service
@@ -25,16 +23,17 @@ public class AccountService {
         return accountMapper.findById(id);
     }
 
-    public void addAccount(Account account) {
+    public boolean addAccount(Account account) {
         String encodePassword = passwordEncoder.encode(account.getPassword());
         String rawPassword = account.getPassword();
 
         if (!passwordEncoder.matches(rawPassword, encodePassword)) {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "암호화된 비밀번호가 일치하지 않아, 회원 가입에 실패하였습니다.");
+            return false;
         }
 
         Account newAccount = account.passwordEncodeCopyAccount(encodePassword);
         accountMapper.addAccount(newAccount);
+        return true;
     }
 
     public boolean existsByUserId(String id) {
