@@ -18,7 +18,7 @@ public @interface LoginCheck {
   UserLevel userLevel();
 
   enum UserLevel {
-    //기본
+    //  공통(사용자,관리자)
     DEFAULT,
 
     // 사용자
