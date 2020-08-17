@@ -19,7 +19,7 @@ public @interface LoginCheck {
 
   enum UserLevel {
     //  공통(사용자,관리자)
-    DEFAULT,
+    ANONYMOUS,
 
     // 사용자
     USER,

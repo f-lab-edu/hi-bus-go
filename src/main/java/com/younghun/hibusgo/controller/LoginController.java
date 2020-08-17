@@ -85,7 +85,7 @@ public class LoginController {
      *
      * @return ResponseEntity(성공시 200 code)
      */
-    @LoginCheck(userLevel = UserLevel.DEFAULT)
+    @LoginCheck(userLevel = UserLevel.ANONYMOUS)
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
         loginService.accountLogout();

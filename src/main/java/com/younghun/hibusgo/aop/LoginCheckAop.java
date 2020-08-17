@@ -31,7 +31,7 @@ public class LoginCheckAop {
   @Before("@annotation(LoginCheck) && @annotation(loginCheck)")
   public void loginCheck(LoginCheck loginCheck) throws HttpClientErrorException {
 
-    if (UserLevel.DEFAULT == loginCheck.userLevel()) {
+    if (UserLevel.ANONYMOUS == loginCheck.userLevel()) {
       defaultLoginCheck();
     }
 
