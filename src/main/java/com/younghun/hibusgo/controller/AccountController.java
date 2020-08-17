@@ -4,6 +4,7 @@ import com.younghun.hibusgo.aop.LoginCheck;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE__SERVER_ERROR;
 
 
 import com.younghun.hibusgo.domain.Account;
@@ -83,7 +84,7 @@ public class AccountController {
         boolean isAddedAccount = accountService.addAccount(account);
 
         if (!isAddedAccount) {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "암호화된 비밀번호가 일치하지 않아, 회원 가입에 실패하였습니다.");
+            return RESPONSE__SERVER_ERROR;
         }
 
         return RESPONSE_ENTITY_CREATED;
