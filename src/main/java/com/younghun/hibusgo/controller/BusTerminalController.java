@@ -24,12 +24,9 @@ public class BusTerminalController {
   /**
    * 터미널 조회 메소드
    *
-   * 값이 있으면 ResponseEntity Body에 busTerminal return.
-   * 조회후 값이 없으면 컨텐츠를 리턴하지 않음을 의미하는 204 code return.
-   *
    * @param region 지역 이름
    * @param name 터미널 이름
-   * @return ResponseEntity(성공시 204 code, 실패시 204 code)
+   * @return BusTerminal
    */
   /**
    * @Cacheable : 동일 값이 Cache에 있는 경우 Cache에서 데이터를 return합니다.
@@ -42,11 +39,16 @@ public class BusTerminalController {
     return busTerminal.get();
   }
 
+  /**
+   * 터미널 조회 메소드
+   * @param region 지역 이름
+   * @return List<BusTerminal>
+   */
   @Cacheable(value = "terminals.region", key = "#region", cacheManager = "redisCacheManager")
   @GetMapping("/{region}")
   public List<BusTerminal> getBusTerminals(@PathVariable String region) {
-    List<BusTerminal> busTerminals = busTerminalService.searchByRegion(region);
-    return busTerminals;
+    Optional<List<BusTerminal>> busTerminals = busTerminalService.searchByRegion(region);
+    return busTerminals.get();
   }
 
 }

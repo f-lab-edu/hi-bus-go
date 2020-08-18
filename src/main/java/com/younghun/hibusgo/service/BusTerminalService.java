@@ -27,8 +27,8 @@ public class BusTerminalService {
             .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
-    public List<BusTerminal> searchByRegion(String region) {
-        return terminalMapper.searchByRegion(region);
+    public Optional<List<BusTerminal>> searchByRegion(String region) {
+        return Optional.ofNullable(terminalMapper.searchByRegion(region));
     }
 
     public void addBusTerminal(BusTerminal busTerminal) {
