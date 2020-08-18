@@ -18,5 +18,5 @@ public class Region {
     private String name;
 
     // 지역 상태(기본, 삭제)
-    private String status;
+    private Status status;
 }
