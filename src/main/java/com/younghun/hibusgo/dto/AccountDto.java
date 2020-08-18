@@ -1,8 +1,8 @@
 package com.younghun.hibusgo.dto;
 
+import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.domain.Account.Status;
-import com.younghun.hibusgo.domain.Account.UserLevel;
 import javax.validation.constraints.Max;
 import lombok.Builder;
 import lombok.Getter;
