@@ -1,7 +1,5 @@
 package com.younghun.hibusgo.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.Duration;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,19 +14,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
-
-  /**
-   * ObjectMapper 설정 및 등록
-   * ObjectMapper는 object와 json 파싱을 해주는 클래스
-   * 직렬화를 하기 위해서는 getter가 있어야 값에 대한 접근이 가능하다.
-   * 역직렬화를 하기 위해서는 객체 생성을 위한 기본 생성자가 반드시 존재해야하고,
-   * 값을 매핑하기 위해서는 AllArgsConstructor나 setter가 존재해야한다.
-   */
-  @Bean
-  public ObjectMapper objectMapper() {
-    ObjectMapper mapper = new ObjectMapper();
-    return mapper;
-  }
 
   /**
    * Redis Connection Factory 설정
@@ -64,7 +49,7 @@ public class RedisConfig {
     redisTemplate.setKeySerializer(new StringRedisSerializer());
 
     //객체를 json 형태로 깨지지 않고 받기 위한 직렬화 작업
-    redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper()));
+    redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
     return redisTemplate;
   }
 
@@ -81,8 +66,7 @@ public class RedisConfig {
             .fromSerializer(new StringRedisSerializer()))
         .serializeValuesWith(RedisSerializationContext
             .SerializationPair
-            .fromSerializer(new GenericJackson2JsonRedisSerializer()))
-        .entryTtl(Duration.ofSeconds(1800));
+            .fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
     RedisCacheManager cacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
