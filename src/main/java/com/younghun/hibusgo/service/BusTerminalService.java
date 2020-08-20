@@ -9,6 +9,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
@@ -38,7 +39,8 @@ public class BusTerminalService {
         return terminalMapper.searchByRegion(region);
     }
 
-    @Cacheable(value = "terminals.total", key = "'total'", cacheManager = "redisCacheManager")
+    @Scheduled(fixedDelay = 300000L)
+    @Cacheable(value = "terminals.total", key = "'total'")
     public List<BusTerminal> searchTotal() {
         return terminalMapper.searchTotal();
     }
