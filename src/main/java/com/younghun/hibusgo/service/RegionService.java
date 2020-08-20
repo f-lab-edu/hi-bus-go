@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,7 +29,8 @@ public class RegionService {
     return regionMapper.searchByName(name);
   }
 
-  @Cacheable(value = "regions.total", key = "'total'",cacheManager = "redisCacheManager")
+  @Scheduled(fixedDelay = 300000L) // 5분마다 캐시
+  @Cacheable(value = "regions.total", key = "'total'")
   public List<Region> searchTotal() {
     return regionMapper.searchTotal();
   }
