@@ -30,8 +30,8 @@ public class BusTerminalService {
     }
 
     @Cacheable(value = "terminals.region", key = "#region", cacheManager = "redisCacheManager")
-    public Optional<List<BusTerminal>> searchByRegion(String region) {
-        return Optional.ofNullable(terminalMapper.searchByRegion(region));
+    public List<BusTerminal> searchByRegion(String region) {
+        return terminalMapper.searchByRegion(region);
     }
 
     public void addBusTerminal(BusTerminal busTerminal) {

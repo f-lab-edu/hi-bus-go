@@ -1,12 +1,16 @@
 package com.younghun.hibusgo.controller;
 
 
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
+
 import com.younghun.hibusgo.domain.BusTerminal;
 import com.younghun.hibusgo.service.BusTerminalService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +36,14 @@ public class BusTerminalController {
    * 만약 동일 key 값이 없을 경우 메소드를 실행하고 반환된 결과 값을 Cache에 저장합니다.
    */
   @GetMapping("/{region}/{name}")
-  public BusTerminal getBusTerminal(@PathVariable String region, @PathVariable String name) {
+  public ResponseEntity<?> getBusTerminal(@PathVariable String region, @PathVariable String name) {
     Optional<BusTerminal> busTerminal = busTerminalService.findByNameAndRegion(name, region);
-    return busTerminal.get();
+
+    if (!busTerminal.isPresent()) {
+      return RESPONSE_NOT_FOUND;
+    }
+
+    return ResponseEntity.ok().body(busTerminal.get());
   }
 
   /**
@@ -43,9 +52,14 @@ public class BusTerminalController {
    * @return List<BusTerminal>
    */
   @GetMapping("/{region}")
-  public List<BusTerminal> getBusTerminals(@PathVariable String region) {
-    Optional<List<BusTerminal>> busTerminals = busTerminalService.searchByRegion(region);
-    return busTerminals.get();
+  public ResponseEntity<?> getBusTerminals(@PathVariable String region) {
+    List<BusTerminal> busTerminals = busTerminalService.searchByRegion(region);
+
+    if (busTerminals == null || busTerminals.isEmpty()) {
+      return RESPONSE_ENTITY_NO_CONTENT;
+    }
+
+    return ResponseEntity.ok().body(busTerminals);
   }
 
 }
