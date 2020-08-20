@@ -1,7 +1,7 @@
 package com.younghun.hibusgo.controller;
 
 
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.domain.Region;
 import com.younghun.hibusgo.service.RegionService;
@@ -32,7 +32,7 @@ public class RegionController {
     List<Region> regions = regionService.searchByName(name);
 
     if (regions == null || regions.isEmpty()) {
-      return RESPONSE_ENTITY_NO_CONTENT;
+      return RESPONSE_NOT_FOUND;
     }
 
     return ResponseEntity.ok().body(regions);
