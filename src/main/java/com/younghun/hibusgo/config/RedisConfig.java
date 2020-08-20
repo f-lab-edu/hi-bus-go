@@ -1,6 +1,5 @@
 package com.younghun.hibusgo.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -68,7 +67,8 @@ public class RedisConfig {
             .fromSerializer(new StringRedisSerializer()))
         .serializeValuesWith(RedisSerializationContext
             .SerializationPair
-            .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+            .fromSerializer(new GenericJackson2JsonRedisSerializer()))
+        .entryTtl(Duration.ofMinutes(5L));
 
     RedisCacheManager cacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
