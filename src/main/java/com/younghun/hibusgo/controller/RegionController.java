@@ -38,4 +38,19 @@ public class RegionController {
     return ResponseEntity.ok().body(regions);
   }
 
+  /**
+   * 지역 전체 조회 메서드
+   * @return List<Region>
+   */
+  @GetMapping()
+  public ResponseEntity<?> getTotalRegion() {
+    List<Region> totalRegions = regionService.searchTotal();
+
+    if (totalRegions == null || totalRegions.isEmpty()) {
+      return RESPONSE_NOT_FOUND;
+    }
+
+    return ResponseEntity.ok().body(totalRegions);
+  }
+
 }

@@ -27,4 +27,9 @@ public class RegionService {
   public List<Region> searchByName(String name) {
     return regionMapper.searchByName(name);
   }
+
+  @Cacheable(value = "regions.total", cacheManager = "redisCacheManager")
+  public List<Region> searchTotal() {
+    return regionMapper.searchTotal();
+  }
 }

@@ -10,6 +10,8 @@ public interface RegionMapper {
 
   List<Region> searchByName(String name);
 
+  List<Region> searchTotal();
+
   void addRegion(String name);
 
   void deleteRegion(int id);
