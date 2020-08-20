@@ -4,7 +4,6 @@ import com.younghun.hibusgo.aop.LoginCheck;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE__SERVER_ERROR;
 
 
 import com.younghun.hibusgo.domain.Account;

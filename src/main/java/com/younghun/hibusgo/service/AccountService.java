@@ -23,13 +23,9 @@ public class AccountService {
         return accountMapper.findById(id);
     }
 
-    public void addAccount(Account account) throws IllegalAccessException {
+    public void addAccount(Account account) {
         String encodePassword = passwordEncoder.encode(account.getPassword());
         String rawPassword = account.getPassword();
-
-        if (!passwordEncoder.matches(rawPassword, encodePassword)) {
-            throw new IllegalAccessException("암호화된 비밀번호가 일치하지 않아, 회원 가입에 실패하였습니다.");
-        }
 
         Account newAccount = account.passwordEncodeCopyAccount(encodePassword);
         accountMapper.addAccount(newAccount);

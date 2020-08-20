@@ -3,17 +3,19 @@ package com.younghun.hibusgo.controller;
 
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_OK;
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
+import com.younghun.hibusgo.validator.LoginDtoValidator;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,6 +54,18 @@ public class LoginController {
 
     private final AccountService accountService;
     private final LoginService loginService;
+    private final LoginDtoValidator loginDtoValidator;
+
+    /**
+     * loginDto객체에 바인딩된 값을 검증
+     *
+     * InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용한다.
+     * @param webDataBinder requestBody에 있는 값을 특정 객체로 바인딩
+     */
+    @InitBinder("loginDto")
+    public void accountInitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(loginDtoValidator);
+    }
 
     /**
      * 유저 로그인 메서드
@@ -69,10 +83,6 @@ public class LoginController {
         String password = loginDto.getPassword();
 
         Optional<Account> account = accountService.findByUserIdAndPassword(userId, password);
-
-        if (!account.isPresent()) {
-            return RESPONSE_NOT_FOUND;
-        }
 
         loginService.accountLogin(account.get().getId());
 

@@ -29,6 +29,20 @@
         WHERE id = #{id}
     </select>
 
+    <select id="findByUserId" resultMap="accountResultMap">
+        SELECT id
+             , user_id
+             , password
+             , name
+             , phone_number
+             , user_level
+             , status
+             , created_at
+             , updated_at
+        FROM ACCOUNT
+        WHERE user_id = #{userId}
+    </select>
+
     <select id="findByUserIdAndPassword" resultMap="accountResultMap">
         SELECT id
             , user_id
