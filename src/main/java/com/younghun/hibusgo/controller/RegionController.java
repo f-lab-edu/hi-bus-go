@@ -28,7 +28,7 @@ public class RegionController {
    * @return List<Region>
    */
   @GetMapping("/{name}")
-  public ResponseEntity getRegion(@PathVariable String name) {
+  public ResponseEntity<?> getRegion(@PathVariable String name) {
     List<Region> regions = regionService.searchByName(name);
 
     if (regions == null || regions.isEmpty()) {
