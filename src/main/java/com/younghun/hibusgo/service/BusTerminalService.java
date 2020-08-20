@@ -38,6 +38,11 @@ public class BusTerminalService {
         return terminalMapper.searchByRegion(region);
     }
 
+    @Cacheable(value = "terminals.total", cacheManager = "redisCacheManager")
+    public List<BusTerminal> searchTotal() {
+        return terminalMapper.searchTotal();
+    }
+
     public void addBusTerminal(BusTerminal busTerminal) {
         terminalMapper.addBusTerminal(busTerminal);
     }

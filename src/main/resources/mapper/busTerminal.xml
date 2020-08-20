@@ -58,5 +58,19 @@
         </if>
     </select>
 
+    <select id="searchTotal" resultMap="busTerminalResultMap" resultType="java.util.ArrayList">
+        SELECT b.id
+        , b.name
+        , b.address
+        , b.tel
+        , r.name region
+        , b.status
+        FROM terminal b
+        LEFT JOIN region r
+        ON b.region_id = r.id
+        WHERE
+        b.status != 'DELETE'
+    </select>
+
 </mapper>
 

@@ -58,4 +58,19 @@ public class BusTerminalController {
     return ResponseEntity.ok().body(busTerminals);
   }
 
+  /**
+   * 터미널 전체 조회 메소드
+   * @return List<BusTerminal>
+   */
+  @GetMapping()
+  public ResponseEntity<?> getTotalBusTerminals() {
+    List<BusTerminal> busTotalTerminals = busTerminalService.searchTotal();
+
+    if (busTotalTerminals == null || busTotalTerminals.isEmpty()) {
+      return RESPONSE_ENTITY_NO_CONTENT;
+    }
+
+    return ResponseEntity.ok().body(busTotalTerminals);
+  }
+
 }
