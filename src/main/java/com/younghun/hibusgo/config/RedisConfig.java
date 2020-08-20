@@ -32,8 +32,7 @@ public class RedisConfig {
    */
   @Bean
   public RedisConnectionFactory connectionFactory() {
-    LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
-    return lettuceConnectionFactory;
+    return new LettuceConnectionFactory();
   }
 
   /**
@@ -68,7 +67,8 @@ public class RedisConfig {
             .fromSerializer(new StringRedisSerializer()))
         .serializeValuesWith(RedisSerializationContext
             .SerializationPair
-            .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+            .fromSerializer(new GenericJackson2JsonRedisSerializer()))
+        .entryTtl(Duration.ofMinutes(5L));
 
     RedisCacheManager cacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
