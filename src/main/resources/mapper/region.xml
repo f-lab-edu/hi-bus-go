@@ -17,6 +17,13 @@
         AND status != 'DELETE'
     </select>
 
+    <select id="existsByName" resultType="boolean" parameterType="String">
+        SELECT COUNT(*)
+        FROM REGION
+        WHERE name = #{name}
+        AND status != 'DELETE'
+    </select>
+
     <select id="searchByName" resultMap="regionResultMap" resultType="java.util.ArrayList">
         SELECT id,
             name,
@@ -25,5 +32,10 @@
         WHERE name Like '%' || #{name} || '%'
         AND status != 'DELETE'
     </select>
+
+    <insert id="addRegion">
+        INSERT INTO REGION(name, status)
+        VALUES(#{name}, #{status})
+    </insert>
 
 </mapper>

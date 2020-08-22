@@ -2,9 +2,13 @@ package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.BusTerminal;
 import com.younghun.hibusgo.domain.BusTerminal.Status;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Builder
 public class BusTerminalDto {

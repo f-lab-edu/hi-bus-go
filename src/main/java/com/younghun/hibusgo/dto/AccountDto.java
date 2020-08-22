@@ -4,8 +4,10 @@ import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.domain.Account.Status;
 import javax.validation.constraints.Max;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -13,6 +15,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 // 유저 생성시 유효성 검사를 위한 class
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Builder
 public class AccountDto {

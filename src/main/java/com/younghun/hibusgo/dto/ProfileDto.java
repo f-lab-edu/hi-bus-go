@@ -5,10 +5,17 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+/**
+ * request Body에 있는 json data를 mapping하기 위해, 생성자 추가
+ */
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Builder
 public class ProfileDto {
