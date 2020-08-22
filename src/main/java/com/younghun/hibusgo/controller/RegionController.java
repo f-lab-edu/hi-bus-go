@@ -8,10 +8,10 @@ import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Region;
-import com.younghun.hibusgo.domain.Region.Status;
 import com.younghun.hibusgo.dto.RegionDto;
 import com.younghun.hibusgo.service.RegionService;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +53,7 @@ public class RegionController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PostMapping("/name")
-  public ResponseEntity<?> addRegion(@RequestBody RegionDto regionDto) {
+  public ResponseEntity<?> addRegion(@RequestBody @Valid RegionDto regionDto) {
     String name = regionDto.getName();
 
     boolean isExistsRegion =  regionService.existsByName(name);
