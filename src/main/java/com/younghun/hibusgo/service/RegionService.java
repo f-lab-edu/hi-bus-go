@@ -19,6 +19,6 @@ public class RegionService {
   }
 
   public List<Region> searchByName(String name) {
-    return regionMapper.findByName(name);
+    return regionMapper.searchByName(name);
   }
 }

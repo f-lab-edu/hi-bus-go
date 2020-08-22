@@ -4,9 +4,11 @@ package com.younghun.hibusgo.service;
 import com.younghun.hibusgo.domain.BusTerminal;
 import com.younghun.hibusgo.domain.BusTerminal.Status;
 import com.younghun.hibusgo.mapper.BusTerminalMapper;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 
@@ -21,9 +23,15 @@ public class BusTerminalService {
         return terminalMapper.findById(id);
     }
 
+    @Cacheable(value = "terminals.name", key = "#name", cacheManager = "redisCacheManager")
     public Optional<BusTerminal> findByNameAndRegion(String name, String region) {
         return Optional.ofNullable(terminalMapper.findByNameAndRegion(name, region))
             .filter(o -> o.getStatus() == Status.DEFAULT);
+    }
+
+    @Cacheable(value = "terminals.region", key = "#region", cacheManager = "redisCacheManager")
+    public List<BusTerminal> searchByRegion(String region) {
+        return terminalMapper.searchByRegion(region);
     }
 
     public void addBusTerminal(BusTerminal busTerminal) {
