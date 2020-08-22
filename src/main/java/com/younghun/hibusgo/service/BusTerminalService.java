@@ -39,7 +39,7 @@ public class BusTerminalService {
         return terminalMapper.searchByRegion(region);
     }
 
-    @Scheduled(fixedDelay = 300000L)
+    @Scheduled(fixedDelay = 300000L) // 5분마다 캐시 갱신
     @Cacheable(value = "terminals.total", key = "'total'")
     public List<BusTerminal> searchTotal() {
         return terminalMapper.searchTotal();

@@ -1,7 +1,6 @@
 package com.younghun.hibusgo.controller;
 
 
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.domain.BusTerminal;
@@ -51,10 +50,6 @@ public class BusTerminalController {
   public ResponseEntity<?> getBusTerminals(@PathVariable String region) {
     List<BusTerminal> busTerminals = busTerminalService.searchByRegion(region);
 
-    if (busTerminals == null || busTerminals.isEmpty()) {
-      return RESPONSE_ENTITY_NO_CONTENT;
-    }
-
     return ResponseEntity.ok().body(busTerminals);
   }
 
@@ -65,10 +60,6 @@ public class BusTerminalController {
   @GetMapping()
   public ResponseEntity<?> getTotalBusTerminals() {
     List<BusTerminal> busTotalTerminals = busTerminalService.searchTotal();
-
-    if (busTotalTerminals == null || busTotalTerminals.isEmpty()) {
-      return RESPONSE_ENTITY_NO_CONTENT;
-    }
 
     return ResponseEntity.ok().body(busTotalTerminals);
   }
