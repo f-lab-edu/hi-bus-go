@@ -9,18 +9,15 @@ import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.dto.LoginDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
-import com.younghun.hibusgo.validator.LoginDtoValidator;
 import java.util.Optional;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.constraints.NotNull;
 
 
 /**
@@ -54,18 +51,6 @@ public class LoginController {
 
     private final AccountService accountService;
     private final LoginService loginService;
-    private final LoginDtoValidator loginDtoValidator;
-
-    /**
-     * loginDto객체에 바인딩된 값을 검증
-     *
-     * InitBinder는 특정 컨트롤러에서 바인딩 또는 검증 설정 변경에 사용한다.
-     * @param webDataBinder requestBody에 있는 값을 특정 객체로 바인딩
-     */
-    @InitBinder("loginDto")
-    public void accountInitBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(loginDtoValidator);
-    }
 
     /**
      * 유저 로그인 메서드
@@ -78,11 +63,15 @@ public class LoginController {
      * 로그인 실패시 데이터가 없음을 의미하는 404 code return
      */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @NotNull LoginDto loginDto) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto) {
         String userId = loginDto.getUserId();
         String password = loginDto.getPassword();
 
         Optional<Account> account = accountService.findByUserIdAndPassword(userId, password);
+
+        if (!account.isPresent()) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+        }
 
         loginService.accountLogin(account.get().getId());
 

@@ -37,8 +37,9 @@ public class AccountService {
 
     public Optional<Account> findByUserIdAndPassword(String userId, String password) {
         String encodePassword = passwordEncoder.encode(password);
-         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, encodePassword))
-             .filter(o -> o.getStatus() == Status.DEFAULT);
+
+        return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, encodePassword))
+            .filter(o -> o.getStatus() == Status.DEFAULT);
     }
 
     public void deleteAccount(long id) {
