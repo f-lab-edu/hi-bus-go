@@ -29,7 +29,7 @@ public class RegionService {
     return regionMapper.searchByName(name);
   }
 
-  @Scheduled(fixedDelay = 300000L) // 5분마다 캐시
+  @Scheduled(fixedDelay = 300000L) // 5분마다 캐시 갱신
   @Cacheable(value = "regions.total", key = "'total'")
   public List<Region> searchTotal() {
     return regionMapper.searchTotal();

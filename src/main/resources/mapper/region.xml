@@ -22,14 +22,14 @@
              , name
              , status
         FROM REGION
-        WHERE name Like '%' || #{name} || '%'
+        WHERE name Like '%${name}%'
         AND status != 'DELETE'
     </select>
 
     <select id="searchTotal" resultMap="regionResultMap" resultType="java.util.ArrayList">
-        SELECT id,
-            name,
-            status
+        SELECT id
+               , name
+               , status
         FROM REGION
         WHERE status != 'DELETE'
     </select>

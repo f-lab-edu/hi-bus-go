@@ -31,10 +31,6 @@ public class RegionController {
   public ResponseEntity<?> getRegion(@PathVariable String name) {
     List<Region> regions = regionService.searchByName(name);
 
-    if (regions == null || regions.isEmpty()) {
-      return RESPONSE_NOT_FOUND;
-    }
-
     return ResponseEntity.ok().body(regions);
   }
 
@@ -45,10 +41,6 @@ public class RegionController {
   @GetMapping()
   public ResponseEntity<?> getTotalRegion() {
     List<Region> totalRegions = regionService.searchTotal();
-
-    if (totalRegions == null || totalRegions.isEmpty()) {
-      return RESPONSE_NOT_FOUND;
-    }
 
     return ResponseEntity.ok().body(totalRegions);
   }
