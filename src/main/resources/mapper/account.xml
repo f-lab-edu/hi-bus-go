@@ -59,7 +59,7 @@
     </select>
 
     <select id="existsByUserId" resultType="boolean">
-        SELECT 1
+        SELECT COUNT(*)
         FROM ACCOUNT
         WHERE user_id = #{userId}
         AND status != 'DELETE'

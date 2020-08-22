@@ -12,7 +12,7 @@ public interface AccountMapper {
 
     boolean existsByUserId(String id);
 
-    Account findByUserI(String userId);
+    Account findByUserId(String userId);
 
     Account findByUserIdAndPassword(String userId, String password);
 

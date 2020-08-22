@@ -16,7 +16,6 @@ public class LoginDto {
 
     @NotBlank
     @Email
-    @Max(255)
     private String userId;
 
     @NotBlank

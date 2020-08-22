@@ -69,10 +69,6 @@ public class LoginController {
 
         Optional<Account> account = accountService.findByUserIdAndPassword(userId, password);
 
-        if (!account.isPresent()) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
-        }
-
         loginService.accountLogin(account.get().getId());
 
         return RESPONSE_ENTITY_OK;

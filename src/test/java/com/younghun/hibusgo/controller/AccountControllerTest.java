@@ -56,10 +56,9 @@ class AccountControllerTest {
     @Test
     void addAccount_with_wrong_input() throws Exception {
         AccountDto accountDto = AccountDto.builder()
-                .id("abcd1234")
+                .userId("abcd1234")
                 .password("1")
                 .name("younghun")
-                .email("whdudgns2654@naver.com")
                 .phoneNumber("010-1234-5678")
                 .build();
 
@@ -79,10 +78,9 @@ class AccountControllerTest {
     @Test
     void addAccount_with_correct_input() throws Exception {
         AccountDto accountDto = AccountDto.builder()
-                .id("abcd123455")
+                .userId("abcd123455")
                 .password("dudgns1234!")
                 .name("younghun")
-                .email("whdudgns2654@naver.com")
                 .phoneNumber("010-1234-5678")
                 .build();
 
