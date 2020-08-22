@@ -7,6 +7,7 @@ import com.younghun.hibusgo.service.RegionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,12 @@ public class RegionController {
    * @param name 조회할 지역 이름
    * @return ResponseEntity
    */
+  /**
+   * @Cacheable : 동일 값이 Cache에 있는 경우 Cache에서 데이터를 return합니다.
+   * 만약 동일 key 값이 없을 경우 메소드를 실행하고 반환된 결과 값을 Cache에 저장합니다.
+   */
+
+  @Cacheable(value = "regions", key = "#name", cacheManager = "redisCacheManager")
   @GetMapping("/{name}")
   public ResponseEntity getRegion(@PathVariable String name) {
     List<Region> regions = regionService.searchByName(name);

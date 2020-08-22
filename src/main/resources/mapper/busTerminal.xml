@@ -11,7 +11,7 @@
         <result property="status" column="status"/>
     </resultMap>
 
-    <select id="findById" resultMap="accountResultMap">
+    <select id="findById" resultMap="busTerminalResultMap">
         SELECT id
              , name
              , address
