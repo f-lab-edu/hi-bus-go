@@ -14,7 +14,6 @@ public interface RegionMapper {
 
   void addRegion(Region region);
 
-  void deleteRegion(int id);
+  void deleteRegion(String name);
 
-  void updateRegion(Region region);
 }

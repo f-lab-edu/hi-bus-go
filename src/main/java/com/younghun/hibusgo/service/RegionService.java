@@ -35,4 +35,8 @@ public class RegionService {
   public void addRegion(Region region) {
     regionMapper.addRegion(region);
   }
+
+  public void deleteRegion(String name) {
+    regionMapper.deleteRegion(name);
+  }
 }

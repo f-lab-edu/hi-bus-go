@@ -38,4 +38,11 @@
         VALUES(#{name}, #{status})
     </insert>
 
+    <update id="deleteRegion">
+        UPDATE REGION
+        SET  status = 'DELETE'
+        WHERE name = #{name}
+        AND status != 'DELETE'
+    </update>
+
 </mapper>
