@@ -60,7 +60,7 @@ public class LoginController {
      *
      * @param loginDto
      * @return 로그인 성공시 200 code return
-     * 로그인 실패시 데이터가 없음을 의미하는 404 code return
+     * 로그인 실패시 잘못된 요청을 의미하는 400 code return
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto) {
@@ -68,6 +68,10 @@ public class LoginController {
         String password = loginDto.getPassword();
 
         Optional<Account> account = accountService.findByUserIdAndPassword(userId, password);
+
+        if (!account.isPresent()) {
+            return ResponseEntity.badRequest().body("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
+        }
 
         loginService.accountLogin(account.get().getId());
 

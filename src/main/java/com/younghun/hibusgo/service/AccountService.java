@@ -25,7 +25,6 @@ public class AccountService {
 
     public void addAccount(Account account) {
         String encodePassword = passwordEncoder.encode(account.getPassword());
-        String rawPassword = account.getPassword();
 
         Account newAccount = account.passwordEncodeCopyAccount(encodePassword);
         accountMapper.addAccount(newAccount);
@@ -37,15 +36,6 @@ public class AccountService {
 
     public Optional<Account> findByUserIdAndPassword(String userId, String password) throws IllegalArgumentException {
         String encodePassword = passwordEncoder.encode(password);
-        Optional<Account> existIngAccount = Optional.ofNullable(accountMapper.findByUserId(userId));
-
-        if (!existIngAccount.isPresent()) {
-            throw new IllegalArgumentException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
-        }
-
-        if (!existIngAccount.get().getPassword().equals(encodePassword)) {
-            throw new IllegalArgumentException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
-        }
 
         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, encodePassword))
             .filter(o -> o.getStatus() == Status.DEFAULT);
