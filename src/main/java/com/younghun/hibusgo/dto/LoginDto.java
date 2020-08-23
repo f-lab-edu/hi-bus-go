@@ -1,6 +1,5 @@
 package com.younghun.hibusgo.dto;
 
-
 import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.Email;
