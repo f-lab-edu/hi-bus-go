@@ -17,35 +17,49 @@
 
     <select id="findById" resultMap="accountResultMap">
         SELECT id
-            , user_id
-            , password
-            , name
-            , phone_number
-            , user_level
-            , status
-            , created_at
-            , updated_at
+             , user_id
+             , password
+             , name
+             , phone_number
+             , user_level
+             , status
+             , created_at
+             , updated_at
         FROM ACCOUNT
         WHERE id = #{id}
     </select>
 
+    <select id="findByUserId" resultMap="accountResultMap">
+        SELECT id
+             , user_id
+             , password
+             , name
+             , phone_number
+             , user_level
+             , status
+             , created_at
+             , updated_at
+        FROM ACCOUNT
+        WHERE user_id = #{userId}
+    </select>
+
     <select id="findByUserIdAndPassword" resultMap="accountResultMap">
         SELECT id
-            , user_id
-            , password
-            , name
-            , phone_number
-            , user_level
-            , status
-            , created_at
-            , updated_at
+             , user_id
+             , password
+             , name
+             , phone_number
+             , user_level
+             , status
+             , created_at
+             , updated_at
         FROM ACCOUNT
         WHERE user_id = #{userId}
         AND password = #{password}
     </select>
 
     <select id="existsByUserId" resultType="boolean">
-        SELECT 1
+        SELECT COUNT(*)
         FROM ACCOUNT
         WHERE user_id = #{userId}
         AND status != 'DELETE'
