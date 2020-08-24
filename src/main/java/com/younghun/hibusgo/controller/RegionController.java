@@ -52,7 +52,7 @@ public class RegionController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @PostMapping("/name")
+  @PostMapping()
   public ResponseEntity<?> addRegion(@RequestBody @Valid RegionDto regionDto) {
     String name = regionDto.getName();
 
