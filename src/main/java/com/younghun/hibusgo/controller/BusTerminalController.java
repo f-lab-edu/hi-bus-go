@@ -8,9 +8,7 @@ import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.BusTerminal;
-import com.younghun.hibusgo.domain.Region;
 import com.younghun.hibusgo.dto.BusTerminalDto;
-import com.younghun.hibusgo.dto.RegionDto;
 import com.younghun.hibusgo.service.BusTerminalService;
 import java.util.List;
 import java.util.Optional;
@@ -74,7 +72,7 @@ public class BusTerminalController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PostMapping()
-  public ResponseEntity<?> addTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto) {
+  public ResponseEntity<?> addBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto) {
     String name = busTerminalDto.getName();
 
     boolean isExistsTerminal =  busTerminalService.existsByName(name);
@@ -85,7 +83,7 @@ public class BusTerminalController {
 
     BusTerminal busTerminal = busTerminalDto.toEntity();
 
-    busTerminalService.addTerminal(busTerminal);
+    busTerminalService.addBusTerminal(busTerminal);
 
     return RESPONSE_ENTITY_CREATED;
   }
