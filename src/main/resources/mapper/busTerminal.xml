@@ -30,7 +30,7 @@
              , r.name region
              , b.status
         FROM terminal b
-        INNER JOIN region r
+        INNER JOIN region r /* 지역 정보를 가지고 있는 버스터미널 정보만 가져오도록 inner join 사용*/
         ON b.region_id = r.id
         WHERE 1=1
         <if test="name !=null and name !=''">
@@ -51,8 +51,7 @@
         FROM terminal b
         INNER JOIN region r
         ON b.region_id = r.id
-        WHERE
-        b.status != 'DELETE'
+        WHERE b.status != 'DELETE'
         <if test="region !=null and region !=''">
             AND  r.name LIKE '%${region}%'
         </if>
