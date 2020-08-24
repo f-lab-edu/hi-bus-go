@@ -65,7 +65,7 @@
         AND status != 'DELETE'
     </select>
 
-    <insert id="addAccount" parameterType="com.younghun.hibusgo.mapper.AccountMapper">
+    <insert id="addAccount">
         INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at)
         VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt})
     </insert>
