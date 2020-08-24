@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -76,21 +77,20 @@ public class RegionController {
 
   /**
    * 지역 삭제 메소드
-   * @param regionDto 삭제할 지역 정보(지역 이름)
+   * @param id 삭제할 지역 아이디
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @DeleteMapping()
-  public ResponseEntity<?> deleteRegion(@RequestBody @Valid RegionDto regionDto) {
-    String name = regionDto.getName();
+  public ResponseEntity<?> deleteRegion(@RequestParam int id) {
 
-    boolean isExistsRegion =  regionService.existsByName(name);
+    boolean isExistsRegion =  regionService.existsById(id);
 
     if (isExistsRegion) {
       return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역입니다.");
     }
 
-    regionService.deleteRegion(name);
+    regionService.deleteRegion(id);
 
     return RESPONSE_ENTITY_NO_CONTENT;
   }

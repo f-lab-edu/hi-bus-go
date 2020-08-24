@@ -41,7 +41,7 @@
     <update id="deleteRegion">
         UPDATE REGION
         SET  status = 'DELETE'
-        WHERE name = #{name}
+        WHERE id = #{id}
         AND status != 'DELETE'
     </update>
 

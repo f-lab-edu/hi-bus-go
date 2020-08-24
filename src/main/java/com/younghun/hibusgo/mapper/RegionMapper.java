@@ -14,6 +14,7 @@ public interface RegionMapper {
 
   void addRegion(Region region);
 
-  void deleteRegion(String name);
+  void deleteRegion(int id);
 
+  boolean existsById(int id);
 }
