@@ -78,14 +78,14 @@ public class RegionController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @DeleteMapping("/name")
+  @DeleteMapping()
   public ResponseEntity<?> deleteRegion(@RequestBody @Valid RegionDto regionDto) {
     String name = regionDto.getName();
 
     boolean isExistsRegion =  regionService.existsByName(name);
 
     if (isExistsRegion) {
-      return RESPONSE_BAD_REQUEST;
+      return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역입니다.");
     }
 
     regionService.deleteRegion(name);
