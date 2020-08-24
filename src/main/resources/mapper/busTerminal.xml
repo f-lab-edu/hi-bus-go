@@ -72,5 +72,12 @@
         VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
     </insert>
 
+    <update id="deleteBusTerminal">
+        UPDATE TERMINAL
+        SET  status = 'DELETE'
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
+
 </mapper>
 

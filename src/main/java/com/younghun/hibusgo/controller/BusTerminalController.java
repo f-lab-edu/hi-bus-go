@@ -3,6 +3,7 @@ package com.younghun.hibusgo.controller;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.aop.LoginCheck;
@@ -16,11 +17,13 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -86,6 +89,26 @@ public class BusTerminalController {
     busTerminalService.addBusTerminal(busTerminal);
 
     return RESPONSE_ENTITY_CREATED;
+  }
+
+  /**
+   * 터미널 삭제 메소드
+   * @param id 삭제할 터미널 아이디
+   * @return ResponseEntity
+   */
+  @LoginCheck(userLevel = UserLevel.ADMIN)
+  @DeleteMapping()
+  public ResponseEntity<?> deleteBusTerminal(@RequestParam int id) {
+
+    boolean isExistsRegion =  busTerminalService.existsById(id);
+
+    if (isExistsRegion) {
+      return ResponseEntity.badRequest().body("이미 삭제된 터미널이거나, 잘못된 터미널 입니다.");
+    }
+
+    busTerminalService.deleteBusTerminal(id);
+
+    return RESPONSE_ENTITY_NO_CONTENT;
   }
 
 }
