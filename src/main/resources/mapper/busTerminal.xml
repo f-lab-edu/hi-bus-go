@@ -29,8 +29,8 @@
         , b.tel
         , r.name region
         , b.status
-        FROM terminal b
-        LEFT JOIN region r
+        FROM TERMINAL b
+        LEFT JOIN REGION r
         ON b.region_id = r.id
         WHERE 1=1
         <if test="name !=null and name !=''">
@@ -48,8 +48,8 @@
         , b.tel
         , r.name region
         , b.status
-        FROM terminal b
-        LEFT JOIN region r
+        FROM TERMINAL b
+        LEFT JOIN REGION r
         ON b.region_id = r.id
         WHERE
         b.status != 'DELETE'
@@ -60,14 +60,14 @@
 
     <select id="existsByName" resultType="boolean" parameterType="String">
         SELECT COUNT(*)
-        FROM terminal b
-        INNER JOIN region r
+        FROM TERMINAL b
+        INNER JOIN REGION r
         ON b.region_id = r.id
         WHERE b.name = #{name}
         AND status != 'DELETE'
     </select>
 
-    <insert id="addTerminal">
+    <insert id="addBusTerminal">
         INSERT INTO TERMINAL(name, address , tel , region_id, status)
         VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
     </insert>
