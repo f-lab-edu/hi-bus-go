@@ -58,5 +58,19 @@
         </if>
     </select>
 
+    <select id="existsByName" resultType="boolean" parameterType="String">
+        SELECT COUNT(*)
+        FROM terminal b
+        INNER JOIN region r
+        ON b.region_id = r.id
+        WHERE b.name = #{name}
+        AND status != 'DELETE'
+    </select>
+
+    <insert id="addTerminal">
+        INSERT INTO TERMINAL(name, address , tel , region_id, status)
+        VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
+    </insert>
+
 </mapper>
 

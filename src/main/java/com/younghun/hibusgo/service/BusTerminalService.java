@@ -38,8 +38,8 @@ public class BusTerminalService {
         return terminalMapper.searchByRegion(region);
     }
 
-    public void addBusTerminal(BusTerminal busTerminal) {
-        terminalMapper.addBusTerminal(busTerminal);
+    public void addTerminal(BusTerminal busTerminal) {
+        terminalMapper.addTerminal(busTerminal);
     }
 
     public void deleteBusTerminal(int id) {
@@ -49,4 +49,8 @@ public class BusTerminalService {
     public void updateBusTerminal(BusTerminal busTerminal) {
         terminalMapper.updateBusTerminal(busTerminal);
     }
+
+  public boolean existsByName(String name) {
+        return terminalMapper.existsByName(name);
+  }
 }
