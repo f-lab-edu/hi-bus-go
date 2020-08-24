@@ -46,4 +46,15 @@ public class Account {
 
     // 최종 수정일
     private LocalDateTime updatedAt;
+
+    public Account passwordEncodeCopyAccount(String encodePassword) {
+        return Account.builder()
+            .userId(this.userId)
+            .password(encodePassword)
+            .name(this.name)
+            .phoneNumber(this.phoneNumber)
+            .status(this.status)
+            .build();
+    }
+
 }

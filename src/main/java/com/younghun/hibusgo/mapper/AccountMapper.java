@@ -12,6 +12,8 @@ public interface AccountMapper {
 
     boolean existsByUserId(String id);
 
+    Account findByUserId(String userId);
+
     Account findByUserIdAndPassword(String userId, String password);
 
     void deleteAccount(Long id);
