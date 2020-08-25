@@ -12,6 +12,7 @@ public interface BusTerminalMapper {
     BusTerminal findByNameAndRegion(String name, String region);
 
     List<BusTerminal> searchByRegion(String region);
+    List<BusTerminal> searchTotal();
 
     void addBusTerminal(BusTerminal busTerminal);
 
