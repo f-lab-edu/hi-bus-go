@@ -57,6 +57,20 @@
         </if>
     </select>
 
+    <select id="existsByName" resultType="boolean" parameterType="String">
+        SELECT COUNT(*)
+        FROM TERMINAL b
+        INNER JOIN REGION r
+        ON b.region_id = r.id
+        WHERE b.name = #{name}
+        AND status != 'DELETE'
+    </select>
+
+    <insert id="addBusTerminal">
+        INSERT INTO TERMINAL(name, address , tel , region_id, status)
+        VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
+    </insert>
+
     <select id="searchTotal" resultMap="busTerminalResultMap" resultType="java.util.ArrayList">
         SELECT b.id
              , b.name

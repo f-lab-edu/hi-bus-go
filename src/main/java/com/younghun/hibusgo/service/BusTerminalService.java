@@ -56,4 +56,8 @@ public class BusTerminalService {
     public void updateBusTerminal(BusTerminal busTerminal) {
         terminalMapper.updateBusTerminal(busTerminal);
     }
+
+  public boolean existsByName(String name) {
+        return terminalMapper.existsByName(name);
+  }
 }

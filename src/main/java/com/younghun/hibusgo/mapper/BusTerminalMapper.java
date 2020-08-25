@@ -20,4 +20,6 @@ public interface BusTerminalMapper {
     void deleteBusTerminal(int id);
 
     void updateBusTerminal(BusTerminal busTerminal);
+
+    boolean existsByName(String name);
 }
