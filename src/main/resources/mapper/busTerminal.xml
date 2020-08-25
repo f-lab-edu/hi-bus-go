@@ -71,6 +71,13 @@
         VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
     </insert>
 
+    <update id="deleteBusTerminal">
+        UPDATE TERMINAL
+        SET  status = 'DELETE'
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
+
     <select id="searchTotal" resultMap="busTerminalResultMap" resultType="java.util.ArrayList">
         SELECT b.id
              , b.name
