@@ -9,6 +9,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
@@ -36,6 +37,12 @@ public class BusTerminalService {
     @Cacheable(value = "terminals.region", key = "#region", cacheManager = "redisCacheManager")
     public List<BusTerminal> searchByRegion(String region) {
         return terminalMapper.searchByRegion(region);
+    }
+
+    @Scheduled(fixedDelay = 300000L) // 5분마다 캐시 갱신
+    @Cacheable(value = "terminals.total", key = "'total'")
+    public List<BusTerminal> searchTotal() {
+        return terminalMapper.searchTotal();
     }
 
     public void addBusTerminal(BusTerminal busTerminal) {

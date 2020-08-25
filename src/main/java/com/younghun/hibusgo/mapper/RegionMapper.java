@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface RegionMapper {
+
   Region findById(int id);
 
   boolean existsByName(String name);
@@ -13,6 +14,10 @@ public interface RegionMapper {
   List<Region> searchByName(String name);
 
   void addRegion(Region region);
+
+  List<Region> searchTotal();
+
+  void addRegion(String name);
 
   void deleteRegion(int id);
 
