@@ -103,8 +103,8 @@ public class BusTerminalController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @DeleteMapping()
-  public ResponseEntity<?> deleteBusTerminal(@RequestParam int id) {
+  @DeleteMapping("{id}")
+  public ResponseEntity<?> deleteBusTerminal(@PathVariable int id) {
 
     boolean isExistsRegion =  busTerminalService.existsById(id);
 

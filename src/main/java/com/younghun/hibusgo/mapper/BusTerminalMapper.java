@@ -22,4 +22,6 @@ public interface BusTerminalMapper {
     void updateBusTerminal(BusTerminal busTerminal);
 
     boolean existsByName(String name);
+
+    boolean existsById(int id);
 }
