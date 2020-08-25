@@ -58,10 +58,6 @@ public class BusTerminalController {
   public ResponseEntity<?> getBusTerminals(@PathVariable String region) {
     List<BusTerminal> busTerminals = busTerminalService.searchByRegion(region);
 
-    if (busTerminals == null || busTerminals.isEmpty()) {
-      return RESPONSE_NOT_FOUND;
-    }
-
     return ResponseEntity.ok().body(busTerminals);
   }
 
@@ -86,6 +82,16 @@ public class BusTerminalController {
     busTerminalService.addBusTerminal(busTerminal);
 
     return RESPONSE_ENTITY_CREATED;
+  }
+  /**
+   * 터미널 전체 조회 메소드
+   * @return List<BusTerminal>
+   */
+  @GetMapping()
+  public ResponseEntity<?> getTotalBusTerminals() {
+    List<BusTerminal> busTotalTerminals = busTerminalService.searchTotal();
+
+    return ResponseEntity.ok().body(busTotalTerminals);
   }
 
 }

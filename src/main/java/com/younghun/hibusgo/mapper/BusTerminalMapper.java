@@ -13,6 +13,8 @@ public interface BusTerminalMapper {
 
     List<BusTerminal> searchByRegion(String region);
 
+    List<BusTerminal> searchTotal();
+
     void addBusTerminal(BusTerminal busTerminal);
 
     void deleteBusTerminal(int id);

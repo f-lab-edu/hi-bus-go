@@ -9,9 +9,9 @@
     </resultMap>
 
     <select id="findById" resultMap="regionResultMap">
-        SELECT id,
-            name,
-            status
+        SELECT id
+             , name
+             , status
         FROM REGION
         WHERE id = #{id}
         AND status != 'DELETE'
@@ -25,11 +25,11 @@
     </select>
 
     <select id="searchByName" resultMap="regionResultMap" resultType="java.util.ArrayList">
-        SELECT id,
-            name,
-            status
+        SELECT id
+             , name
+             , status
         FROM REGION
-        WHERE name Like '%' || #{name} || '%'
+        WHERE name Like '%${name}%'
         AND status != 'DELETE'
     </select>
 
@@ -37,5 +37,13 @@
         INSERT INTO REGION(name, status)
         VALUES(#{name}, #{status})
     </insert>
+
+    <select id="searchTotal" resultMap="regionResultMap" resultType="java.util.ArrayList">
+        SELECT id
+             , name
+             , status
+        FROM REGION
+        WHERE status != 'DELETE'
+    </select>
 
 </mapper>
