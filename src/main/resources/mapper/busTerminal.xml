@@ -24,50 +24,49 @@
 
     <select id="findByNameAndRegion" resultMap="busTerminalResultMap">
         SELECT b.id
-        , b.name
-        , b.address
-        , b.tel
-        , r.name region
-        , b.status
+             , b.name
+             , b.address
+             , b.tel
+             , r.name region
+             , b.status
         FROM terminal b
-        LEFT JOIN region r
+        INNER JOIN region r /* 지역 정보를 가지고 있는 버스터미널 정보만 가져오도록 inner join 사용*/
         ON b.region_id = r.id
         WHERE 1=1
         <if test="name !=null and name !=''">
-            AND  b.name LIKE '%' || #{name} || '%'
+            AND  b.name LIKE '%${name}%'
         </if>
         <if test="region !=null and region !=''">
-            AND  r.name LIKE '%' || #{region} || '%'
+            AND  r.name LIKE '%${region}%'
         </if>
     </select>
 
     <select id="searchByRegion" resultMap="busTerminalResultMap" resultType="java.util.ArrayList">
         SELECT b.id
-        , b.name
-        , b.address
-        , b.tel
-        , r.name region
-        , b.status
+             , b.name
+             , b.address
+             , b.tel
+             , r.name region
+             , b.status
         FROM terminal b
-        LEFT JOIN region r
+        INNER JOIN region r
         ON b.region_id = r.id
-        WHERE
-        b.status != 'DELETE'
+        WHERE b.status != 'DELETE'
         <if test="region !=null and region !=''">
-            AND  r.name LIKE '%' || #{region} || '%'
+            AND  r.name LIKE '%${region}%'
         </if>
     </select>
 
     <select id="existsByName" resultType="boolean" parameterType="String">
         SELECT COUNT(*)
-        FROM terminal b
-        INNER JOIN region r
+        FROM TERMINAL b
+        INNER JOIN REGION r
         ON b.region_id = r.id
         WHERE b.name = #{name}
         AND status != 'DELETE'
     </select>
 
-    <insert id="addTerminal">
+    <insert id="addBusTerminal">
         INSERT INTO TERMINAL(name, address , tel , region_id, status)
         VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
     </insert>
@@ -78,6 +77,19 @@
         WHERE id = #{id}
         AND status != 'DELETE'
     </update>
+
+    <select id="searchTotal" resultMap="busTerminalResultMap" resultType="java.util.ArrayList">
+        SELECT b.id
+             , b.name
+             , b.address
+             , b.tel
+             , r.name region
+             , b.status
+        FROM terminal b
+        INNER JOIN region r
+        ON b.region_id = r.id
+        WHERE b.status != 'DELETE'
+    </select>
 
 </mapper>
 

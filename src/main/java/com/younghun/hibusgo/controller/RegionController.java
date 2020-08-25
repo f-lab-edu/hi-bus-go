@@ -3,7 +3,6 @@ package com.younghun.hibusgo.controller;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
@@ -39,10 +38,6 @@ public class RegionController {
   public ResponseEntity<?> getRegion(@PathVariable String name) {
     List<Region> regions = regionService.searchByName(name);
 
-    if (regions == null || regions.isEmpty()) {
-      return RESPONSE_NOT_FOUND;
-    }
-
     return ResponseEntity.ok().body(regions);
   }
 
@@ -56,7 +51,7 @@ public class RegionController {
   public ResponseEntity<?> addRegion(@RequestBody @Valid RegionDto regionDto) {
     String name = regionDto.getName();
 
-    boolean isExistsRegion =  regionService.existsByName(name);
+    boolean isExistsRegion = regionService.existsByName(name);
 
     if (isExistsRegion) {
       return RESPONSE_CONFLICT;
@@ -67,6 +62,17 @@ public class RegionController {
     regionService.addRegion(region);
 
     return RESPONSE_ENTITY_CREATED;
+  }
+
+  /**
+   * 지역 전체 조회 메서드
+   * @return List<Region>
+   */
+  @GetMapping()
+  public ResponseEntity<?> getTotalRegion() {
+    List<Region> totalRegions = regionService.searchTotal();
+
+    return ResponseEntity.ok().body(totalRegions);
   }
 
 }
