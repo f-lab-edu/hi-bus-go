@@ -2,7 +2,6 @@ package com.younghun.hibusgo.controller;
 
 
 
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_BAD_REQUEST;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -81,8 +79,8 @@ public class RegionController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @DeleteMapping()
-  public ResponseEntity<?> deleteRegion(@RequestParam int id) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteRegion(@PathVariable int id) {
 
     boolean isExistsRegion =  regionService.existsById(id);
 
