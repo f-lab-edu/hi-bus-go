@@ -2,7 +2,7 @@ package com.younghun.hibusgo.dto;
 
 
 import com.younghun.hibusgo.domain.Region;
-import com.younghun.hibusgo.domain.Region.Status;
+import com.younghun.hibusgo.domain.Status;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

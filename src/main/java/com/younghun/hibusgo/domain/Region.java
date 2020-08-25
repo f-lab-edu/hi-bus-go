@@ -13,10 +13,6 @@ import lombok.ToString;
 @ToString
 public class Region {
 
-    public enum Status {
-        DEFAULT, DELETED
-    }
-
     //지역 아이디
     private int id;
 

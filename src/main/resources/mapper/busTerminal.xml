@@ -63,12 +63,12 @@
         INNER JOIN REGION r
         ON b.region_id = r.id
         WHERE b.name = #{name}
-        AND status != 'DELETE'
+        AND b.status != 'DELETE'
     </select>
 
     <insert id="addBusTerminal">
-        INSERT INTO TERMINAL(name, address , tel , region_id, status)
-        VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
+        INSERT INTO TERMINAL (name, address , tel , region_id, status)
+        VALUES (#{name}, #{address}, #{tel}, #{region_id} , #{status})
     </insert>
 
     <update id="deleteBusTerminal">

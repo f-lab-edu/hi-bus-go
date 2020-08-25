@@ -1,8 +1,7 @@
 package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.BusTerminal;
-import com.younghun.hibusgo.domain.BusTerminal.Status;
-import javax.validation.constraints.Max;
+import com.younghun.hibusgo.domain.Status;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

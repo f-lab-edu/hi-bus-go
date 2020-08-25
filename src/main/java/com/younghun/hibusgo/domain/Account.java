@@ -12,14 +12,6 @@ import lombok.ToString;
 @ToString
 public class Account {
 
-    public enum Status {
-        // 기본
-        DEFAULT,
-
-        // 삭제됨
-        DELETED
-    }
-
     // 아이디(pk)
     private long id;
 

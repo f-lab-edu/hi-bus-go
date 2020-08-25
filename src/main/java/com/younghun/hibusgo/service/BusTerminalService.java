@@ -2,7 +2,7 @@ package com.younghun.hibusgo.service;
 
 
 import com.younghun.hibusgo.domain.BusTerminal;
-import com.younghun.hibusgo.domain.BusTerminal.Status;
+import com.younghun.hibusgo.domain.Status;
 import com.younghun.hibusgo.mapper.BusTerminalMapper;
 import java.util.List;
 import java.util.Optional;

@@ -20,14 +20,6 @@ import lombok.ToString;
 @ToString
 public class BusTerminal {
 
-    public enum Status {
-        // 기본
-        DEFAULT,
-
-        // 삭제됨
-        DELETED
-    }
-
     //아이디
     private int id;
 
