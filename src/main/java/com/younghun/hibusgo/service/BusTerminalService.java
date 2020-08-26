@@ -59,5 +59,9 @@ public class BusTerminalService {
 
     public boolean existsByName(String name) {
         return terminalMapper.existsByName(name);
-  }
+    }
+
+    public boolean existsById(int id) {
+        return terminalMapper.existsById(id);
+    }
 }
