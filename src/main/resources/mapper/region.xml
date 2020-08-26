@@ -24,6 +24,13 @@
         AND status != 'DELETE'
     </select>
 
+    <select id="existsById" resultType="boolean" parameterType="Integer">
+        SELECT COUNT(*)
+        FROM REGION
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </select>
+
     <select id="searchByName" resultMap="regionResultMap" resultType="java.util.ArrayList">
         SELECT id
              , name
@@ -45,5 +52,12 @@
         FROM REGION
         WHERE status != 'DELETE'
     </select>
+
+    <update id="deleteRegion">
+        UPDATE REGION
+        SET  status = 'DELETE'
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
 
 </mapper>

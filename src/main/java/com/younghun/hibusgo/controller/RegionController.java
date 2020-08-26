@@ -1,8 +1,10 @@
 package com.younghun.hibusgo.controller;
 
 
+
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
@@ -14,6 +16,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/regions")
 @RequiredArgsConstructor // 초기화 되지 않은 final field에 대해 생성자를 생성. final field에 의존성 주입
 @Log4j2
-public class RegionController {
+public class  RegionController {
 
   private final RegionService regionService;
 
@@ -73,6 +76,26 @@ public class RegionController {
     List<Region> totalRegions = regionService.searchTotal();
 
     return ResponseEntity.ok().body(totalRegions);
+  }
+
+  /**
+   * 지역 삭제 메소드
+   * @param id 삭제할 지역 아이디
+   * @return ResponseEntity
+   */
+  @LoginCheck(userLevel = UserLevel.ADMIN)
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteRegion(@PathVariable int id) {
+
+    boolean isExistsRegion =  regionService.existsById(id);
+
+    if (!isExistsRegion) {
+      return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역입니다.");
+    }
+
+    regionService.deleteRegion(id);
+
+    return RESPONSE_ENTITY_NO_CONTENT;
   }
 
 }

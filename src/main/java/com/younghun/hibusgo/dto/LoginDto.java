@@ -1,7 +1,5 @@
 package com.younghun.hibusgo.dto;
 
-
-
 import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.Email;
@@ -12,10 +10,10 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+
 import lombok.NoArgsConstructor;
 
 import org.hibernate.validator.constraints.Length;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
