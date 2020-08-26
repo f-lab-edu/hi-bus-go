@@ -84,7 +84,7 @@ public class RegionController {
 
     boolean isExistsRegion =  regionService.existsById(id);
 
-    if (isExistsRegion) {
+    if (!isExistsRegion) {
       return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역입니다.");
     }
 
