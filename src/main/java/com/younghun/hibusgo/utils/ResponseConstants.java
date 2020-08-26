@@ -17,4 +17,5 @@ public class ResponseConstants {
   public static final ResponseEntity<Void> RESPONSE_ENTITY_OK = ResponseEntity.ok().build();
   public static final ResponseEntity<Void> RESPONSE_NOT_FOUND = ResponseEntity.notFound().build();
   public static final ResponseEntity<Void> RESPONSE_CONFLICT = ResponseEntity.status(HttpStatus.CONFLICT).build();
+  public static final ResponseEntity<Void> RESPONSE_BAD_REQUEST = ResponseEntity.badRequest().build();
 }
