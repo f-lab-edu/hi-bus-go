@@ -66,6 +66,13 @@
         AND status != 'DELETE'
     </select>
 
+    <select id="existsById" resultType="boolean" parameterType="Integer">
+        SELECT COUNT(*)
+        FROM TERMINAL
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </select>
+
     <insert id="addBusTerminal">
         INSERT INTO TERMINAL(name, address , tel , region_id, status)
         VALUES(#{name}, #{address}, #{tel}, #{region_id} , #{status})
@@ -85,8 +92,8 @@
              , b.tel
              , r.name region
              , b.status
-        FROM terminal b
-        INNER JOIN region r
+        FROM TERMINAL b
+        INNER JOIN REGION r
         ON b.region_id = r.id
         WHERE b.status != 'DELETE'
     </select>
