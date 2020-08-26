@@ -2,7 +2,7 @@ package com.younghun.hibusgo.service;
 
 
 import com.younghun.hibusgo.domain.Account;
-import com.younghun.hibusgo.domain.Account.Status;
+import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.mapper.AccountMapper;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class AccountService {
         String encodePassword = passwordEncoder.encode(password);
 
         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, encodePassword))
-            .filter(o -> o.getStatus() == Status.DEFAULT);
+            .filter(o -> o.getStatus() == DataStatus.DEFAULT);
     }
 
     public void deleteAccount(long id) {

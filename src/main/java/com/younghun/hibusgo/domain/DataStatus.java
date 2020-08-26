@@ -1,6 +1,6 @@
 package com.younghun.hibusgo.domain;
 
-public enum Status {
+public enum DataStatus {
   // 기본
   DEFAULT,
 

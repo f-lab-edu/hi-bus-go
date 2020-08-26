@@ -36,5 +36,5 @@ public class BusTerminal {
     private String region;
 
     // 버스 터미널 상태 DEFAULT(기본), DELETED(삭제됨)
-    private Status status;
+    private DataStatus status;
 }

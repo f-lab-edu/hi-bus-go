@@ -2,7 +2,7 @@ package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Account;
-import com.younghun.hibusgo.domain.Status;
+import com.younghun.hibusgo.domain.DataStatus;
 import javax.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,7 +46,7 @@ public class AccountDto {
     private UserLevel userLevel;
 
     // 상태 DEFAULT(기본), DELETED(삭제됨)
-    private Status status;
+    private DataStatus status;
 
     public Account toEntity() {
         return Account.builder()
@@ -55,7 +55,7 @@ public class AccountDto {
                 .name(this.name)
                 .phoneNumber(this.phoneNumber)
                 .userLevel(UserLevel.USER)
-                .status(Status.DEFAULT)
+                .status(DataStatus.DEFAULT)
                 .build();
     }
 
