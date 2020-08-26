@@ -67,13 +67,14 @@
     </select>
 
     <insert id="addBusTerminal">
-        INSERT INTO TERMINAL(name, address , tel , region_id, status)
-        VALUES(#{name}, #{address}, #{tel}, #{regionId} , #{status})
+        INSERT INTO TERMINAL(name, address , tel , region_id, status, created_at, updated_at)
+        VALUES(#{name}, #{address}, #{tel}, #{regionId} , #{status}, NOW(), NOW())
     </insert>
 
     <update id="deleteBusTerminal">
         UPDATE TERMINAL
         SET  status = 'DELETE'
+        AND updated_at = NOW()
         WHERE id = #{id}
         AND status != 'DELETE'
     </update>
@@ -97,6 +98,7 @@
         AND address = #{address}
         AND tel = #{tel}
         AND region_id = #{regionId}
+        AND updated_at = NOW()
         WHERE id = #{id}
         AND status != 'DELETE'
     </update>

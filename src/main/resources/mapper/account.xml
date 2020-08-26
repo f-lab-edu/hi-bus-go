@@ -66,13 +66,14 @@
     </select>
 
     <insert id="addAccount">
-        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at)
-        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt})
+        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at, updated_at)
+        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, NOW(), NOW())
     </insert>
 
     <update id="deleteAccount">
         UPDATE ACCOUNT
-        SET  status = 'DELETE'
+        SET status = 'DELETE'
+        AND updated_at = NOW()
         WHERE id = #{id}
         AND status != 'DELETE'
     </update>
