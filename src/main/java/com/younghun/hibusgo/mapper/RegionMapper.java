@@ -22,4 +22,6 @@ public interface RegionMapper {
   void deleteRegion(int id);
 
   void updateRegion(Region region);
+
+  boolean existsById(int regionId);
 }

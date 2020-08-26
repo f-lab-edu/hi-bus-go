@@ -42,4 +42,8 @@ public class RegionService {
   public List<Region> searchTotal() {
     return regionMapper.searchTotal();
   }
+
+  public boolean existsById(int regionId) {
+    return regionMapper.existsById(regionId);
+  }
 }

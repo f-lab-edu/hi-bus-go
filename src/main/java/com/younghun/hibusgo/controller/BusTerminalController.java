@@ -11,6 +11,7 @@ import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.BusTerminal;
 import com.younghun.hibusgo.dto.BusTerminalDto;
 import com.younghun.hibusgo.service.BusTerminalService;
+import com.younghun.hibusgo.service.RegionService;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BusTerminalController {
 
   private final BusTerminalService busTerminalService;
+  private final RegionService regionService;
 
   /**
    * 터미널 조회 메소드
@@ -66,7 +68,7 @@ public class BusTerminalController {
 
   /**
    * 버스 터미널 추가 메소드
-   * @param busTerminalDto 추가할 터미널 정보(지역 이름, 터미널 이름)
+   * @param busTerminalDto 추가할 터미널 정보(지역 아이디, 터미널 이름, 터미널 주소, 터미널 전화번호)
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
@@ -86,6 +88,7 @@ public class BusTerminalController {
 
     return RESPONSE_ENTITY_CREATED;
   }
+
   /**
    * 터미널 전체 조회 메소드
    * @return List<BusTerminal>
@@ -113,6 +116,35 @@ public class BusTerminalController {
     }
 
     busTerminalService.deleteBusTerminal(id);
+
+    return RESPONSE_ENTITY_NO_CONTENT;
+  }
+
+  /**
+   * 버스 터미널 수정 메소드
+   * @param busTerminalDto 수정할 터미널 정보(지역 아이디, 터미널 이름, 터미널 주소, 터미널 전화번호)
+   * @return ResponseEntity
+   */
+  @LoginCheck(userLevel = UserLevel.ADMIN)
+  @PostMapping()
+  public ResponseEntity<?> updateBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto) {
+    String name = busTerminalDto.getName();
+    int regionId = busTerminalDto.getRegionId();
+
+    boolean isExistsRegion = regionService.existsById(regionId);
+
+    if (!isExistsRegion) {
+      return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역 입니다.");
+    }
+
+    boolean isExistsTerminal =  busTerminalService.existsByName(name);
+
+    if (isExistsTerminal) {
+      return RESPONSE_CONFLICT;
+    }
+
+    BusTerminal busTerminal = busTerminalDto.toEntity();
+    busTerminalService.updateBusTerminal(busTerminal);
 
     return RESPONSE_ENTITY_NO_CONTENT;
   }
