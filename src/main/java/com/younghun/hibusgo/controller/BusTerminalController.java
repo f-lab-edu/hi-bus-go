@@ -103,12 +103,12 @@ public class BusTerminalController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @DeleteMapping("{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteBusTerminal(@PathVariable int id) {
 
-    boolean isExistsRegion =  busTerminalService.existsById(id);
+    boolean isExistsTerminal =  busTerminalService.existsById(id);
 
-    if (isExistsRegion) {
+    if (!isExistsTerminal) {
       return ResponseEntity.badRequest().body("이미 삭제된 터미널이거나, 잘못된 터미널 입니다.");
     }
 
