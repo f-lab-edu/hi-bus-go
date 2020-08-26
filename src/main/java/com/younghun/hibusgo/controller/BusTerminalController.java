@@ -5,6 +5,7 @@ import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_REGION_BAD_REQUEST;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
@@ -135,7 +136,7 @@ public class BusTerminalController {
     boolean isExistsRegion = regionService.existsById(regionId);
 
     if (!isExistsRegion) {
-      return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역 입니다.");
+      return RESPONSE_REGION_BAD_REQUEST;
     }
 
     boolean isExistsTerminal =  busTerminalService.existsByName(name);
