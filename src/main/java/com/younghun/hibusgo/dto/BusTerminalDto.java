@@ -1,7 +1,9 @@
 package com.younghun.hibusgo.dto;
 
 import com.younghun.hibusgo.domain.BusTerminal;
-import com.younghun.hibusgo.domain.BusTerminal.Status;
+
+import com.younghun.hibusgo.domain.DataStatus;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -36,15 +38,15 @@ public class BusTerminalDto {
     private int regionId;
 
     // 버스 미널 상태 DEFAULT(기본), DELETED(삭제됨)
-    private Status status;
+    private DataStatus status;
 
     public BusTerminal toEntity() {
         return BusTerminal.builder()
             .name(this.name)
             .address(this.address)
             .tel(this.tel)
-            .regionId(this.regionId)
-            .status(Status.DEFAULT)
+            .region(this.region)
+            .status(DataStatus.DEFAULT)
             .build();
     }
 }
