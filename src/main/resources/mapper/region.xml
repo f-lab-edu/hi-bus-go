@@ -39,7 +39,12 @@
         WHERE name Like '%${name}%'
         AND status != 'DELETE'
     </select>
-  
+
+    <insert id="addRegion">
+        INSERT INTO REGION(name, status, create_at, updated_at)
+        VALUES(#{name}, #{status}, NOW(), NOW())
+    </insert>
+
     <select id="searchTotal" resultMap="regionResultMap" resultType="java.util.ArrayList">
         SELECT id
              , name
@@ -47,11 +52,6 @@
         FROM REGION
         WHERE status != 'DELETE'
     </select>
-
-    <insert id="addRegion">
-        INSERT INTO REGION(name, status)
-        VALUES(#{name}, #{status})
-    </insert>
 
     <update id="deleteRegion">
         UPDATE REGION
