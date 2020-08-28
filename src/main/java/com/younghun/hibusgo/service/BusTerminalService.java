@@ -2,7 +2,7 @@ package com.younghun.hibusgo.service;
 
 
 import com.younghun.hibusgo.domain.BusTerminal;
-import com.younghun.hibusgo.domain.BusTerminal.Status;
+import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.mapper.BusTerminalMapper;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class BusTerminalService {
     @Cacheable(value = "terminals.name", key = "#name", cacheManager = "redisCacheManager")
     public Optional<BusTerminal> findByNameAndRegion(String name, String region) {
         return Optional.ofNullable(terminalMapper.findByNameAndRegion(name, region))
-            .filter(o -> o.getStatus() == Status.DEFAULT);
+            .filter(o -> o.getStatus() == DataStatus.DEFAULT);
     }
 
     @Cacheable(value = "terminals.region", key = "#region", cacheManager = "redisCacheManager")
@@ -59,5 +59,9 @@ public class BusTerminalService {
 
     public boolean existsByName(String name) {
         return terminalMapper.existsByName(name);
-  }
+    }
+
+    public boolean existsById(int id) {
+        return terminalMapper.existsById(id);
+    }
 }

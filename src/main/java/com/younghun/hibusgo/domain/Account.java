@@ -12,14 +12,6 @@ import lombok.ToString;
 @ToString
 public class Account {
 
-    public enum Status {
-        // 기본
-        DEFAULT,
-
-        // 삭제됨
-        DELETED
-    }
-
     // 아이디(pk)
     private long id;
 
@@ -39,7 +31,7 @@ public class Account {
     private UserLevel userLevel;
 
     // 회원 상태 DEFAULT(기본), DELETED(삭제됨)
-    private Status status;
+    private DataStatus status;
 
     // 회원가입일
     private LocalDateTime createdAt;

@@ -5,6 +5,7 @@ import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_REGION_BAD_REQUEST;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
@@ -20,6 +21,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -106,12 +108,12 @@ public class BusTerminalController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @DeleteMapping()
-  public ResponseEntity<?> deleteBusTerminal(@RequestParam int id) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteBusTerminal(@PathVariable int id) {
 
-    boolean isExistsRegion =  busTerminalService.existsById(id);
+    boolean isExistsTerminal =  busTerminalService.existsById(id);
 
-    if (isExistsRegion) {
+    if (!isExistsTerminal) {
       return ResponseEntity.badRequest().body("이미 삭제된 터미널이거나, 잘못된 터미널 입니다.");
     }
 
@@ -126,7 +128,7 @@ public class BusTerminalController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @PostMapping()
+  @PatchMapping()
   public ResponseEntity<?> updateBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto) {
     String name = busTerminalDto.getName();
     int regionId = busTerminalDto.getRegionId();
@@ -134,7 +136,7 @@ public class BusTerminalController {
     boolean isExistsRegion = regionService.existsById(regionId);
 
     if (!isExistsRegion) {
-      return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역 입니다.");
+      return RESPONSE_REGION_BAD_REQUEST;
     }
 
     boolean isExistsTerminal =  busTerminalService.existsByName(name);
