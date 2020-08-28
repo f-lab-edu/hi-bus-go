@@ -66,8 +66,8 @@
     </select>
 
     <insert id="addAccount">
-        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at)
-        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt})
+        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at, updated_at)
+        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt}, #{createdAt})
     </insert>
 
     <update id="deleteAccount">
