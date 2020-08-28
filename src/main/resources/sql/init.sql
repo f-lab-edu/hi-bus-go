@@ -22,10 +22,11 @@ create table mileage
 (
     id         bigint auto_increment comment '아이디'
         primary key,
-    account_id bigint   not null comment '회원 아이디',
-    mileage    bigint   null comment '마일리지',
-    created_at datetime not null comment '추가일',
-    updated_at datetime not null comment '수정일',
+    account_id bigint      not null comment '회원 아이디',
+    mileage    bigint      null comment '마일리지',
+    status     varchar(10) null comment '상태',
+    created_at datetime    not null comment '추가일',
+    updated_at datetime    not null comment '수정일',
     constraint mileage_account_id_fk
         foreign key (account_id) references account (id)
             on update cascade on delete cascade

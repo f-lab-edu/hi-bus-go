@@ -22,4 +22,7 @@ public class Mileage {
   //마일리지
   private int mileage;
 
+  //상태
+  private DataStatus status;
+
 }

@@ -6,6 +6,7 @@
         <result property="id" column="id"/>
         <result property="accountId" column="account_id"/>
         <result property="mileage" column="mileage"/>
+        <result property="status" column="status"/>
     </resultMap>
 
 
@@ -13,6 +14,7 @@
         SELECT id
              , account_id
              , mileage
+             , status
         FROM mileage
         WHERE id = #{id}
     </select>
