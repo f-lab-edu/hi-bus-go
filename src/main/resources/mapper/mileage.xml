@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.MileageMapper">
+
+    <resultMap id="mileageResultMap" type="com.younghun.hibusgo.domain.Mileage">
+        <result property="id" column="id"/>
+        <result property="accountId" column="account_id"/>
+        <result property="mileage" column="mileage"/>
+    </resultMap>
+
+
+    <select id="findById" resultMap="mileageResultMap">
+        SELECT id
+             , account_id
+             , mileage
+        FROM mileage
+        WHERE id = #{id}
+    </select>
+
+
+</mapper>
