@@ -19,4 +19,7 @@ public class MileageService {
         .filter(o -> o.getStatus() == DataStatus.DEFAULT);
   }
 
+  public void addMileage(Mileage mileage) {
+    mileageMapper.addMileage(mileage);
+  }
 }

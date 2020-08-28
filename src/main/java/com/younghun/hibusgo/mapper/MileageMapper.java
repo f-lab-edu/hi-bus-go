@@ -8,4 +8,5 @@ public interface MileageMapper {
 
   Mileage findById(Long id);
 
+  void addMileage(Mileage mileage);
 }

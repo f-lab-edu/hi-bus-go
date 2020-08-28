@@ -10,6 +10,8 @@ public interface AccountMapper {
 
     void addAccount(Account account);
 
+    boolean existsById(Long id);
+
     boolean existsByUserId(String id);
 
     Account findByUserId(String userId);
