@@ -4,18 +4,22 @@ import com.younghun.hibusgo.aop.LoginCheck;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Account;
+import com.younghun.hibusgo.domain.Mileage;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.dto.PasswordDto;
 import com.younghun.hibusgo.dto.ProfileDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
+import com.younghun.hibusgo.service.MileageService;
 import com.younghun.hibusgo.utils.SessionId;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import com.younghun.hibusgo.validator.PasswordValidator;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.WebDataBinder;
 
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +44,8 @@ public class AccountController {
 
     private final AccountService accountService;
     private final LoginService loginService;
+    private final MileageService mileageService;
+
     private final AccountDtoValidator accountDtoValidator;
     private final PasswordValidator passwordValidator;
 
@@ -144,6 +151,23 @@ public class AccountController {
         accountService.updateAccountInfo(accountInfo);
 
         return RESPONSE_ENTITY_NO_CONTENT;
+    }
+
+    /**
+     * 회원 자신의 마일리지를 조회하는 메소드
+     * @param accountId
+     * @return ResponseEntity
+     */
+    @LoginCheck(userLevel = UserLevel.USER)
+    @GetMapping("/myMileage")
+    public ResponseEntity<?> getMyMileage(@SessionId long accountId) {
+        Optional<Mileage> mileage = mileageService.findByAccountId(accountId);
+
+        if (!mileage.isPresent()) {
+            return RESPONSE_NOT_FOUND;
+        }
+
+        return ResponseEntity.ok().body(mileage.get());
     }
 
 }

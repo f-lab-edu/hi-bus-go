@@ -14,8 +14,8 @@ public class MileageService {
 
   private final MileageMapper mileageMapper;
 
-  public Optional<Mileage> findById(Long id) {
-    return Optional.ofNullable(mileageMapper.findById(id))
+  public Optional<Mileage> findByAccountId(long accountId) {
+    return Optional.ofNullable(mileageMapper.findByAccountId(accountId))
         .filter(o -> o.getStatus() == DataStatus.DEFAULT);
   }
 

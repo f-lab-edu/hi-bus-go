@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.younghun.hibusgo.mapper.MileageMapper">
 
-    <resultMap id="mileageResultMap" type="com.younghun.hibusgo.domain.Mileage">
+    <resultMap id="mileageMap" type="com.younghun.hibusgo.domain.Mileage">
         <result property="id" column="id"/>
         <result property="accountId" column="account_id"/>
         <result property="mileage" column="mileage"/>
@@ -10,13 +10,13 @@
     </resultMap>
 
 
-    <select id="findById" resultMap="mileageResultMap">
+    <select id="findByAccountId" resultMap="mileageMap">
         SELECT id
              , account_id
              , mileage
              , status
-        FROM mileage
-        WHERE id = #{id}
+        FROM MILEAGE
+        WHERE account_id = #{accountId}
     </select>
 
 

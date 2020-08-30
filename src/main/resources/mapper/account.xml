@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.younghun.hibusgo.mapper.AccountMapper">
 
-    <resultMap id="accountResultMap" type="com.younghun.hibusgo.domain.Account">
+    <resultMap id="accountMap" type="com.younghun.hibusgo.domain.Account">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="password" column="password"/>
@@ -15,7 +15,7 @@
     </resultMap>
 
 
-    <select id="findById" resultMap="accountResultMap">
+    <select id="findById" resultMap="accountMap">
         SELECT id
              , user_id
              , password
@@ -29,7 +29,7 @@
         WHERE id = #{id}
     </select>
 
-    <select id="findByUserId" resultMap="accountResultMap">
+    <select id="findByUserId" resultMap="accountMap">
         SELECT id
              , user_id
              , password
@@ -43,7 +43,7 @@
         WHERE user_id = #{userId}
     </select>
 
-    <select id="findByUserIdAndPassword" resultMap="accountResultMap">
+    <select id="findByUserIdAndPassword" resultMap="accountMap">
         SELECT id
              , user_id
              , password
@@ -65,19 +65,26 @@
         AND status != 'DELETE'
     </select>
 
+    <select id="existsById" resultType="boolean">
+        SELECT COUNT(*)
+        FROM ACCOUNT
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </select>
+
     <insert id="addAccount">
         INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at, updated_at)
-        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, #{createdAt}, #{createdAt})
+        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, NOW(), NOW())
     </insert>
 
-    <update id="deleteAccount">
+    <update id="deleteAccount" parameterMap="accountMap">
         UPDATE ACCOUNT
         SET  status = 'DELETE'
         WHERE id = #{id}
         AND status != 'DELETE'
     </update>
 
-    <update id="updatePassword">
+    <update id="updatePassword" parameterMap="accountMap">
         UPDATE ACCOUNT
         SET password = #{password}
         AND updated_at = NOW()
@@ -85,7 +92,7 @@
         AND status != 'DELETE'
     </update>
 
-    <update id="updateAccountInfo">
+    <update id="updateAccountInfo" parameterMap="accountMap">
         UPDATE ACCOUNT
         SET name = #{name}
         AND phone_number = #{phoneNumber}
@@ -93,6 +100,5 @@
         WHERE user_id = #{userId}
         AND status != 'DELETE'
     </update>
-
 
 </mapper>

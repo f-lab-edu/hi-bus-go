@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MileageMapper {
 
-  Mileage findById(Long id);
+  Mileage findByAccountId(long accountId);
 
 }
