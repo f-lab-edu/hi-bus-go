@@ -19,13 +19,13 @@ public class RegionService {
   public Region findById(int id) {
     return regionMapper.findById(id);
   }
+  
+  public boolean existsById(int id) {
+    return regionMapper.existsById(id);
+  }
 
   public boolean existsByName(String name) {
     return regionMapper.existsByName(name);
-  }
-
-  public boolean existsById(int id) {
-    return regionMapper.existsById(id);
   }
 
   /**
@@ -37,14 +37,14 @@ public class RegionService {
     return regionMapper.searchByName(name);
   }
 
-  public void addRegion(Region region) {
-    regionMapper.addRegion(region);
-  }
-
   @Scheduled(fixedDelay = 300000L) // 5분마다 캐시 갱신
   @Cacheable(value = "regions.total", key = "'total'")
   public List<Region> searchTotal() {
     return regionMapper.searchTotal();
+  }
+  
+  public void addRegion(Region region) {
+    regionMapper.addRegion(region);
   }
 
   public void deleteRegion(int id) {
