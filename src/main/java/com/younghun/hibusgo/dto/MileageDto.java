@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-// 유저 생성시 유효성 검사를 위한 class
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

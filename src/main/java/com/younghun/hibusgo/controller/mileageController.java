@@ -1,14 +1,13 @@
 package com.younghun.hibusgo.controller;
 
-import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 
 import static com.younghun.hibusgo.utils.ResponseConstants.ACCOUNT_BAD_REQUEST;
 
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
-import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.domain.Mileage;
 
 import com.younghun.hibusgo.dto.MileageDto;
@@ -22,7 +21,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,27 +63,27 @@ public class mileageController {
   }
 
   /**
-   * 마일리지 추가 메소드
-   * 관리자가 특정 사용자의 id로 마일리지를 추가한다.
+   * 마일리지 수정 메소드
+   * 관리자가 특정 사용자의 마일리지를 수정한다.
    * @param mileageDto
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @PostMapping("/account")
-  public ResponseEntity<?> addMileage(@RequestBody @Valid MileageDto mileageDto) {
+  @PatchMapping("/account")
+  public ResponseEntity<?> updateMileage(@RequestBody @Valid MileageDto mileageDto) {
     long accountId = mileageDto.getAccountId();
 
     boolean existAccount = accountService.existsById(accountId);
 
     if (!existAccount) {
-      return ACCOUNT_BADE_REQUEST;
+      return ACCOUNT_BAD_REQUEST;
     }
 
     Mileage mileage = mileageDto.toEntity();
 
-    mileageService.addMileage(mileage);
+    mileageService.updateMileage(mileage);
 
-    return RESPONSE_ENTITY_CREATED;
+    return RESPONSE_ENTITY_NO_CONTENT;
   }
 
 

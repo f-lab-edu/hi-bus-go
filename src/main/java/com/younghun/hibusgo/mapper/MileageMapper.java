@@ -8,5 +8,5 @@ public interface MileageMapper {
 
   Mileage findByAccountId(long accountId);
 
-  void addMileage(Mileage mileage);
+  void updateMileage(Mileage mileage);
 }
