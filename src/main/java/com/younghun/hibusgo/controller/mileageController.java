@@ -65,6 +65,7 @@ public class mileageController {
   /**
    * 마일리지 수정 메소드
    * 관리자가 특정 사용자의 마일리지를 수정한다.
+   * 사용자의 마일리지가 존재하지 않을 경우 추가, 존재할 경우 추가한다.
    * @param mileageDto
    * @return ResponseEntity
    */
@@ -81,7 +82,13 @@ public class mileageController {
 
     Mileage mileage = mileageDto.toEntity();
 
-    mileageService.updateMileage(mileage);
+    boolean existMileage = mileageService.existsByAccountId(accountId);
+
+    if (existMileage) {
+      mileageService.updateMileage(mileage);
+    } else {
+      mileageService.addMileage(mileage);
+    }
 
     return RESPONSE_ENTITY_NO_CONTENT;
   }

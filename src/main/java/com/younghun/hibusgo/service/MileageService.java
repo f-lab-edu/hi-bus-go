@@ -14,6 +14,10 @@ public class MileageService {
 
   private final MileageMapper mileageMapper;
 
+  public boolean existsByAccountId(long id) {
+    return mileageMapper.existsByAccountId(id);
+  }
+
   public Optional<Mileage> findByAccountId(long accountId) {
     return Optional.ofNullable(mileageMapper.findByAccountId(accountId))
         .filter(o -> o.getStatus() == DataStatus.DEFAULT);
@@ -21,5 +25,9 @@ public class MileageService {
 
   public void updateMileage(Mileage mileage) {
     mileageMapper.updateMileage(mileage);
+  }
+
+  public void addMileage(Mileage mileage) {
+    mileageMapper.addMileage(mileage);
   }
 }
