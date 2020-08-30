@@ -9,13 +9,13 @@
         <result property="status" column="status"/>
     </resultMap>
 
-    <select id="findById" resultMap="mileageMap">
+    <select id="findByAccountId" resultMap="mileageMap">
         SELECT id
              , account_id
              , mileage
              , status
         FROM MILEAGE
-        WHERE id = #{id}
+        WHERE account_id = #{accountId}
     </select>
 
     <insert id="addMileage" parameterMap="mileageMap">

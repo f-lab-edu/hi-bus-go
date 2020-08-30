@@ -30,7 +30,7 @@ public class AccountService {
         accountMapper.addAccount(newAccount);
     }
 
-    public boolean existsById(Long id) {
+    public boolean existsById(long id) {
         return accountMapper.existsById(id);
     }
 

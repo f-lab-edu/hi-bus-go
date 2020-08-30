@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AccountMapper {
 
-    Account findById(Long id);
+    Account findById(long id);
 
     void addAccount(Account account);
 
-    boolean existsById(Long id);
+    boolean existsById(long id);
 
     boolean existsByUserId(String id);
 
