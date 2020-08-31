@@ -16,18 +16,18 @@
         WHERE id = #{id}
         AND status != 'DELETE'
     </select>
+  
+    <select id="existsById" resultType="boolean" parameterType="Integer">
+        SELECT COUNT(*)
+        FROM REGION
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </select>
 
     <select id="existsByName" resultType="boolean" parameterType="String">
         SELECT COUNT(*)
         FROM REGION
         WHERE name = #{name}
-        AND status != 'DELETE'
-    </select>
-
-    <select id="existsById" resultType="boolean" parameterType="Integer">
-        SELECT COUNT(*)
-        FROM REGION
-        WHERE id = #{id}
         AND status != 'DELETE'
     </select>
 
@@ -41,8 +41,8 @@
     </select>
 
     <insert id="addRegion">
-        INSERT INTO REGION(name, status)
-        VALUES(#{name}, #{status})
+        INSERT INTO REGION(name, status, create_at, updated_at)
+        VALUES(#{name}, #{status}, NOW(), NOW())
     </insert>
 
     <select id="searchTotal" resultMap="regionResultMap" resultType="java.util.ArrayList">

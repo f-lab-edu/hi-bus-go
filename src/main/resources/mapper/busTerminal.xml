@@ -7,7 +7,7 @@
         <result property="name" column="name"/>
         <result property="address" column="address"/>
         <result property="tel" column="tel"/>
-        <result property="region" column="region"/>
+        <result property="regionId" column="region_id"/>
         <result property="status" column="status"/>
     </resultMap>
 
@@ -74,13 +74,14 @@
     </select>
 
     <insert id="addBusTerminal">
-        INSERT INTO TERMINAL (name, address , tel , region_id, status)
-        VALUES (#{name}, #{address}, #{tel}, #{region_id} , #{status})
+        INSERT INTO TERMINAL(name, address , tel , region_id, status, created_at, updated_at)
+        VALUES(#{name}, #{address}, #{tel}, #{regionId} , #{status}, NOW(), NOW())
     </insert>
 
     <update id="deleteBusTerminal">
         UPDATE TERMINAL
         SET  status = 'DELETE'
+        AND updated_at = NOW()
         WHERE id = #{id}
         AND status != 'DELETE'
     </update>
@@ -97,6 +98,17 @@
         ON b.region_id = r.id
         WHERE b.status != 'DELETE'
     </select>
+
+    <update id="updateBusTerminal">
+        UPDATE TERMINAL
+        SET name = #{name}
+        AND address = #{address}
+        AND tel = #{tel}
+        AND region_id = #{regionId}
+        AND updated_at = NOW()
+        WHERE id = #{id}
+        AND status != 'DELETE'
+    </update>
 
 </mapper>
 
