@@ -8,9 +8,6 @@ public interface MileageMapper {
 
   Mileage findByAccountId(long accountId);
 
-  boolean existsByAccountId(long id);
-
   void updateMileage(Mileage mileage);
 
-  void addMileage(Mileage mileage);
 }

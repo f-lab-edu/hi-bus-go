@@ -82,13 +82,7 @@ public class mileageController {
 
     Mileage mileage = mileageDto.toEntity();
 
-    boolean existMileage = mileageService.existsByAccountId(accountId);
-
-    if (existMileage) {
-      mileageService.updateMileage(mileage);
-    } else {
-      mileageService.addMileage(mileage);
-    }
+    mileageService.updateMileage(mileage);
 
     return RESPONSE_ENTITY_NO_CONTENT;
   }
