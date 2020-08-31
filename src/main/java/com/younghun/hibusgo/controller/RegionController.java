@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +53,11 @@ public class  RegionController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PostMapping()
-  public ResponseEntity<?> addRegion(@RequestBody @Valid RegionDto regionDto) {
+  public ResponseEntity<?> addRegion(@RequestBody @Valid RegionDto regionDto, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+    }
+
     String name = regionDto.getName();
 
     boolean isExistsRegion = regionService.existsByName(name);
@@ -87,7 +92,6 @@ public class  RegionController {
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteRegion(@PathVariable int id) {
-
     boolean isExistsRegion =  regionService.existsById(id);
 
     if (!isExistsRegion) {
