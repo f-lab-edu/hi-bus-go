@@ -5,6 +5,7 @@ package com.younghun.hibusgo.controller;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_REGION_BAD_REQUEST;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
@@ -90,7 +91,7 @@ public class  RegionController {
     boolean isExistsRegion =  regionService.existsById(id);
 
     if (!isExistsRegion) {
-      return ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역입니다.");
+      return RESPONSE_REGION_BAD_REQUEST;
     }
 
     regionService.deleteRegion(id);

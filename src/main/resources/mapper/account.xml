@@ -79,7 +79,8 @@
 
     <update id="deleteAccount" parameterMap="accountMap">
         UPDATE ACCOUNT
-        SET  status = 'DELETE'
+        SET status = 'DELETE'
+        AND updated_at = NOW()
         WHERE id = #{id}
         AND status != 'DELETE'
     </update>
