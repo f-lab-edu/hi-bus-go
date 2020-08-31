@@ -23,7 +23,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 
 import javax.validation.Valid;
@@ -77,13 +77,13 @@ public class AccountController {
      * 객체 valitaion 실패시 에러 정보와 400(Bad Request) code return.
      *
      * @param accountDto 저장할 회원의 정보
-     * @param errors 객체 validation 에러 정보
+     * @param bindingResult 객체 validation 에러 정보
      * @return ResponseEntity(성공시 201 code, 실패시 400 code)
      */
     @PostMapping("/signUp")
-    public ResponseEntity<?> addAccount(@RequestBody @Valid AccountDto accountDto, Errors errors) {
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors.getAllErrors());
+    public ResponseEntity<?> addAccount(@RequestBody @Valid AccountDto accountDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
 
         Account account = accountDto.toEntity();
@@ -115,14 +115,14 @@ public class AccountController {
      *
      * @param accountId 로그인한 사용자 id
      * @param passwordDto 이전 패스워드, 새로운 패스워드
-     * @param errors 패스워드 validation 에러 정보
+     * @param bindingResult 패스워드 validation 에러 정보
      * @return ResponseEntity(성공시 201 code, 실패시 204 code)
      */
     @LoginCheck(userLevel = UserLevel.USER)
     @PatchMapping("/myInfo/password")
-    public ResponseEntity<?> updatePassword(@AccountId Long accountId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors.getAllErrors());
+    public ResponseEntity<?> updatePassword(@SessionId Long accountId, @RequestBody @Valid PasswordDto passwordDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
 
         accountService.updatePassword(accountId, passwordDto.getNewPassword());
@@ -137,14 +137,14 @@ public class AccountController {
      * 객체 validation 실패시 에러 정보와 400(Bad Request) code return.
      *
      * @param ProfileDto 프로필 정보
-     * @param errors 에러 정보
+     * @param bindingResult 에러 정보
      * @return ResponseEntity(성공시 204 code, 실패시 400 code)
      * */
     @LoginCheck(userLevel = UserLevel.USER)
     @PatchMapping("/myInfo")
-    public ResponseEntity<?> updateAccountInfo(@RequestBody @Valid ProfileDto ProfileDto, Errors errors) {
-        if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors.getAllErrors());
+    public ResponseEntity<?> updateAccountInfo(@RequestBody @Valid ProfileDto ProfileDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }
 
         Account accountInfo = ProfileDto.toEntity();

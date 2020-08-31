@@ -4,6 +4,7 @@ import com.younghun.hibusgo.domain.BusTerminal;
 
 import com.younghun.hibusgo.domain.DataStatus;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -22,10 +23,12 @@ public class BusTerminalDto {
 
     //터미널 이름
     @NotBlank
+    @Max(255)
     private String name;
 
     //주소
     @NotBlank
+    @Max(255)
     private String address;
 
     //전화번호
@@ -45,7 +48,7 @@ public class BusTerminalDto {
             .name(this.name)
             .address(this.address)
             .tel(this.tel)
-            .region(this.region)
+            .regionId(this.regionId)
             .status(DataStatus.DEFAULT)
             .build();
     }
