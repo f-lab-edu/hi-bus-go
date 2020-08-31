@@ -16,7 +16,7 @@ import com.younghun.hibusgo.dto.ProfileDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
 import com.younghun.hibusgo.service.MileageService;
-import com.younghun.hibusgo.utils.SessionId;
+import com.younghun.hibusgo.utils.AccountId;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import com.younghun.hibusgo.validator.PasswordValidator;
 import java.util.Optional;
@@ -100,7 +100,7 @@ public class AccountController {
      */
     @LoginCheck(userLevel = UserLevel.USER)
     @DeleteMapping("/myInfo")
-    public ResponseEntity<?> deleteAccount(@SessionId Long accountId) {
+    public ResponseEntity<?> deleteAccount(@AccountId Long accountId) {
         accountService.deleteAccount(accountId);
         loginService.accountLogout();
 
@@ -120,7 +120,7 @@ public class AccountController {
      */
     @LoginCheck(userLevel = UserLevel.USER)
     @PatchMapping("/myInfo/password")
-    public ResponseEntity<?> updatePassword(@SessionId Long accountId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
+    public ResponseEntity<?> updatePassword(@AccountId Long accountId, @RequestBody @Valid PasswordDto passwordDto, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().body(errors.getAllErrors());
         }
@@ -159,8 +159,8 @@ public class AccountController {
      * @return ResponseEntity
      */
     @LoginCheck(userLevel = UserLevel.USER)
-    @GetMapping("/myMileage")
-    public ResponseEntity<?> getMyMileage(@SessionId long accountId) {
+    @GetMapping("/mileage")
+    public ResponseEntity<?> getMyMileage(@AccountId long accountId) {
         Optional<Mileage> mileage = mileageService.findByAccountId(accountId);
 
         if (!mileage.isPresent()) {

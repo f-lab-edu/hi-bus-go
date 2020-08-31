@@ -1,6 +1,6 @@
 package com.younghun.hibusgo.config;
 
-import com.younghun.hibusgo.utils.SessionIdResolver;
+import com.younghun.hibusgo.utils.AccountIdResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
   /**
    * 커스터마이징한 HandlerMethodArgumentResolver
    */
-  SessionIdResolver sessionIdResolver;
+  AccountIdResolver sessionIdResolver;
 
   /**
    * sessionIdResolver를 등록
