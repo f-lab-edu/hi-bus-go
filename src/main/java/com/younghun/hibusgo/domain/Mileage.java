@@ -10,10 +10,10 @@ import lombok.ToString;
 public class Mileage {
 
   //아이디
-  private int id;
+  private long id;
 
   //회원 아이디
-  private int accountId;
+  private long accountId;
 
   //마일리지
   private int mileage;

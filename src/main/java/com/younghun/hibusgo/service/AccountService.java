@@ -38,7 +38,7 @@ public class AccountService {
         return accountMapper.existsByUserId(id);
     }
 
-    public Optional<Account> findByUserIdAndPassword(String userId, String password) throws IllegalArgumentException {
+    public Optional<Account> findByUserIdAndPassword(String userId, String password) {
         String encodePassword = passwordEncoder.encode(password);
 
         return Optional.ofNullable(accountMapper.findByUserIdAndPassword(userId, encodePassword))

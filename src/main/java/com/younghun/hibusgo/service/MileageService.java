@@ -19,4 +19,8 @@ public class MileageService {
         .filter(o -> o.getStatus() == DataStatus.DEFAULT);
   }
 
+  public void updateMileage(Mileage mileage) {
+    mileageMapper.updateMileage(mileage);
+  }
+
 }

@@ -72,7 +72,7 @@
         AND status != 'DELETE'
     </select>
 
-    <insert id="addAccount">
+    <insert id="addAccount" parameterMap="accountMap">
         INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at, updated_at)
         VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, NOW(), NOW())
     </insert>

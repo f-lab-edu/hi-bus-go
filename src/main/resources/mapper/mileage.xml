@@ -9,7 +9,6 @@
         <result property="status" column="status"/>
     </resultMap>
 
-
     <select id="findByAccountId" resultMap="mileageMap">
         SELECT id
              , account_id
@@ -19,5 +18,12 @@
         WHERE account_id = #{accountId}
     </select>
 
+    <update id="updateMileage" parameterMap="mileageMap">
+        INSERT INTO MILEAGE (account_id, mileage, status, created_at, updated_at)
+        VALUES (#{accountId}, #{mileage}, #{status}, NOW(), NOW())
+        ON DUPLICATE KEY UPDATE
+        mileage = #{mileage}
+        ,updated_at = NOW()
+    </update>
 
 </mapper>
