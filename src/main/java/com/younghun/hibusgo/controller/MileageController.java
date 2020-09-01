@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mileages")
 @RequiredArgsConstructor // 초기화 되지 않은 final field에 대해 생성자를 생성. final field에 의존성 주입
 @Log4j2
-public class mileageController {
+public class MileageController {
 
   private final MileageService mileageService;
   private final AccountService accountService;
