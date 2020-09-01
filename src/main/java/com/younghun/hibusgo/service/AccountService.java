@@ -30,6 +30,10 @@ public class AccountService {
         accountMapper.addAccount(newAccount);
     }
 
+    public boolean existsById(long id) {
+        return accountMapper.existsById(id);
+    }
+
     public boolean existsByUserId(String id) {
         return accountMapper.existsByUserId(id);
     }

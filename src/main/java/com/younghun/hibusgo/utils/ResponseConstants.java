@@ -17,5 +17,7 @@ public class ResponseConstants {
   public static final ResponseEntity<Void> RESPONSE_ENTITY_OK = ResponseEntity.ok().build();
   public static final ResponseEntity<Void> RESPONSE_NOT_FOUND = ResponseEntity.notFound().build();
   public static final ResponseEntity<Void> RESPONSE_CONFLICT = ResponseEntity.status(HttpStatus.CONFLICT).build();
+
+  public static final ResponseEntity<String> ACCOUNT_BAD_REQUEST = ResponseEntity.badRequest().body("이미 삭제된 회원이거나, 잘못된 회원입니다.");
   public static final ResponseEntity<String> RESPONSE_REGION_BAD_REQUEST = ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역 입니다.");
 }
