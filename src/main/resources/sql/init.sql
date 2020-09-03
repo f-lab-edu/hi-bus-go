@@ -66,6 +66,67 @@ create table terminal
 )
     comment '터미널';
 
+create table arrive_terminal
+(
+    id          bigint auto_increment comment '도착 터미널 아이디'
+        primary key,
+    terminal_id bigint   not null comment '터미널 아이디',
+    create_at   datetime not null comment '추가일',
+    update_at   datetime not null comment '추가일',
+    constraint arrive_terminal_terminal_id_uindex
+        unique (terminal_id),
+    constraint arrive_terminal_terminal_id_fk
+        foreign key (terminal_id) references terminal (id)
+            on update cascade on delete cascade
+)
+    comment '도착 터미널';
+
+create table departure_terminal
+(
+    id          bigint auto_increment comment '출발 터미널 아이디'
+        primary key,
+    terminal_id bigint   not null comment '터미널 아이디',
+    create_at   datetime not null comment '추가일',
+    updated_at  datetime not null comment '수정일',
+    constraint departure_terminal_terminal_id_uindex
+        unique (terminal_id),
+    constraint departure_terminal_terminal_id_fk
+        foreign key (terminal_id) references terminal (id)
+            on update cascade on delete cascade
+)
+    comment '출발 터미널';
+
+create table route
+(
+    id                    bigint auto_increment
+        primary key,
+    name                  varchar(255) not null comment '노선 이름',
+    distance              bigint       not null comment '거리',
+    seat_residual         bigint       not null comment '잔여석',
+    grade                 varchar(20)  null comment '노선 등급',
+    departure_terminal_id bigint       not null comment '출발 터미널 아이디',
+    arrive_terminal_id    bigint       not null comment '도착 터미널 아이디',
+    departure_time        datetime     not null comment '출발 시간',
+    arrive_terminal       datetime     not null comment '도착 시간',
+    created_at            datetime     not null comment '추가일',
+    updated_at            datetime     not null,
+    status                varchar(10)  not null comment '상태',
+    constraint route_arrive_terminal_id_uindex
+        unique (arrive_terminal_id),
+    constraint route_departure_terminal_id_uindex
+        unique (departure_terminal_id),
+    constraint route_arrive_terminal_id_fk
+        foreign key (arrive_terminal_id) references arrive_terminal (id)
+            on update cascade on delete cascade,
+    constraint route_departure_terminal_id_fk
+        foreign key (departure_terminal_id) references departure_terminal (id)
+            on update cascade on delete cascade
+)
+    comment '노선';
+
+create index route_name_index
+    on route (name);
+
 create index terminal_id_name_region_id_index
     on terminal (id, name, region_id);
 

@@ -3,10 +3,10 @@
 <mapper namespace="com.younghun.hibusgo.mapper.MileageMapper">
 
     <resultMap id="mileageMap" type="com.younghun.hibusgo.domain.Mileage">
-        <result property="id" column="id"/>
+        <result property="id"        column="id"/>
         <result property="accountId" column="account_id"/>
-        <result property="mileage" column="mileage"/>
-        <result property="status" column="status"/>
+        <result property="mileage"   column="mileage"/>
+        <result property="status"    column="status"/>
     </resultMap>
 
     <select id="findByAccountId" resultMap="mileageMap">
@@ -14,12 +14,12 @@
              , account_id
              , mileage
              , status
-        FROM MILEAGE
+        FROM mileage
         WHERE account_id = #{accountId}
     </select>
 
     <update id="updateMileage" parameterMap="mileageMap">
-        INSERT INTO MILEAGE (account_id, mileage, status, created_at, updated_at)
+        INSERT INTO mileage (account_id, mileage, status, created_at, updated_at)
         VALUES (#{accountId}, #{mileage}, #{status}, NOW(), NOW())
         ON DUPLICATE KEY UPDATE
         mileage = #{mileage}

@@ -40,7 +40,7 @@ public class BusTerminalDto {
     @NotBlank
     private int regionId;
 
-    // 버스 미널 상태 DEFAULT(기본), DELETED(삭제됨)
+    // 버스 터미널 상태 DEFAULT(기본), DELETED(삭제됨)
     private DataStatus status;
 
     public BusTerminal toEntity() {

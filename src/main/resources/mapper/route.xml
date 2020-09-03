@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.RegionMapper">
+
+    <resultMap id="routeMap" type="com.younghun.hibusgo.domain.Route">
+        <result property="id"                  column="id"/>
+        <result property="name"                column="name"/>
+        <result property="distance"            column="distance"/>
+        <result property="searResidual"        column="sear_residual"/>
+        <result property="grade"               column="grade"/>
+        <result property="departureTerminalId" column="departure_terminal_id"/>
+        <result property="arriveTerminalId"    column="arrive_terminal_id"/>
+        <result property="departureTime"       column="departure_time"/>
+        <result property="arriveTime"          column="arrive_time"/>
+        <result property="createdAt"           column="created_at"/>
+        <result property="updatedAt"           column="updated_at"/>
+        <result property="status"              column="status"/>
+    </resultMap>
+
+    <select id="existsByName" resultType="boolean" parameterType="String">
+        SELECT COUNT(*)
+        FROM route
+        WHERE name = #{name}
+        AND status != 'DELETE'
+    </select>
+
+    <select id="searchByName" resultMap="routeMap" resultType="java.util.ArrayList">
+        SELECT r.id
+             , r.name
+             , r.distance
+             , r.grade
+             , r.departure_terminal_id
+             , r.arrive_terminal_id
+             , r.departure_time
+             , r.arrive_terminal
+             , r.created_at
+             , r.updated_at
+             , r.status
+        FROM route r
+        INNER JOIN arrive_terminal a
+        on r.arrive_terminal_id = a.id
+        INNER JOIN departure_terminal dt
+        on r.departure_terminal_id = dt.id
+        WHERE r.name Like '%${name}%'
+        AND status != 'DELETE'
+    </select>
+
+    <select id="searchByTerminal" resultMap="routeMap" resultType="java.util.ArrayList">
+        SELECT r.id
+             , r.name
+             , r.distance
+             , r.grade
+             , r.departure_terminal_id
+             , r.arrive_terminal_id
+             , r.departure_time
+             , r.arrive_terminal
+             , r.created_at
+             , r.updated_at
+             , r.status
+        FROM route r
+        INNER JOIN arrive_terminal a
+        ON r.arrive_terminal_id = a.id
+        INNER JOIN departure_terminal dt
+        ON r.departure_terminal_id = dt.id
+        WHERE r.departure_terminal_id = #{departureTerminalId}
+        AND r.arrive_terminal_id = #{arriveTerminalId}
+        AND r.grade = #{grade}
+        AND r.departure_time = #{departureTime}
+        AND r.status != 'DELETE'
+    </select>
+
+
+
+</mapper>
