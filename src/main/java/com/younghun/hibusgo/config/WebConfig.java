@@ -1,6 +1,6 @@
 package com.younghun.hibusgo.config;
 
-import com.younghun.hibusgo.utils.LoginUserIddResolver;
+import com.younghun.hibusgo.utils.LoginUserIdResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -23,16 +23,16 @@ public class WebConfig implements WebMvcConfigurer {
   /**
    * 커스터마이징한 HandlerMethodArgumentResolver
    */
-  LoginUserIddResolver loginUserIddResolver;
+  LoginUserIdResolver loginUserIdResolver;
 
   /**
-   * LoginUserIddResolver를 등록
+   * LoginUserIdResolver를 등록
    *
    * 커스터마이징한 HandlerMethodArgumentResolver를 사용하기 위해 등록
    * @param resolvers
    */
   @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-    resolvers.add(loginUserIddResolver);
+    resolvers.add(loginUserIdResolver);
   }
 }

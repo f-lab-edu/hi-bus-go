@@ -17,7 +17,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
  */
 @Component
 @RequiredArgsConstructor
-public class LoginUserIddResolver implements HandlerMethodArgumentResolver {
+public class LoginUserIdResolver implements HandlerMethodArgumentResolver {
 
   private final LoginService loginService;
 
