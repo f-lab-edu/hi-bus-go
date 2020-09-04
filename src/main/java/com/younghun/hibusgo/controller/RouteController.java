@@ -42,23 +42,6 @@ public class RouteController {
    */
   @GetMapping()
   public ResponseEntity<?> getRoutesByTerminal(@RequestBody RouteDto routeDto) {
-    int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
-    int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
-
-    //출발 터미널 존재 여부
-    boolean existDepartureTerminal = busTerminalService.existsById(departureTerminalId);
-
-    if (!existDepartureTerminal) {
-      return RESPONSE_TERMINAL_BAD_REQUEST;
-    }
-
-    //도착 터미널 존재 여부
-    boolean existArriveTerminal = busTerminalService.existsById(arriveTerminalId);
-
-    if (!existArriveTerminal) {
-      return RESPONSE_TERMINAL_BAD_REQUEST;
-    }
-
     Route route = routeDto.toEntity();
     List<Route> routes = routeService.searchByTerminal(route);
 
