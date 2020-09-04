@@ -61,6 +61,10 @@
         AND status != 'DELETE'
     </select>
 
+    <insert id="addRoute" parameterMap="routeMap">
+        INSERT INTO route (name, distance, seat_residual, grade, departure_terminal_id, arrive_terminal_id, departure_time, arrive_time, created_at, updated_at, status)
+        values (#{name}, #{distance}, #{seatResidual}, #{grade}, #{departureTerminalId}, #{arriveTerminalId}, #{departureTime}, #{arriveTime}, NOW(), NOW(), #{status});
+    </insert>
 
 
 </mapper>

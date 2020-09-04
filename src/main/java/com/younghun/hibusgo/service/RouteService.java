@@ -21,4 +21,13 @@ public class RouteService {
   public List<Route> searchByTerminal(Route route) {
     return routeMapper.searchByTerminal(route);
   }
+
+  public boolean existsByName(String name) {
+    return routeMapper.existsByName(name);
+  }
+
+  public void addRoute(Route route) {
+    routeMapper.addRoute(route);
+  }
+
 }

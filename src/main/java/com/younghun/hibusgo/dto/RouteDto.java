@@ -58,6 +58,7 @@ public class RouteDto {
             .grade(this.grade)
             .departureTerminalId(this.departureTerminalId)
             .arriveTerminalId(this.arriveTerminalId)
+            .departureTime(this.departureTime)
             .status(DataStatus.DEFAULT)
             .build();
     }
