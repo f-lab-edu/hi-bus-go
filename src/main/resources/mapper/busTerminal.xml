@@ -62,14 +62,14 @@
         FROM terminal b
         INNER JOIN REGION r
         ON b.region_id = r.id
-        WHERE b.name = #{name}
-        AND b.status != 'DELETE'
+        WHERE b.name   = #{name}
+        AND b.status   != 'DELETE'
     </select>
 
     <select id="existsById" resultType="boolean" parameterType="Integer">
         SELECT COUNT(*)
         FROM terminal
-        WHERE id = #{id}
+        WHERE id   = #{id}
         AND status != 'DELETE'
     </select>
 
@@ -80,10 +80,10 @@
 
     <update id="deleteBusTerminal">
         UPDATE terminal
-        SET  status = 'DELETE'
+        SET  status    = 'DELETE'
         AND updated_at = NOW()
-        WHERE id = #{id}
-        AND status != 'DELETE'
+        WHERE id       = #{id}
+        AND status     != 'DELETE'
     </update>
 
     <select id="searchTotal" resultMap="busTerminalResultMap" resultType="java.util.ArrayList">
@@ -101,13 +101,13 @@
 
     <update id="updateBusTerminal">
         UPDATE terminal
-        SET name = #{name}
-        AND address = #{address}
-        AND tel = #{tel}
-        AND region_id = #{regionId}
+        SET name       = #{name}
+        AND address    = #{address}
+        AND tel        = #{tel}
+        AND region_id  = #{regionId}
         AND updated_at = NOW()
-        WHERE id = #{id}
-        AND status != 'DELETE'
+        WHERE id       = #{id}
+        AND status     != 'DELETE'
     </update>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.younghun.hibusgo.controller;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ROUTE_BAD_REQUEST;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_TERMINAL_BAD_REQUEST;
 
 import com.younghun.hibusgo.aop.LoginCheck;
@@ -119,6 +120,25 @@ public class RouteController {
 
     Route route = routeDto.toEntity();
     routeService.updateRoute(route);
+
+    return RESPONSE_ENTITY_NO_CONTENT;
+  }
+
+  /**
+   * 노선 삭제 메소드
+   * @param id 삭제할 노선 아이디
+   * @return ResponseEntity
+   */
+  @LoginCheck(userLevel = UserLevel.ADMIN)
+  @PatchMapping("/{id}")
+  public ResponseEntity<?> deleteRoute(@PathVariable int id) {
+    boolean existRoute = routeService.existsById(id);
+
+    if (!existRoute) {
+      return RESPONSE_ROUTE_BAD_REQUEST;
+    }
+
+    routeService.deleteRoute(id);
 
     return RESPONSE_ENTITY_NO_CONTENT;
   }
