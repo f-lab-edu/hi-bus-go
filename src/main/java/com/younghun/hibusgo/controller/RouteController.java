@@ -29,7 +29,7 @@ public class RouteController {
    * @return List<Route>
    */
   @GetMapping("/{name}")
-  public ResponseEntity<?> getRoutesByName(@PathVariable String name) {
+  public ResponseEntity<List<Route>> getRoutesByName(@PathVariable String name) {
     List<Route> routes = routeService.searchByName(name);
 
     return ResponseEntity.ok().body(routes);
@@ -41,7 +41,7 @@ public class RouteController {
    * @return List<Route>
    */
   @GetMapping()
-  public ResponseEntity<?> getRoutesByTerminal(@RequestBody RouteDto routeDto) {
+  public ResponseEntity<List<Route>> getRoutesByTerminal(@RequestBody RouteDto routeDto) {
     Route route = routeDto.toEntity();
     List<Route> routes = routeService.searchByTerminal(route);
 
