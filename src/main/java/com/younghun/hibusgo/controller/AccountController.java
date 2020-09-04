@@ -120,7 +120,7 @@ public class AccountController {
      */
     @LoginCheck(userLevel = UserLevel.USER)
     @PatchMapping("/myInfo/password")
-    public ResponseEntity<?> updatePassword(@SessionId Long accountId, @RequestBody @Valid PasswordDto passwordDto, BindingResult bindingResult) {
+    public ResponseEntity<?> updatePassword(@AccountId Long accountId, @RequestBody @Valid PasswordDto passwordDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
         }

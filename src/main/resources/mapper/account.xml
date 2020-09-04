@@ -14,7 +14,6 @@
         <result property="updatedAt"   column="updated_at"/>
     </resultMap>
 
-
     <select id="findById" resultMap="accountMap">
         SELECT id
              , user_id
@@ -72,12 +71,12 @@
         AND status != 'DELETE'
     </select>
 
-    <insert id="addAccount" parameterMap="accountMap">
-        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at, updated_at)
-        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, NOW(), NOW())
+    <insert id="addAccount">
+        INSERT INTO ACCOUNT (user_id, password, name, phone_number, user_level, status, created_at, updated_at)
+        VALUES (#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, NOW(), NOW())
     </insert>
 
-    <update id="deleteAccount" parameterMap="accountMap">
+    <update id="deleteAccount">
         UPDATE ACCOUNT
         SET status = 'DELETE'
         AND updated_at = NOW()
@@ -85,7 +84,7 @@
         AND status != 'DELETE'
     </update>
 
-    <update id="updatePassword" parameterMap="accountMap">
+    <update id="updatePassword">
         UPDATE account
         SET password = #{password}
         AND updated_at = NOW()
@@ -93,7 +92,7 @@
         AND status != 'DELETE'
     </update>
 
-    <update id="updateAccountInfo" parameterMap="accountMap">
+    <update id="updateAccountInfo">
         UPDATE account
         SET name = #{name}
         AND phone_number = #{phoneNumber}

@@ -18,7 +18,7 @@
         WHERE account_id = #{accountId}
     </select>
 
-    <update id="updateMileage" parameterMap="mileageMap">
+    <update id="updateMileage">
         INSERT INTO mileage (account_id, mileage, status, created_at, updated_at)
         VALUES (#{accountId}, #{mileage}, #{status}, NOW(), NOW())
         ON DUPLICATE KEY UPDATE
