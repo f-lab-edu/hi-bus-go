@@ -15,4 +15,5 @@ public interface RouteMapper {
 
   void addRoute(Route route);
 
+  void updateRoute(Route route);
 }

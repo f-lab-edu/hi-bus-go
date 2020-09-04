@@ -30,4 +30,7 @@ public class RouteService {
     routeMapper.addRoute(route);
   }
 
+  public void updateRoute(Route route) {
+    routeMapper.updateRoute(route);
+  }
 }
