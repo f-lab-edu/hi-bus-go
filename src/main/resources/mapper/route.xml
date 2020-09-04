@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.younghun.hibusgo.mapper.RegionMapper">
+<mapper namespace="com.younghun.hibusgo.mapper.RouteMapper">
 
     <resultMap id="routeMap" type="com.younghun.hibusgo.domain.Route">
         <result property="id"                  column="id"/>
@@ -25,50 +25,46 @@
     </select>
 
     <select id="searchByName" resultMap="routeMap" resultType="java.util.ArrayList">
-        SELECT r.id
-             , r.name
-             , r.distance
-             , r.grade
-             , r.departure_terminal_id
-             , r.arrive_terminal_id
-             , r.departure_time
-             , r.arrive_terminal
-             , r.created_at
-             , r.updated_at
-             , r.status
-        FROM route r
-        INNER JOIN arrive_terminal a
-        on r.arrive_terminal_id = a.id
-        INNER JOIN departure_terminal dt
-        on r.departure_terminal_id = dt.id
-        WHERE r.name Like '%${name}%'
+        SELECT id
+             , name
+             , distance
+             , grade
+             , departure_terminal_id
+             , arrive_terminal_id
+             , departure_time
+             , arrive_time
+             , created_at
+             , updated_at
+             , status
+        FROM route
+        WHERE name Like '%${name}%'
         AND status != 'DELETE'
     </select>
 
     <select id="searchByTerminal" resultMap="routeMap" resultType="java.util.ArrayList">
-        SELECT r.id
-             , r.name
-             , r.distance
-             , r.grade
-             , r.departure_terminal_id
-             , r.arrive_terminal_id
-             , r.departure_time
-             , r.arrive_terminal
-             , r.created_at
-             , r.updated_at
-             , r.status
-        FROM route r
-        INNER JOIN arrive_terminal a
-        ON r.arrive_terminal_id = a.id
-        INNER JOIN departure_terminal dt
-        ON r.departure_terminal_id = dt.id
-        WHERE r.departure_terminal_id = #{departureTerminalId}
-        AND r.arrive_terminal_id = #{arriveTerminalId}
-        AND r.grade = #{grade}
-        AND r.departure_time = #{departureTime}
-        AND r.status != 'DELETE'
+        SELECT id
+             , name
+             , distance
+             , grade
+             , departure_terminal_id
+             , arrive_terminal_id
+             , departure_time
+             , arrive_time
+             , created_at
+             , updated_at
+             , status
+        FROM route
+        WHERE departure_terminal_id = #{departureTerminalId}
+        AND arrive_terminal_id = #{arriveTerminalId}
+        AND grade = #{grade}
+        AND departure_time = #{departureTime}
+        AND status != 'DELETE'
     </select>
 
+    <insert id="addRoute" parameterMap="routeMap">
+        INSERT INTO route (name, distance, seat_residual, grade, departure_terminal_id, arrive_terminal_id, departure_time, arrive_time, created_at, updated_at, status)
+        values (#{name}, #{distance}, #{seatResidual}, #{grade}, #{departureTerminalId}, #{arriveTerminalId}, #{departureTime}, #{arriveTime}, NOW(), NOW(), #{status});
+    </insert>
 
 
 </mapper>

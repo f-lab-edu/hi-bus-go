@@ -10,4 +10,9 @@ public interface RouteMapper {
   List<Route> searchByName(String name);
 
   List<Route> searchByTerminal(Route route);
+
+  boolean existsByName(String name);
+
+  void addRoute(Route route);
+
 }
