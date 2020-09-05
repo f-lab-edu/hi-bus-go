@@ -74,14 +74,6 @@ public class RouteController {
       return RESPONSE_TERMINAL_BAD_REQUEST;
     }
 
-    String name = routeDto.getName();
-
-    boolean isExistsRoute =  routeService.existsByName(name);
-
-    if (isExistsRoute) {
-      return RESPONSE_CONFLICT;
-    }
-
     Route route = routeDto.toEntity();
     routeService.addRoute(route);
 

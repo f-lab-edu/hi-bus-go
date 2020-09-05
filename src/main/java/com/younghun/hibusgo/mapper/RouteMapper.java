@@ -7,8 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RouteMapper {
 
-  List<Route> searchByName(String name);
-
   List<Route> searchByTerminal(Route route);
 
   boolean existsByName(String name);

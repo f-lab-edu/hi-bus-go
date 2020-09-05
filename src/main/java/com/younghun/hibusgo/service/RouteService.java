@@ -14,10 +14,6 @@ public class RouteService {
 
   private final RouteMapper routeMapper;
 
-  public List<Route> searchByName(String name) {
-    return routeMapper.searchByName(name);
-  }
-
   public List<Route> searchByTerminal(Route route) {
     return routeMapper.searchByTerminal(route);
   }

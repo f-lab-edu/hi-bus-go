@@ -17,13 +17,6 @@
         <result property="status"              column="status"/>
     </resultMap>
 
-    <select id="existsByName" resultType="boolean" parameterType="String">
-        SELECT COUNT(*)
-        FROM route
-        WHERE name = #{name}
-        AND status != 'DELETE'
-    </select>
-
     <select id="searchByName" resultMap="routeMap" resultType="java.util.ArrayList">
         SELECT id
              , name
