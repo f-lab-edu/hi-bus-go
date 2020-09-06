@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -130,7 +131,7 @@ public class RouteController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @PatchMapping("/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteRoute(@PathVariable int id) {
     boolean existRoute = routeService.existsById(id);
 

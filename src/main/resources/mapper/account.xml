@@ -54,7 +54,7 @@
              , updated_at
         FROM account
         WHERE user_id = #{userId}
-        AND password  = #{password}
+        AND password = #{password}
     </select>
 
     <select id="existsByUserId" resultType="boolean">
