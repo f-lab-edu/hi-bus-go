@@ -94,9 +94,6 @@ create table route
 )
     comment '노선';
 
-create index route_name_index
-    on route (name);
-
 create index terminal_id_name_region_id_index
     on terminal (id, name, region_id);
 

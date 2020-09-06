@@ -17,7 +17,6 @@
         <result property="status"              column="status"/>
     </resultMap>
 
-
     <select id="existsById" resultType="boolean" parameterType="Integer">
       SELECT COUNT(*)
       FROM route
