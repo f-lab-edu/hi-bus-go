@@ -19,6 +19,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RouteDto {
 
+    //노선 아이디
+    private int id;
+
     //노선 이름
     @NotBlank
     @Max(255)
@@ -52,6 +55,7 @@ public class RouteDto {
 
     public Route toEntity() {
         return Route.builder()
+            .id(this.id)
             .name(this.name)
             .distance(this.distance)
             .seatResidual(this.seatResidual)

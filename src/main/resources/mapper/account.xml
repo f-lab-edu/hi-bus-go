@@ -94,11 +94,11 @@
 
     <update id="updateAccountInfo">
         UPDATE account
-        SET name = #{name}
+        SET name         = #{name}
         AND phone_number = #{phoneNumber}
-        AND updated_at = NOW()
-        WHERE user_id = #{userId}
-        AND status != 'DELETE'
+        AND updated_at   = NOW()
+        WHERE user_id    = #{userId}
+        AND status       != 'DELETE'
     </update>
 
 </mapper>

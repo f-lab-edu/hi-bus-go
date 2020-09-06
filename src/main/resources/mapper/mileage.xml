@@ -22,8 +22,8 @@
         INSERT INTO mileage (account_id, mileage, status, created_at, updated_at)
         VALUES (#{accountId}, #{mileage}, #{status}, NOW(), NOW())
         ON DUPLICATE KEY UPDATE
-        mileage = #{mileage}
-        ,updated_at = NOW()
+        mileage      = #{mileage}
+        , updated_at = NOW()
     </update>
 
 </mapper>

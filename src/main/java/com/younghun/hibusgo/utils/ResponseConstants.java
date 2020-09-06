@@ -21,4 +21,5 @@ public class ResponseConstants {
   public static final ResponseEntity<String> RESPONSE_ACCOUNT_BAD_REQUEST = ResponseEntity.badRequest().body("이미 삭제된 회원이거나, 잘못된 회원입니다.");
   public static final ResponseEntity<String> RESPONSE_REGION_BAD_REQUEST = ResponseEntity.badRequest().body("이미 삭제된 지역이거나, 잘못된 지역입니다.");
   public static final ResponseEntity<String> RESPONSE_TERMINAL_BAD_REQUEST = ResponseEntity.badRequest().body("이미 삭제된 터미널이거나, 잘못된 터미널입니다.");
+  public static final ResponseEntity<String> RESPONSE_ROUTE_BAD_REQUEST = ResponseEntity.badRequest().body("이미 삭제된 노선이거나, 잘못된 노선입니다.");
 }
