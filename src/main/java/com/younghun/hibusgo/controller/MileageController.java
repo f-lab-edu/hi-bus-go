@@ -1,8 +1,6 @@
 package com.younghun.hibusgo.controller;
 
-
-import static com.younghun.hibusgo.utils.ResponseConstants.ACCOUNT_BAD_REQUEST;
-
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ACCOUNT_BAD_REQUEST;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 
@@ -50,7 +48,7 @@ public class MileageController {
     boolean existAccount = accountService.existsById(id);
 
     if (!existAccount) {
-      return ACCOUNT_BAD_REQUEST;
+      return RESPONSE_ACCOUNT_BAD_REQUEST;
     }
 
     Optional<Mileage> mileage = mileageService.findByAccountId(id);
@@ -77,7 +75,7 @@ public class MileageController {
     boolean existAccount = accountService.existsById(accountId);
 
     if (!existAccount) {
-      return ACCOUNT_BAD_REQUEST;
+      return RESPONSE_ACCOUNT_BAD_REQUEST;
     }
 
     Mileage mileage = mileageDto.toEntity();

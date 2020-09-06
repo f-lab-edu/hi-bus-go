@@ -3,17 +3,16 @@
 <mapper namespace="com.younghun.hibusgo.mapper.AccountMapper">
 
     <resultMap id="accountMap" type="com.younghun.hibusgo.domain.Account">
-        <result property="id" column="id"/>
-        <result property="userId" column="user_id"/>
-        <result property="password" column="password"/>
-        <result property="name" column="name"/>
+        <result property="id"          column="id"/>
+        <result property="userId"      column="user_id"/>
+        <result property="password"    column="password"/>
+        <result property="name"        column="name"/>
         <result property="phoneNumber" column="phone_number"/>
-        <result property="userLevel" column="user_level"/>
-        <result property="status" column="status"/>
-        <result property="createdAt" column="created_at"/>
-        <result property="updatedAt" column="updated_at"/>
+        <result property="userLevel"   column="user_level"/>
+        <result property="status"      column="status"/>
+        <result property="createdAt"   column="created_at"/>
+        <result property="updatedAt"   column="updated_at"/>
     </resultMap>
-
 
     <select id="findById" resultMap="accountMap">
         SELECT id
@@ -25,7 +24,7 @@
              , status
              , created_at
              , updated_at
-        FROM ACCOUNT
+        FROM account
         WHERE id = #{id}
     </select>
 
@@ -39,7 +38,7 @@
              , status
              , created_at
              , updated_at
-        FROM ACCOUNT
+        FROM account
         WHERE user_id = #{userId}
     </select>
 
@@ -53,31 +52,31 @@
              , status
              , created_at
              , updated_at
-        FROM ACCOUNT
+        FROM account
         WHERE user_id = #{userId}
         AND password = #{password}
     </select>
 
     <select id="existsByUserId" resultType="boolean">
         SELECT COUNT(*)
-        FROM ACCOUNT
+        FROM account
         WHERE user_id = #{userId}
         AND status != 'DELETE'
     </select>
 
     <select id="existsById" resultType="boolean">
         SELECT COUNT(*)
-        FROM ACCOUNT
+        FROM account
         WHERE id = #{id}
         AND status != 'DELETE'
     </select>
 
-    <insert id="addAccount" parameterMap="accountMap">
-        INSERT INTO ACCOUNT(user_id, password, name, phone_number, user_level, status, created_at, updated_at)
-        VALUES(#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, NOW(), NOW())
+    <insert id="addAccount">
+        INSERT INTO ACCOUNT (user_id, password, name, phone_number, user_level, status, created_at, updated_at)
+        VALUES (#{userId}, #{password}, #{name}, #{phoneNumber}, #{userLevel}, #{status}, NOW(), NOW())
     </insert>
 
-    <update id="deleteAccount" parameterMap="accountMap">
+    <update id="deleteAccount">
         UPDATE ACCOUNT
         SET status = 'DELETE'
         AND updated_at = NOW()
@@ -85,21 +84,21 @@
         AND status != 'DELETE'
     </update>
 
-    <update id="updatePassword" parameterMap="accountMap">
-        UPDATE ACCOUNT
+    <update id="updatePassword">
+        UPDATE account
         SET password = #{password}
         AND updated_at = NOW()
         WHERE id = #{accountId}
         AND status != 'DELETE'
     </update>
 
-    <update id="updateAccountInfo" parameterMap="accountMap">
-        UPDATE ACCOUNT
-        SET name = #{name}
+    <update id="updateAccountInfo">
+        UPDATE account
+        SET name         = #{name}
         AND phone_number = #{phoneNumber}
-        AND updated_at = NOW()
-        WHERE user_id = #{userId}
-        AND status != 'DELETE'
+        AND updated_at   = NOW()
+        WHERE user_id    = #{userId}
+        AND status       != 'DELETE'
     </update>
 
 </mapper>

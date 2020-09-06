@@ -3,8 +3,8 @@
 <mapper namespace="com.younghun.hibusgo.mapper.RegionMapper">
 
     <resultMap id="regionResultMap" type="com.younghun.hibusgo.domain.Region">
-        <result property="id" column="id"/>
-        <result property="name" column="name"/>
+        <result property="id"     column="id"/>
+        <result property="name"   column="name"/>
         <result property="status" column="status"/>
     </resultMap>
 
@@ -12,22 +12,22 @@
         SELECT id
              , name
              , status
-        FROM REGION
-        WHERE id = #{id}
+        FROM region
+        WHERE id   = #{id}
         AND status != 'DELETE'
     </select>
   
     <select id="existsById" resultType="boolean" parameterType="Integer">
         SELECT COUNT(*)
-        FROM REGION
-        WHERE id = #{id}
+        FROM region
+        WHERE id   = #{id}
         AND status != 'DELETE'
     </select>
 
     <select id="existsByName" resultType="boolean" parameterType="String">
         SELECT COUNT(*)
-        FROM REGION
-        WHERE name = #{name}
+        FROM region
+        WHERE name  = #{name}
         AND status != 'DELETE'
     </select>
 
@@ -35,13 +35,13 @@
         SELECT id
              , name
              , status
-        FROM REGION
+        FROM region
         WHERE name Like '%${name}%'
         AND status != 'DELETE'
     </select>
 
     <insert id="addRegion">
-        INSERT INTO REGION(name, status, create_at, updated_at)
+        INSERT INTO region(name, status, create_at, updated_at)
         VALUES(#{name}, #{status}, NOW(), NOW())
     </insert>
 
@@ -49,15 +49,15 @@
         SELECT id
              , name
              , status
-        FROM REGION
+        FROM region
         WHERE status != 'DELETE'
     </select>
 
     <update id="deleteRegion">
-        UPDATE REGION
+        UPDATE region
         SET  status = 'DELETE'
-        WHERE id = #{id}
-        AND status != 'DELETE'
+        WHERE id    = #{id}
+        AND status  != 'DELETE'
     </update>
 
 </mapper>

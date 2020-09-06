@@ -3,12 +3,12 @@
 <mapper namespace="com.younghun.hibusgo.mapper.BusTerminalMapper">
 
     <resultMap id="busTerminalResultMap" type="com.younghun.hibusgo.domain.BusTerminal">
-        <result property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="address" column="address"/>
-        <result property="tel" column="tel"/>
+        <result property="id"       column="id"/>
+        <result property="name"     column="name"/>
+        <result property="address"  column="address"/>
+        <result property="tel"      column="tel"/>
         <result property="regionId" column="region_id"/>
-        <result property="status" column="status"/>
+        <result property="status"   column="status"/>
     </resultMap>
 
     <select id="findById" resultMap="busTerminalResultMap">
@@ -59,31 +59,31 @@
 
     <select id="existsByName" resultType="boolean" parameterType="String">
         SELECT COUNT(*)
-        FROM TERMINAL b
+        FROM terminal b
         INNER JOIN REGION r
         ON b.region_id = r.id
-        WHERE b.name = #{name}
-        AND b.status != 'DELETE'
+        WHERE b.name   = #{name}
+        AND b.status   != 'DELETE'
     </select>
 
     <select id="existsById" resultType="boolean" parameterType="Integer">
         SELECT COUNT(*)
-        FROM TERMINAL
-        WHERE id = #{id}
+        FROM terminal
+        WHERE id   = #{id}
         AND status != 'DELETE'
     </select>
 
     <insert id="addBusTerminal">
-        INSERT INTO TERMINAL(name, address , tel , region_id, status, created_at, updated_at)
+        INSERT INTO terminal(name, address , tel , region_id, status, created_at, updated_at)
         VALUES(#{name}, #{address}, #{tel}, #{regionId} , #{status}, NOW(), NOW())
     </insert>
 
     <update id="deleteBusTerminal">
-        UPDATE TERMINAL
-        SET  status = 'DELETE'
+        UPDATE terminal
+        SET  status    = 'DELETE'
         AND updated_at = NOW()
-        WHERE id = #{id}
-        AND status != 'DELETE'
+        WHERE id       = #{id}
+        AND status     != 'DELETE'
     </update>
 
     <select id="searchTotal" resultMap="busTerminalResultMap" resultType="java.util.ArrayList">
@@ -93,21 +93,21 @@
              , b.tel
              , r.name region
              , b.status
-        FROM TERMINAL b
+        FROM terminal b
         INNER JOIN REGION r
         ON b.region_id = r.id
         WHERE b.status != 'DELETE'
     </select>
 
     <update id="updateBusTerminal">
-        UPDATE TERMINAL
-        SET name = #{name}
-        AND address = #{address}
-        AND tel = #{tel}
-        AND region_id = #{regionId}
+        UPDATE terminal
+        SET name       = #{name}
+        AND address    = #{address}
+        AND tel        = #{tel}
+        AND region_id  = #{regionId}
         AND updated_at = NOW()
-        WHERE id = #{id}
-        AND status != 'DELETE'
+        WHERE id       = #{id}
+        AND status     != 'DELETE'
     </update>
 
 </mapper>
