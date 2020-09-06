@@ -3,6 +3,7 @@ package com.younghun.hibusgo.controller;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_CONFLICT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ROUTE_BAD_REQUEST;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_TERMINAL_BAD_REQUEST;
 
 import com.younghun.hibusgo.aop.LoginCheck;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -109,6 +111,25 @@ public class RouteController {
 
     Route route = routeDto.toEntity();
     routeService.updateRoute(route);
+
+    return RESPONSE_ENTITY_NO_CONTENT;
+  }
+
+  /**
+   * 노선 삭제 메소드
+   * @param id 삭제할 노선 아이디
+   * @return ResponseEntity
+   */
+  @LoginCheck(userLevel = UserLevel.ADMIN)
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> deleteRoute(@PathVariable int id) {
+    boolean existRoute = routeService.existsById(id);
+
+    if (!existRoute) {
+      return RESPONSE_ROUTE_BAD_REQUEST;
+    }
+
+    routeService.deleteRoute(id);
 
     return RESPONSE_ENTITY_NO_CONTENT;
   }

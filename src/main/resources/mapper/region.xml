@@ -13,21 +13,21 @@
              , name
              , status
         FROM region
-        WHERE id = #{id}
+        WHERE id   = #{id}
         AND status != 'DELETE'
     </select>
   
     <select id="existsById" resultType="boolean" parameterType="Integer">
         SELECT COUNT(*)
         FROM region
-        WHERE id = #{id}
+        WHERE id   = #{id}
         AND status != 'DELETE'
     </select>
 
     <select id="existsByName" resultType="boolean" parameterType="String">
         SELECT COUNT(*)
         FROM region
-        WHERE name = #{name}
+        WHERE name  = #{name}
         AND status != 'DELETE'
     </select>
 
@@ -56,8 +56,8 @@
     <update id="deleteRegion">
         UPDATE region
         SET  status = 'DELETE'
-        WHERE id = #{id}
-        AND status != 'DELETE'
+        WHERE id    = #{id}
+        AND status  != 'DELETE'
     </update>
 
 </mapper>

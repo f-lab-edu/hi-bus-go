@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RouteMapper {
 
+  boolean existsById(int id);
+
   List<Route> searchByTerminal(Route route);
 
   boolean existsByName(String name);
@@ -14,4 +16,6 @@ public interface RouteMapper {
   void addRoute(Route route);
 
   void updateRoute(Route route);
+
+  void deleteRoute(int id);
 }

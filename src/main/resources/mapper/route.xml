@@ -17,6 +17,20 @@
         <result property="status"              column="status"/>
     </resultMap>
 
+    <select id="existsById" resultType="boolean" parameterType="Integer">
+      SELECT COUNT(*)
+      FROM route
+      WHERE id = #{id}
+      AND status != 'DELETE'
+    </select>
+
+    <select id="existsByName" resultType="boolean" parameterType="String">
+        SELECT COUNT(*)
+        FROM route
+        WHERE name = #{name}
+        AND status != 'DELETE'
+    </select>
+
     <select id="searchByName" resultMap="routeMap" resultType="java.util.ArrayList">
         SELECT id
              , name
@@ -61,18 +75,24 @@
 
     <update id="updateRoute">
         UPDATE route
-        SET name = #{name}
-        AND distance = #{distance}
-        AND seat_residual = #{seatResidual}
-        AND grade = #{grade}
+        SET name                  = #{name}
+        AND distance              = #{distance}
+        AND seat_residual         = #{seatResidual}
+        AND grade                 = #{grade}
         AND departure_terminal_id = #{departureTerminalId}
-        AND arrive_terminal_id = #{arriveTerminalId}
-        AND departure_time = {departureTime}
-        AND arrive_time = #{arriveTime}
-        AND updated_at = NOW()
-        AND status = #{status}
-        WHERE id = #{id}
+        AND arrive_terminal_id    = #{arriveTerminalId}
+        AND departure_time        = {departureTime}
+        AND arrive_time           = #{arriveTime}
+        AND updated_at            = NOW()
+        AND status                = #{status}
+        WHERE id                  = #{id}
     </update>
 
+    <update id="deleteRoute">
+      UPDATE route
+      SET  status = 'DELETE'
+      WHERE id    = #{id}
+      AND status  != 'DELETE'
+    </update>
 
 </mapper>

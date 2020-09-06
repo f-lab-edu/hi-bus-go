@@ -14,6 +14,10 @@ public class RouteService {
 
   private final RouteMapper routeMapper;
 
+  public boolean existsById(int id) {
+    return routeMapper.existsById(id);
+  }
+
   public List<Route> searchByTerminal(Route route) {
     return routeMapper.searchByTerminal(route);
   }
@@ -28,5 +32,9 @@ public class RouteService {
 
   public void updateRoute(Route route) {
     routeMapper.updateRoute(route);
+  }
+
+  public void deleteRoute(int id) {
+    routeMapper.deleteRoute(id);
   }
 }
