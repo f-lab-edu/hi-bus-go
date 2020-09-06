@@ -11,8 +11,6 @@ public interface RouteMapper {
 
   List<Route> searchByTerminal(Route route);
 
-  boolean existsByName(String name);
-
   void addRoute(Route route);
 
   void updateRoute(Route route);

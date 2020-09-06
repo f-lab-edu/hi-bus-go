@@ -22,10 +22,6 @@ public class RouteService {
     return routeMapper.searchByTerminal(route);
   }
 
-  public boolean existsByName(String name) {
-    return routeMapper.existsByName(name);
-  }
-
   public void addRoute(Route route) {
     routeMapper.addRoute(route);
   }
