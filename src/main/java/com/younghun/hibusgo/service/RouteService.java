@@ -18,8 +18,8 @@ public class RouteService {
     return routeMapper.existsById(id);
   }
 
-  public List<Route> searchByTerminal(Route route) {
-    return routeMapper.searchByTerminal(route);
+  public List<Route> searchRoute(Route route) {
+    return routeMapper.searchRoute(route);
   }
 
   public void addRoute(Route route) {

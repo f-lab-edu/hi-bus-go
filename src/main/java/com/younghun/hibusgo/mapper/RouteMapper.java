@@ -9,7 +9,7 @@ public interface RouteMapper {
 
   boolean existsById(int id);
 
-  List<Route> searchByTerminal(Route route);
+  List<Route> searchRoute(Route route);
 
   void addRoute(Route route);
 
