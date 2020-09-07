@@ -85,7 +85,7 @@ public class LoginController {
      */
     @LoginCheck(userLevel = UserLevel.ANONYMOUS)
     @PostMapping("/logout")
-    public ResponseEntity<?> logout() {
+    public ResponseEntity<Void> logout() {
         loginService.accountLogout();
 
         return RESPONSE_ENTITY_OK;

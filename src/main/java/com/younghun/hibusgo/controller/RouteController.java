@@ -15,7 +15,6 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,11 +51,7 @@ public class RouteController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PostMapping()
-  public ResponseEntity<?> addRoute(@RequestBody @Valid RouteDto routeDto, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-    }
-
+  public ResponseEntity<?> addRoute(@RequestBody @Valid RouteDto routeDto) {
     int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
     int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
 
@@ -87,11 +82,7 @@ public class RouteController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PostMapping()
-  public ResponseEntity<?> updateRoute(@RequestBody @Valid RouteDto routeDto, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-    }
-
+  public ResponseEntity<?> updateRoute(@RequestBody @Valid RouteDto routeDto) {
     int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
     int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
 
