@@ -42,9 +42,11 @@ public class RouteDto {
     private RouteGrade grade;
 
     //출발 터미널 아이디
+    @NotBlank
     private int departureTerminalId;
 
     //도착 터미널 아이디
+    @NotBlank
     private int arriveTerminalId;
 
     //출발시간

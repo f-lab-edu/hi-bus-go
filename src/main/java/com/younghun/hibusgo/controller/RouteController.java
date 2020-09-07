@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,10 +87,27 @@ public class RouteController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @PostMapping()
+  @PutMapping()
   public ResponseEntity<?> updateRoute(@RequestBody @Valid RouteDto routeDto, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+    }
+
+    int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
+    int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
+
+    //출발 터미널 존재 여부
+    boolean existDepartureTerminal = busTerminalService.existsById(departureTerminalId);
+
+    if (!existDepartureTerminal) {
+      return RESPONSE_TERMINAL_BAD_REQUEST;
+    }
+
+    //도착 터미널 존재 여부
+    boolean existArriveTerminal = busTerminalService.existsById(arriveTerminalId);
+
+    if (!existArriveTerminal) {
+      return RESPONSE_TERMINAL_BAD_REQUEST;
     }
 
     int id = routeDto.getId();
