@@ -92,21 +92,13 @@ public class RouteController {
       return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
     }
 
-    int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
-    int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
+    int id = routeDto.getId();
 
-    //출발 터미널 존재 여부
-    boolean existDepartureTerminal = busTerminalService.existsById(departureTerminalId);
+    //노선 존재 여부
+    boolean existRoute = routeService.existsById(id);
 
-    if (!existDepartureTerminal) {
-      return RESPONSE_TERMINAL_BAD_REQUEST;
-    }
-
-    //도착 터미널 존재 여부
-    boolean existArriveTerminal = busTerminalService.existsById(arriveTerminalId);
-
-    if (!existArriveTerminal) {
-      return RESPONSE_TERMINAL_BAD_REQUEST;
+    if (!existRoute) {
+      return RESPONSE_ROUTE_BAD_REQUEST;
     }
 
     Route route = routeDto.toEntity();
@@ -125,6 +117,7 @@ public class RouteController {
   public ResponseEntity<?> deleteRoute(@PathVariable int id) {
     boolean existRoute = routeService.existsById(id);
 
+    //노선 존재 여부
     if (!existRoute) {
       return RESPONSE_ROUTE_BAD_REQUEST;
     }

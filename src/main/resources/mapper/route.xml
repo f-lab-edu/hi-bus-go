@@ -68,16 +68,12 @@
 
     <update id="updateRoute">
         UPDATE route
-        SET name                  = #{name}
-        AND distance              = #{distance}
+        SET distance              = #{distance}
         AND seat_residual         = #{seatResidual}
         AND grade                 = #{grade}
-        AND departure_terminal_id = #{departureTerminalId}
-        AND arrive_terminal_id    = #{arriveTerminalId}
-        AND departure_time        = {departureTime}
+        AND departure_time        = #{departureTime}
         AND arrive_time           = #{arriveTime}
         AND updated_at            = NOW()
-        AND status                = #{status}
         WHERE id                  = #{id}
     </update>
 
