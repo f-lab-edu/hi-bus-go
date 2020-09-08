@@ -100,7 +100,7 @@ public class AccountController {
      */
     @LoginCheck(userLevel = UserLevel.USER)
     @DeleteMapping("/myInfo")
-    public ResponseEntity<?> deleteAccount(@LoginUserId Long accountId) {
+    public ResponseEntity<Void> deleteAccount(@LoginUserId Long accountId) {
         accountService.deleteAccount(accountId);
         loginService.accountLogout();
 

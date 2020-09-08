@@ -40,7 +40,7 @@ public class  RegionController {
    * @return List<Region>
    */
   @GetMapping("/{name}")
-  public ResponseEntity<?> getRegion(@PathVariable String name) {
+  public ResponseEntity<List<Region>> getRegion(@PathVariable String name) {
     List<Region> regions = regionService.searchByName(name);
 
     return ResponseEntity.ok().body(regions);
@@ -78,7 +78,7 @@ public class  RegionController {
    * @return List<Region>
    */
   @GetMapping()
-  public ResponseEntity<?> getTotalRegion() {
+  public ResponseEntity<List<Region>> getTotalRegion() {
     List<Region> totalRegions = regionService.searchTotal();
 
     return ResponseEntity.ok().body(totalRegions);

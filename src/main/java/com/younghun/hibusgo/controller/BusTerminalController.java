@@ -63,7 +63,7 @@ public class BusTerminalController {
    * @return List<BusTerminal>
    */
   @GetMapping("/{region}")
-  public ResponseEntity<?> getBusTerminals(@PathVariable String region) {
+  public ResponseEntity<List<BusTerminal>> getBusTerminals(@PathVariable String region) {
     List<BusTerminal> busTerminals = busTerminalService.searchByRegion(region);
 
     return ResponseEntity.ok().body(busTerminals);
@@ -101,7 +101,7 @@ public class BusTerminalController {
    * @return List<BusTerminal>
    */
   @GetMapping()
-  public ResponseEntity<?> getTotalBusTerminals() {
+  public ResponseEntity<List<BusTerminal>> getTotalBusTerminals() {
     List<BusTerminal> busTotalTerminals = busTerminalService.searchTotal();
 
     return ResponseEntity.ok().body(busTotalTerminals);
