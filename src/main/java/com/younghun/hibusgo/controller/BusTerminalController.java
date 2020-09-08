@@ -19,8 +19,6 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -76,11 +74,7 @@ public class BusTerminalController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PostMapping()
-  public ResponseEntity<?> addBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto, Errors bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-    }
-
+  public ResponseEntity<?> addBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto) {
     String name = busTerminalDto.getName();
 
     boolean isExistsTerminal =  busTerminalService.existsByName(name);
@@ -133,11 +127,7 @@ public class BusTerminalController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PatchMapping()
-  public ResponseEntity<?> updateBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-    }
-
+  public ResponseEntity<?> updateBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto) {
     String name = busTerminalDto.getName();
     int regionId = busTerminalDto.getRegionId();
 
