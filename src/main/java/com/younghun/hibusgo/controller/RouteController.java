@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,7 +40,7 @@ public class RouteController {
   @GetMapping()
   public ResponseEntity<List<Route>> getRoutes(@RequestBody RouteDto routeDto) {
     Route route = routeDto.toEntity();
-    List<Route> routes = routeService.searchByTerminal(route);
+    List<Route> routes = routeService.searchRoute(route);
 
     return ResponseEntity.ok().body(routes);
   }
@@ -81,7 +82,7 @@ public class RouteController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @PostMapping()
+  @PutMapping()
   public ResponseEntity<?> updateRoute(@RequestBody @Valid RouteDto routeDto) {
     int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
     int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
@@ -100,6 +101,15 @@ public class RouteController {
       return RESPONSE_TERMINAL_BAD_REQUEST;
     }
 
+    int id = routeDto.getId();
+
+    //노선 존재 여부
+    boolean existRoute = routeService.existsById(id);
+
+    if (!existRoute) {
+      return RESPONSE_ROUTE_BAD_REQUEST;
+    }
+
     Route route = routeDto.toEntity();
     routeService.updateRoute(route);
 
@@ -116,6 +126,7 @@ public class RouteController {
   public ResponseEntity<?> deleteRoute(@PathVariable int id) {
     boolean existRoute = routeService.existsById(id);
 
+    //노선 존재 여부
     if (!existRoute) {
       return RESPONSE_ROUTE_BAD_REQUEST;
     }

@@ -95,7 +95,7 @@ public class BusTerminalController {
    * @return List<BusTerminal>
    */
   @GetMapping()
-  public ResponseEntity<?> getTotalBusTerminals() {
+  public ResponseEntity<List<BusTerminal>> getTotalBusTerminals() {
     List<BusTerminal> busTotalTerminals = busTerminalService.searchTotal();
 
     return ResponseEntity.ok().body(busTotalTerminals);
