@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,7 +87,7 @@ public class RouteController {
    * @return ResponseEntity
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @PostMapping()
+  @PutMapping()
   public ResponseEntity<?> updateRoute(@RequestBody @Valid RouteDto routeDto, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
@@ -109,6 +110,15 @@ public class RouteController {
       return RESPONSE_TERMINAL_BAD_REQUEST;
     }
 
+    int id = routeDto.getId();
+
+    //노선 존재 여부
+    boolean existRoute = routeService.existsById(id);
+
+    if (!existRoute) {
+      return RESPONSE_ROUTE_BAD_REQUEST;
+    }
+
     Route route = routeDto.toEntity();
     routeService.updateRoute(route);
 
@@ -125,6 +135,7 @@ public class RouteController {
   public ResponseEntity<?> deleteRoute(@PathVariable int id) {
     boolean existRoute = routeService.existsById(id);
 
+    //노선 존재 여부
     if (!existRoute) {
       return RESPONSE_ROUTE_BAD_REQUEST;
     }
