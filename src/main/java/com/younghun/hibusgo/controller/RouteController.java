@@ -41,7 +41,7 @@ public class RouteController {
   @GetMapping()
   public ResponseEntity<List<Route>> getRoutes(@RequestBody RouteDto routeDto) {
     Route route = routeDto.toEntity();
-    List<Route> routes = routeService.searchByTerminal(route);
+    List<Route> routes = routeService.searchRoute(route);
 
     return ResponseEntity.ok().body(routes);
   }

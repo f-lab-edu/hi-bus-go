@@ -24,24 +24,7 @@
       AND status != 'DELETE'
     </select>
 
-    <select id="searchByName" resultMap="routeMap" resultType="java.util.ArrayList">
-        SELECT id
-             , name
-             , distance
-             , grade
-             , departure_terminal_id
-             , arrive_terminal_id
-             , departure_time
-             , arrive_time
-             , created_at
-             , updated_at
-             , status
-        FROM route
-        WHERE name Like '%${name}%'
-        AND status != 'DELETE'
-    </select>
-
-    <select id="searchByTerminal" resultMap="routeMap" resultType="java.util.ArrayList">
+    <select id="searchRoute" resultMap="routeMap" resultType="java.util.ArrayList">
         SELECT id
              , name
              , distance
