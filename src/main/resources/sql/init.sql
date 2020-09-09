@@ -35,6 +35,22 @@ create table mileage
 )
     comment '마일리지 정보';
 
+create table payment
+(
+    id             bigint auto_increment comment '아이디'
+        primary key,
+    account_id     bigint      not null comment '회원 아이디',
+    payment_charge bigint      not null comment '결제 금액',
+    means          varchar(45) not null comment '결제 수단',
+    status         varchar(30) not null comment '상태(대기, 완료, 취소, 삭제)',
+    created_at     datetime    not null comment '추가일',
+    updated_at     datetime    not null comment '수정일',
+    constraint payment_account_id_fk
+        foreign key (account_id) references account (id)
+            on update cascade on delete cascade
+)
+    comment '결제 정보';
+
 create table region
 (
     id         bigint auto_increment comment '아이디'
