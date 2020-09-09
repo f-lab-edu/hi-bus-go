@@ -19,7 +19,7 @@
 + Spring Boot, Maven, Mybatis, Mysql, Redis, Java8
 
 ### 기술적인 집중 요소
-+ 객체지향의 기본 원리와 spring의 IOC/DI , AOP, ASP 활용과 의미 있는 코드 작성
++ 객체지향의 기본 원리와 spring의 IOC/DI , AOP, PSA 활용과 의미 있는 코드 작성
 + 라이브러리 및 기능 추가 시 이유있는 선택과 사용 목적 고려
 
 ### 브렌치 관리 전략
