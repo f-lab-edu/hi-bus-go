@@ -4,6 +4,7 @@ package com.younghun.hibusgo.service;
 import com.younghun.hibusgo.domain.BusTerminal;
 import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.mapper.BusTerminalMapper;
+import com.younghun.hibusgo.utils.CacheKeys;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -27,20 +28,20 @@ public class BusTerminalService {
     /**
      * @Cacheable : 동일 값이 Cache에 있는 경우 Cache에서 데이터를 return합니다.
      * 만약 동일 key 값이 없을 경우 메소드를 실행하고 반환된 결과 값을 Cache에 저장합니다.
+     * unless = "#result == null" -> 조회 결과 값이 null이 아닐 경우에만 캐싱
      */
-    @Cacheable(value = "terminals.name", key = "#name", cacheManager = "redisCacheManager")
+    @Cacheable(value = CacheKeys.TERMINAL_NAME, key = "#name", cacheManager = "redisCacheManager")
     public Optional<BusTerminal> findByNameAndRegion(String name, String region) {
         return Optional.ofNullable(terminalMapper.findByNameAndRegion(name, region))
             .filter(o -> o.getStatus() == DataStatus.DEFAULT);
     }
 
-    @Cacheable(value = "terminals.region", key = "#region", cacheManager = "redisCacheManager")
+    @Cacheable(value = CacheKeys.TERMINAL_REGION, key = "#region", cacheManager = "redisCacheManager")
     public List<BusTerminal> searchByRegion(String region) {
         return terminalMapper.searchByRegion(region);
     }
 
-    @Scheduled(fixedDelay = 86400000L) // 1일마다 캐시 갱신
-    @Cacheable(value = "terminals.total", key = "'total'")
+    @Cacheable(value = CacheKeys.TERMINAL_TOTAL, key = "'total'", cacheManager = "redisCacheManager")
     public List<BusTerminal> searchTotal() {
         return terminalMapper.searchTotal();
     }
