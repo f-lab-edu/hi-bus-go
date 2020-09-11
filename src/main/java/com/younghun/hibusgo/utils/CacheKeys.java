@@ -9,7 +9,9 @@ package com.younghun.hibusgo.utils;
  *  이러한 이유로 새로운 객체롤 최대한 적게 생성하도록 지향.
  */
 public class CacheKeys {
-  public static final String TERMINAL_NAME = "terminals.name";
-  public static final String TERMINAL_REGION = "terminals.region";
-  public static final String TERMINAL_TOTAL = "terminals.total";
+  public static final String TERMINALS_NAME = "terminals.name";
+  public static final String TERMINALS_REGION = "terminals.region";
+  public static final String TERMINALS_TOTAL = "terminals.total";
+  public static final String REGIONS_NAME = "regions.name";
+  public static final String REGIONS_TOTAL = "regions.total";
 }

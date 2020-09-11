@@ -5,10 +5,10 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -32,6 +32,14 @@ public class RedisConfig {
   @Value("${spring.redis.port}")
   private int port;
 
+  // 캐시용 redis server host
+  @Value("${spring.redis.cacheHost}")
+  private String cacheHost;
+
+  // 캐시용 redis server port
+  @Value("${spring.redis.cachePort}")
+  private int cachePort;
+
   /**
    * Redis Connection Factory 설정
    * connectionFactory는 connection 객체를 생성하여 관리하는 인터페이스입니다.
@@ -45,9 +53,15 @@ public class RedisConfig {
    * - 비동기로 요청하기 때문에 Jedis에 비해 높은 성능을 가지고 있다.
    * - TPS, 자원사용량 모두 Jedis에 비해 우수한 성능을 보인다는 테스트 사례가 있다.
    */
+  @Primary
   @Bean
   public RedisConnectionFactory connectionFactory() {
     return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
+  }
+
+  @Bean
+  public RedisConnectionFactory connectionFactory2() {
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(cacheHost, cachePort));
   }
 
   /**
@@ -73,8 +87,29 @@ public class RedisConfig {
    * Redis Cache를 사용하기 위한 cache manager 등록 및 설정
    * entryTtl - 캐시의 TTL(Time To Live)를 설정한다.
    */
+  @Primary
   @Bean
-  public CacheManager redisCacheManager() {
+  public RedisCacheManager cacheManager() {
+    RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
+        .defaultCacheConfig()
+        .serializeKeysWith(RedisSerializationContext
+            .SerializationPair
+            .fromSerializer(new StringRedisSerializer()))
+        .serializeValuesWith(RedisSerializationContext
+            .SerializationPair
+            .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
+    RedisCacheManager redisCacheManager = RedisCacheManager
+        .RedisCacheManagerBuilder
+        .fromConnectionFactory(connectionFactory())
+        .cacheDefaults(redisCacheConfiguration)
+        .build();
+
+    return redisCacheManager;
+  }
+
+  @Bean
+  public RedisCacheManager redisCacheManager() {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
         .serializeKeysWith(RedisSerializationContext
@@ -85,15 +120,17 @@ public class RedisConfig {
             .fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
     Map<String, RedisCacheConfiguration> cacheConfigurationMap = new HashMap<>();
-    cacheConfigurationMap.put(CacheKeys.TERMINAL_NAME, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
-    cacheConfigurationMap.put(CacheKeys.TERMINAL_REGION, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
-    cacheConfigurationMap.put(CacheKeys.TERMINAL_TOTAL, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINALS_NAME, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINALS_REGION, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINALS_TOTAL, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+
+    cacheConfigurationMap.put(CacheKeys.REGIONS_NAME, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.REGIONS_TOTAL, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(connectionFactory())
+        .fromConnectionFactory(connectionFactory2())
         .cacheDefaults(redisCacheConfiguration)
-        .withInitialCacheConfigurations(cacheConfigurationMap)
         .build();
 
     return redisCacheManager;
