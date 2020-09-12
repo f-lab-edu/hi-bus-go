@@ -1,20 +1,36 @@
 package com.younghun.hibusgo.config;
 
+import com.younghun.hibusgo.utils.CacheKeys;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+
+@EnableCaching
 @Configuration
 public class RedisConfig {
+
+  // 세션용 redis server host
+  @Value("${spring.redis.host}")
+  private String host;
+
+  // 세션용 redis server port
+  @Value("${spring.redis.port}")
+  private int port;
 
   /**
    * Redis Connection Factory 설정
@@ -31,14 +47,14 @@ public class RedisConfig {
    */
   @Bean
   public RedisConnectionFactory connectionFactory() {
-    return new LettuceConnectionFactory();
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
   }
 
   /**
    * RedisTemplate은 키,값 및 해시 키/값에 직렬화/역직렬화하기 위한 템플릿 제공 및 설
    * 직렬화는 java object를 redis에 byte로 직렬화한다.
    * 시리얼 라이저를 설정하지 않으면 기본으로 JdkSerializationRedisSerializer 사용
-   * JdkSerializationRedisSerializer : redis에 키값을 \xac\xed\x00\x05t\x00\x03key와 같은
+   * JdkSerializationRedisSerializer : redis에 키값을 \xac\xed\x00\x05t\x00\x03 key와 같은
    * 바이너리 값으로 저장되기 때문에 문자열로 키값을 저장하기 위해 StringRedisSerializer 설정
    * GenericJackson2JsonRedisSerializer : 객체를 json 형태로 직렬화/json을 객체로 역직렬화한다.
    */
@@ -66,16 +82,21 @@ public class RedisConfig {
             .fromSerializer(new StringRedisSerializer()))
         .serializeValuesWith(RedisSerializationContext
             .SerializationPair
-            .fromSerializer(new GenericJackson2JsonRedisSerializer()))
-        .entryTtl(Duration.ofDays(1L));
+            .fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
-    RedisCacheManager cacheManager = RedisCacheManager
+    Map<String, RedisCacheConfiguration> cacheConfigurationMap = new HashMap<>();
+    cacheConfigurationMap.put(CacheKeys.TERMINAL_NAME, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINAL_REGION, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINAL_TOTAL, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+
+    RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
         .fromConnectionFactory(connectionFactory())
         .cacheDefaults(redisCacheConfiguration)
+        .withInitialCacheConfigurations(cacheConfigurationMap)
         .build();
 
-    return cacheManager;
+    return redisCacheManager;
   }
 
 }
