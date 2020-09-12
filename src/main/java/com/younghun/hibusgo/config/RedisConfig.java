@@ -33,11 +33,11 @@ public class RedisConfig {
   private int port;
 
   // 캐시용 redis server host
-  @Value("${spring.redis.cacheHost}")
+  @Value("${spring.redis.cache.host}")
   private String cacheHost;
 
   // 캐시용 redis server port
-  @Value("${spring.redis.cachePort}")
+  @Value("${spring.redis.cache.port}")
   private int cachePort;
 
   /**
@@ -54,13 +54,13 @@ public class RedisConfig {
    * - TPS, 자원사용량 모두 Jedis에 비해 우수한 성능을 보인다는 테스트 사례가 있다.
    */
   @Primary
-  @Bean
-  public RedisConnectionFactory connectionFactory() {
+  @Bean("connectionSessionRedisFactory")
+  public RedisConnectionFactory connectionSessionRedisFactory() {
     return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
   }
 
-  @Bean
-  public RedisConnectionFactory connectionFactory2() {
+  @Bean("connectionCacheRedisFactory")
+  public RedisConnectionFactory connectionCacheRedisFactory() {
     return new LettuceConnectionFactory(new RedisStandaloneConfiguration(cacheHost, cachePort));
   }
 
@@ -75,7 +75,7 @@ public class RedisConfig {
   @Bean
   public RedisTemplate<Object, Object> redisTemplate() {
     RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-    redisTemplate.setConnectionFactory(connectionFactory());
+    redisTemplate.setConnectionFactory(connectionSessionRedisFactory());
     redisTemplate.setKeySerializer(new StringRedisSerializer());
 
     //객체를 json 형태로 깨지지 않고 받기 위한 직렬화 작업
@@ -88,7 +88,7 @@ public class RedisConfig {
    * entryTtl - 캐시의 TTL(Time To Live)를 설정한다.
    */
   @Primary
-  @Bean
+  @Bean("cacheManager")
   public RedisCacheManager cacheManager() {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
@@ -101,14 +101,14 @@ public class RedisConfig {
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(connectionFactory())
+        .fromConnectionFactory(connectionSessionRedisFactory())
         .cacheDefaults(redisCacheConfiguration)
         .build();
 
     return redisCacheManager;
   }
 
-  @Bean
+  @Bean("redisCacheManager")
   public RedisCacheManager redisCacheManager() {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
@@ -129,7 +129,7 @@ public class RedisConfig {
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(connectionFactory2())
+        .fromConnectionFactory(connectionCacheRedisFactory())
         .cacheDefaults(redisCacheConfiguration)
         .build();
 
