@@ -26,11 +26,11 @@ public class RedisConfig {
 
   // 세션용 redis server host
   @Value("${spring.redis.host}")
-  private String host;
+  private String sessionHost;
 
   // 세션용 redis server port
   @Value("${spring.redis.port}")
-  private int port;
+  private int sessionPort;
 
   // 캐시용 redis server host
   @Value("${spring.redis.cache.host}")
@@ -56,7 +56,7 @@ public class RedisConfig {
   @Primary
   @Bean
   public RedisConnectionFactory sessionRedisConnectionFactory() {
-    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(sessionHost, sessionPort));
   }
 
   @Bean
@@ -89,7 +89,7 @@ public class RedisConfig {
    */
   @Primary
   @Bean
-  public RedisCacheManager cacheManager() {
+  public RedisCacheManager cacheManager(RedisConnectionFactory sessionRedisConnectionFactory) {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
         .serializeKeysWith(RedisSerializationContext
@@ -101,7 +101,7 @@ public class RedisConfig {
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(sessionRedisConnectionFactory())
+        .fromConnectionFactory(sessionRedisConnectionFactory)
         .cacheDefaults(redisCacheConfiguration)
         .build();
 
@@ -109,7 +109,7 @@ public class RedisConfig {
   }
 
   @Bean
-  public RedisCacheManager redisCacheManager() {
+  public RedisCacheManager redisCacheManager(RedisConnectionFactory cacheRedisConnectionFactory) {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
         .serializeKeysWith(RedisSerializationContext
@@ -129,7 +129,7 @@ public class RedisConfig {
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(cacheRedisConnectionFactory())
+        .fromConnectionFactory(cacheRedisConnectionFactory)
         .cacheDefaults(redisCacheConfiguration)
         .build();
 
