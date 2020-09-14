@@ -54,13 +54,13 @@ public class RedisConfig {
    * - TPS, 자원사용량 모두 Jedis에 비해 우수한 성능을 보인다는 테스트 사례가 있다.
    */
   @Primary
-  @Bean("connectionSessionRedisFactory")
-  public RedisConnectionFactory connectionSessionRedisFactory() {
+  @Bean
+  public RedisConnectionFactory sessionRedisConnectionFactory() {
     return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
   }
 
-  @Bean("connectionCacheRedisFactory")
-  public RedisConnectionFactory connectionCacheRedisFactory() {
+  @Bean
+  public RedisConnectionFactory cacheRedisConnectionFactory() {
     return new LettuceConnectionFactory(new RedisStandaloneConfiguration(cacheHost, cachePort));
   }
 
@@ -75,7 +75,7 @@ public class RedisConfig {
   @Bean
   public RedisTemplate<Object, Object> redisTemplate() {
     RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-    redisTemplate.setConnectionFactory(connectionSessionRedisFactory());
+    redisTemplate.setConnectionFactory(sessionRedisConnectionFactory());
     redisTemplate.setKeySerializer(new StringRedisSerializer());
 
     //객체를 json 형태로 깨지지 않고 받기 위한 직렬화 작업
@@ -88,7 +88,7 @@ public class RedisConfig {
    * entryTtl - 캐시의 TTL(Time To Live)를 설정한다.
    */
   @Primary
-  @Bean("cacheManager")
+  @Bean
   public RedisCacheManager cacheManager() {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
@@ -101,14 +101,14 @@ public class RedisConfig {
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(connectionSessionRedisFactory())
+        .fromConnectionFactory(sessionRedisConnectionFactory())
         .cacheDefaults(redisCacheConfiguration)
         .build();
 
     return redisCacheManager;
   }
 
-  @Bean("redisCacheManager")
+  @Bean
   public RedisCacheManager redisCacheManager() {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
@@ -129,7 +129,7 @@ public class RedisConfig {
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(connectionCacheRedisFactory())
+        .fromConnectionFactory(cacheRedisConnectionFactory())
         .cacheDefaults(redisCacheConfiguration)
         .build();
 
