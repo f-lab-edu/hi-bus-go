@@ -175,13 +175,13 @@ public class AccountController {
 
     /**
      * 회원의 결제 정보 조회 메서드
-     * @param paymentId 결제 아이디
+     * @param id 결제 아이디
      * @return ResponseEntity
      */
     @LoginCheck(userLevel = UserLevel.USER)
     @GetMapping("/payments/{id}")
-    public ResponseEntity<?> getPayment(long paymentId) {
-        Optional<Payment> payment = paymentService.findById(paymentId);
+    public ResponseEntity<?> getPayment(@PathVariable long id) {
+        Optional<Payment> payment = paymentService.findById(id);
 
         return ResponseEntity.ok().body(payment.get());
     }
