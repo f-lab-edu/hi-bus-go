@@ -41,7 +41,7 @@ public class PaymentController {
    * @return ResponseEntity<?>
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @GetMapping("account/{id}")
+  @GetMapping("/account/{id}")
   public ResponseEntity<?> getPayment(@PathVariable long id) {
     Optional<Payment> payment = paymentService.findById(id);
 
