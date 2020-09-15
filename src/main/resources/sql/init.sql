@@ -31,7 +31,6 @@ create table mileage
         unique (account_id),
     constraint mileage_account_id_fk
         foreign key (account_id) references account (id)
-            on update cascade on delete cascade
 )
     comment '마일리지 정보';
 
@@ -47,7 +46,6 @@ create table payment
     updated_at     datetime    not null comment '수정일',
     constraint payment_account_id_fk
         foreign key (account_id) references account (id)
-            on update cascade on delete cascade
 )
     comment '결제 정보';
 
@@ -64,6 +62,18 @@ create table region
 
 create index region_id_name_index
     on region (id, name);
+
+create table seat
+(
+    id         bigint auto_increment comment '좌석 아이디'
+        primary key,
+    number     bigint      not null comment '좌석 번호',
+    status     varchar(10) not null comment '좌석 상태',
+    grade      varchar(45) not null comment '좌석 등급',
+    created_at datetime    not null comment '좌석 추가일',
+    updated_at datetime    not null comment '좌석 수정일'
+)
+    comment '좌석';
 
 create table terminal
 (
@@ -88,6 +98,7 @@ create table route
         primary key,
     name                  varchar(255) not null comment '노선 이름',
     distance              bigint       not null comment '거리',
+    time_required         varchar(10)  not null comment '소요시간',
     seat_residual         bigint       not null comment '잔여석',
     grade                 varchar(20)  null comment '노선 등급',
     departure_terminal_id bigint       not null comment '출발 터미널 아이디',
@@ -109,6 +120,31 @@ create table route
             on update cascade on delete cascade
 )
     comment '노선';
+
+create table reservation
+(
+    id         bigint auto_increment comment '예매 아이디'
+        primary key,
+    route_id   bigint      not null comment '노선 아이디',
+    account_id bigint      not null comment '회원 아이디',
+    payment_id bigint      not null comment '결제 아이디',
+    seat_id    bigint      not null comment '좌석 아이디',
+    fare       bigint      not null comment '요금',
+    status     varchar(10) not null comment '예매 상태',
+    created_at datetime    not null comment '예매 추가일',
+    updated_at datetime    not null comment '예매 수정일',
+    constraint reservation_account_id_fk
+        foreign key (account_id) references account (id)
+            on update cascade on delete cascade,
+    constraint reservation_payment_id_fk
+        foreign key (payment_id) references payment (id)
+            on update cascade on delete cascade,
+    constraint reservation_route_id_fk
+        foreign key (route_id) references route (id),
+    constraint reservation_seat_id_fk
+        foreign key (seat_id) references seat (id)
+)
+    comment '예매 정보';
 
 create index terminal_id_name_region_id_index
     on terminal (id, name, region_id);

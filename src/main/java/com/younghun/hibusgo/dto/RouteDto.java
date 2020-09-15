@@ -1,6 +1,5 @@
 package com.younghun.hibusgo.dto;
 
-import com.younghun.hibusgo.domain.BusTerminal;
 import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.domain.Route;
 import com.younghun.hibusgo.domain.RouteGrade;
@@ -8,7 +7,6 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,6 +47,10 @@ public class RouteDto {
     @NotBlank
     private int arriveTerminalId;
 
+    //소요시간
+    @NotBlank
+    private String timeRequired;
+
     //출발시간
     @NotBlank
     private LocalDateTime departureTime;
@@ -69,6 +71,7 @@ public class RouteDto {
             .grade(this.grade)
             .departureTerminalId(this.departureTerminalId)
             .arriveTerminalId(this.arriveTerminalId)
+            .timeRequired(this.timeRequired)
             .departureTime(this.departureTime)
             .arriveTime(this.arriveTime)
             .status(DataStatus.DEFAULT)
