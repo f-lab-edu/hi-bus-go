@@ -7,7 +7,7 @@
 
 ### 사용자
 + 버스 예매
-+ 버스 예매 및 변경
++ 버스 예매 변경
 + 버스 노선 조회
 + 회원 정보 수정, 탈퇴
 
@@ -40,6 +40,8 @@ Git Flow를 사용하여 branch를 관리
 ### ERD
 읽기 전용 url(비밀번호 5ez653)
 https://aquerytool.com:443/aquerymain/index/?rurl=70475dc0-1cb5-4573-a864-93e68f4ddcaa
-![hi-bus-go_20200904_12_08](https://user-images.githubusercontent.com/29122916/92238035-5c3a2700-eef3-11ea-87d3-930d731c5712.png)
+![hi-bus-go_20200917_05_49](https://user-images.githubusercontent.com/29122916/93369498-6f051200-f88a-11ea-854c-70aea08a8c6e.png)
+
+
 
 
