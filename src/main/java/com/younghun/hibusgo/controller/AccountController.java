@@ -192,13 +192,13 @@ public class AccountController {
 
     /**
      * 회원의 예매 목록 조회 메서드
-     * @param id 회원의 아이디
+     * @param accountId 회원의 아이디
      * @return List<Reservation>
      */
     @LoginCheck(userLevel = UserLevel.ADMIN)
     @GetMapping("/reservations")
-    public ResponseEntity<List<Reservation>> getReservations(@PathVariable long id) {
-        List<Reservation> reservations = reservationService.findByAccountId(id);
+    public ResponseEntity<List<Reservation>> getReservations(@LoginUserId long accountId) {
+        List<Reservation> reservations = reservationService.findByAccountId(accountId);
 
         return ResponseEntity.ok().body(reservations);
     }
