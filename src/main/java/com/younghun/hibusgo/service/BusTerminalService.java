@@ -10,7 +10,6 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
@@ -30,18 +29,18 @@ public class BusTerminalService {
      * 만약 동일 key 값이 없을 경우 메소드를 실행하고 반환된 결과 값을 Cache에 저장합니다.
      * unless = "#result == null" -> 조회 결과 값이 null이 아닐 경우에만 캐싱
      */
-    @Cacheable(value = CacheKeys.TERMINAL_NAME, key = "#name", cacheManager = "redisCacheManager")
+    @Cacheable(value = CacheKeys.TERMINALS_NAME, key = "#name", cacheManager = "redisCacheManager")
     public Optional<BusTerminal> findByNameAndRegion(String name, String region) {
         return Optional.ofNullable(terminalMapper.findByNameAndRegion(name, region))
             .filter(o -> o.getStatus() == DataStatus.DEFAULT);
     }
 
-    @Cacheable(value = CacheKeys.TERMINAL_REGION, key = "#region", cacheManager = "redisCacheManager")
+    @Cacheable(value = CacheKeys.TERMINALS_REGION, key = "#region", cacheManager = "redisCacheManager")
     public List<BusTerminal> searchByRegion(String region) {
         return terminalMapper.searchByRegion(region);
     }
 
-    @Cacheable(value = CacheKeys.TERMINAL_TOTAL, key = "'total'", cacheManager = "redisCacheManager")
+    @Cacheable(value = CacheKeys.TERMINALS_TOTAL, key = "'total'", cacheManager = "redisCacheManager")
     public List<BusTerminal> searchTotal() {
         return terminalMapper.searchTotal();
     }

@@ -5,10 +5,10 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -26,11 +26,19 @@ public class RedisConfig {
 
   // 세션용 redis server host
   @Value("${spring.redis.host}")
-  private String host;
+  private String sessionHost;
 
   // 세션용 redis server port
   @Value("${spring.redis.port}")
-  private int port;
+  private int sessionPort;
+
+  // 캐시용 redis server host
+  @Value("${spring.redis.cache.host}")
+  private String cacheHost;
+
+  // 캐시용 redis server port
+  @Value("${spring.redis.cache.port}")
+  private int cachePort;
 
   /**
    * Redis Connection Factory 설정
@@ -45,9 +53,15 @@ public class RedisConfig {
    * - 비동기로 요청하기 때문에 Jedis에 비해 높은 성능을 가지고 있다.
    * - TPS, 자원사용량 모두 Jedis에 비해 우수한 성능을 보인다는 테스트 사례가 있다.
    */
+  @Primary
   @Bean
-  public RedisConnectionFactory connectionFactory() {
-    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
+  public RedisConnectionFactory sessionRedisConnectionFactory() {
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(sessionHost, sessionPort));
+  }
+
+  @Bean
+  public RedisConnectionFactory cacheRedisConnectionFactory() {
+    return new LettuceConnectionFactory(new RedisStandaloneConfiguration(cacheHost, cachePort));
   }
 
   /**
@@ -61,7 +75,7 @@ public class RedisConfig {
   @Bean
   public RedisTemplate<Object, Object> redisTemplate() {
     RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
-    redisTemplate.setConnectionFactory(connectionFactory());
+    redisTemplate.setConnectionFactory(sessionRedisConnectionFactory());
     redisTemplate.setKeySerializer(new StringRedisSerializer());
 
     //객체를 json 형태로 깨지지 않고 받기 위한 직렬화 작업
@@ -73,8 +87,29 @@ public class RedisConfig {
    * Redis Cache를 사용하기 위한 cache manager 등록 및 설정
    * entryTtl - 캐시의 TTL(Time To Live)를 설정한다.
    */
+  @Primary
   @Bean
-  public CacheManager redisCacheManager() {
+  public RedisCacheManager cacheManager(RedisConnectionFactory sessionRedisConnectionFactory) {
+    RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
+        .defaultCacheConfig()
+        .serializeKeysWith(RedisSerializationContext
+            .SerializationPair
+            .fromSerializer(new StringRedisSerializer()))
+        .serializeValuesWith(RedisSerializationContext
+            .SerializationPair
+            .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+
+    RedisCacheManager redisCacheManager = RedisCacheManager
+        .RedisCacheManagerBuilder
+        .fromConnectionFactory(sessionRedisConnectionFactory)
+        .cacheDefaults(redisCacheConfiguration)
+        .build();
+
+    return redisCacheManager;
+  }
+
+  @Bean
+  public RedisCacheManager redisCacheManager(RedisConnectionFactory cacheRedisConnectionFactory) {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
         .defaultCacheConfig()
         .serializeKeysWith(RedisSerializationContext
@@ -85,15 +120,17 @@ public class RedisConfig {
             .fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
     Map<String, RedisCacheConfiguration> cacheConfigurationMap = new HashMap<>();
-    cacheConfigurationMap.put(CacheKeys.TERMINAL_NAME, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
-    cacheConfigurationMap.put(CacheKeys.TERMINAL_REGION, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
-    cacheConfigurationMap.put(CacheKeys.TERMINAL_TOTAL, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINALS_NAME, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINALS_REGION, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.TERMINALS_TOTAL, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+
+    cacheConfigurationMap.put(CacheKeys.REGIONS_NAME, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
+    cacheConfigurationMap.put(CacheKeys.REGIONS_TOTAL, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
 
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
-        .fromConnectionFactory(connectionFactory())
+        .fromConnectionFactory(cacheRedisConnectionFactory)
         .cacheDefaults(redisCacheConfiguration)
-        .withInitialCacheConfigurations(cacheConfigurationMap)
         .build();
 
     return redisCacheManager;
