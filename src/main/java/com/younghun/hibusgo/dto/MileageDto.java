@@ -23,10 +23,10 @@ public class MileageDto {
     @Max(255)
     private long accountId;
 
-    //마일리지
+    // 마일리지
     @NotBlank
     @Min(0)
-    private int mileage;
+    private long mileage;
 
     // 상태 DEFAULT(기본), DELETED(삭제됨)
     private DataStatus status;

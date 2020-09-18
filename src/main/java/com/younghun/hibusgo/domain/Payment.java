@@ -15,13 +15,13 @@ public class Payment {
     private long id;
 
     // 회원 아이디
-    private String accountId;
+    private long accountId;
 
     // 결제 금액
     private long paymentCharge;
 
     // 결제 수단
-    private String means;
+    private PaymentMeansType means;
 
     // 결제 상태(대기, 완료, 취소, 삭제)
     private PaymentStatus status;

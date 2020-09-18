@@ -9,16 +9,16 @@ import lombok.ToString;
 @ToString
 public class Mileage {
 
-  //아이디
+  // 아이디
   private long id;
 
-  //회원 아이디
+  // 회원 아이디
   private long accountId;
 
-  //마일리지
-  private int mileage;
+  // 마일리지
+  private long mileage;
 
-  //상태
+  // 상태
   private DataStatus status;
 
 }

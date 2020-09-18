@@ -11,40 +11,43 @@ import lombok.ToString;
 @ToString
 public class Route {
 
-    //아이디
-    private int id;
+    // 아이디
+    private long id;
 
-    //노선 이름
+    // 좌석 아이디
+    private long seatId;
+
+    // 좌석 번호
+    private long seatNumber;
+
+    // 노선 이름
     private String name;
 
-    //거리
-    private int distance;
+    // 거리
+    private long distance;
 
-    //잔여석
-    private int seatResidual;
-
-    //노선 등급
+    // 노선 등급
     private RouteGrade grade;
 
-    //출발 터미널 아이디
-    private int departureTerminalId;
+    // 출발 터미널 아이디
+    private long departureTerminalId;
 
-    //도착 터미널 아이디
-    private int arriveTerminalId;
+    // 도착 터미널 아이디
+    private long arriveTerminalId;
 
-    //소요시간
+    // 소요시간
     private String timeRequired;
 
-    //출발시간
+    // 출발시간
     private LocalDateTime departureTime;
 
-    //도착시간
+    // 도착시간
     private LocalDateTime arriveTime;
 
-    //추가일
+    // 추가일
     private LocalDateTime createAt;
 
-    //수정일
+    // 수정일
     private LocalDateTime updatedAt;
 
     // 노선 터미널 상태 DEFAULT(기본), DELETED(삭제됨)

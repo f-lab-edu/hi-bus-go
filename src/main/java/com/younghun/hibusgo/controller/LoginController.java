@@ -80,7 +80,6 @@ public class LoginController {
 
     /**
      * 회원 로그아웃 메소드
-     *
      * @return ResponseEntity(성공시 200 code)
      */
     @LoginCheck(userLevel = UserLevel.ANONYMOUS)

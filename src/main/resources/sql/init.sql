@@ -49,6 +49,48 @@ create table payment
 )
     comment '결제 정보';
 
+create table credit_card
+(
+    id          bigint auto_increment comment '아이디'
+        primary key,
+    card_number varchar(16) not null comment '카드 번호',
+    card_name   varchar(45) not null comment '카드 회사',
+    payment_id  bigint      not null comment '결제 아이디',
+    created_at  datetime    not null comment '추가일',
+    updated_at  datetime    not null comment '수정일',
+    constraint credit_card_payment_id_fk
+        foreign key (payment_id) references payment (id)
+)
+    comment '신용카드';
+
+create table deposit
+(
+    id             bigint auto_increment comment '아이디'
+        primary key,
+    account_number varchar(45) not null comment '계좌 번호',
+    account_name   varchar(45) not null comment '입금 은행',
+    payment_id     bigint      not null comment '결제 아이디',
+    created_at     datetime    not null comment '추가일',
+    updated_at     datetime    not null comment '수정일',
+    constraint deposit_payment_id_fk
+        foreign key (payment_id) references payment (id)
+)
+    comment '무통장 입금';
+
+create table kakao_pay
+(
+    id          bigint auto_increment comment '아이디'
+        primary key,
+    card_number varchar(16) not null comment '카드 번호',
+    card_name   varchar(45) not null comment '카드 회사',
+    payment_id  bigint      not null comment '결제 아이디',
+    created_at  datetime    not null comment '추가일',
+    updated_at  datetime    not null comment '수정일',
+    constraint kakao_pay_payment_id_fk
+        foreign key (payment_id) references payment (id)
+)
+    comment '카카오 페이';
+
 create table region
 (
     id         bigint auto_increment comment '아이디'
@@ -62,18 +104,6 @@ create table region
 
 create index region_id_name_index
     on region (id, name);
-
-create table seat
-(
-    id         bigint auto_increment comment '좌석 아이디'
-        primary key,
-    number     bigint      not null comment '좌석 번호',
-    status     varchar(10) not null comment '좌석 상태',
-    grade      varchar(45) not null comment '좌석 등급',
-    created_at datetime    not null comment '좌석 추가일',
-    updated_at datetime    not null comment '좌석 수정일'
-)
-    comment '좌석';
 
 create table terminal
 (
@@ -128,8 +158,6 @@ create table reservation
     route_id   bigint      not null comment '노선 아이디',
     account_id bigint      not null comment '회원 아이디',
     payment_id bigint      not null comment '결제 아이디',
-    seat_id    bigint      not null comment '좌석 아이디',
-    fare       bigint      not null comment '요금',
     status     varchar(10) not null comment '예매 상태',
     created_at datetime    not null comment '예매 추가일',
     updated_at datetime    not null comment '예매 수정일',
@@ -140,11 +168,26 @@ create table reservation
         foreign key (payment_id) references payment (id)
             on update cascade on delete cascade,
     constraint reservation_route_id_fk
-        foreign key (route_id) references route (id),
-    constraint reservation_seat_id_fk
-        foreign key (seat_id) references seat (id)
+        foreign key (route_id) references route (id)
 )
     comment '예매 정보';
+
+create table seat
+(
+    id         bigint auto_increment comment '좌석 아이디'
+        primary key,
+    route_id   bigint      not null comment '노선 아이디',
+    number     bigint      not null comment '좌석 번호',
+    status     varchar(10) not null comment '좌석 상태',
+    created_at datetime    not null comment '좌석 추가일',
+    updated_at datetime    not null comment '좌석 수정일',
+    constraint seat_route_id_fk
+        foreign key (route_id) references route (id)
+)
+    comment '좌석';
+
+create index seat_route_id_number_index
+    on seat (route_id, number);
 
 create index terminal_id_name_region_id_index
     on terminal (id, name, region_id);

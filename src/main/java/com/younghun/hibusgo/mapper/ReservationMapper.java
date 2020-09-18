@@ -11,4 +11,5 @@ public interface ReservationMapper {
 
   List<Reservation> findByAccountId(long id);
 
+  void addReservation(Reservation reservation);
 }

@@ -108,7 +108,7 @@ public class BusTerminalController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteBusTerminal(@PathVariable int id) {
+  public ResponseEntity<?> deleteBusTerminal(@PathVariable long id) {
     boolean isExistsTerminal =  busTerminalService.existsById(id);
 
     if (!isExistsTerminal) {
@@ -129,7 +129,7 @@ public class BusTerminalController {
   @PatchMapping()
   public ResponseEntity<?> updateBusTerminal(@RequestBody @Valid BusTerminalDto busTerminalDto) {
     String name = busTerminalDto.getName();
-    int regionId = busTerminalDto.getRegionId();
+    long regionId = busTerminalDto.getRegionId();
 
     boolean isExistsRegion = regionService.existsById(regionId);
 

@@ -11,4 +11,5 @@ public interface PaymentMapper {
 
   List<Payment> findByAccountId(long id);
 
+  long addPayment(Payment payment);
 }
