@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,8 +42,8 @@ public class ReservationController {
    * @return ResponseEntity<?>
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
-  @GetMapping("/account/{id}")
-  public ResponseEntity<?> getReservation(@PathVariable long id) {
+  @GetMapping("/account")
+  public ResponseEntity<?> getReservation(@RequestParam long id) {
     Optional<Reservation> reservation = reservationService.findById(id);
 
     return ResponseEntity.ok().body(reservation.get());
