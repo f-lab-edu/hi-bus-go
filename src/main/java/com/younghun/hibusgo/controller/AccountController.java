@@ -236,10 +236,9 @@ public class AccountController {
      */
     @LoginCheck(userLevel = UserLevel.USER)
     @PostMapping("/reservations")
-    public ResponseEntity<?> addReservation(@RequestBody @Valid ReservationDto reservationDto,
-        @RequestBody @Valid PaymentDto paymentDto, @RequestBody @Valid PaymentMeansDto paymentMeansDtoDto) {
-        long routeId = reservationDto.getRouteId();
-        long seatNumber = reservationDto.getSeatNumber();
+    public ResponseEntity<?> addReservation(@RequestBody @Valid PaymentDto paymentDto) {
+        long routeId = paymentDto.getRouteId();
+        long seatNumber = paymentDto.getSeatNumber();
 
         boolean existRoute = routeService.existsById(routeId);
 
@@ -248,13 +247,13 @@ public class AccountController {
         }
 
         // 좌석 번호가 비어 있는 좌석인지
-        boolean  existEmptySeat = seatService.existEmptySeatByRoutIdAndNumber(routeId, seatNumber);
+        boolean existEmptySeat = seatService.existEmptySeatByRoutIdAndNumber(routeId, seatNumber);
 
         if (!existEmptySeat) {
             return RESPONSE_SEAT_BAD_REQUEST;
         }
 
-        reservationService.addReservation(reservationDto, paymentDto, paymentMeansDtoDto);
+        reservationService.addReservation(paymentDto);
 
         return RESPONSE_ENTITY_CREATED;
     }

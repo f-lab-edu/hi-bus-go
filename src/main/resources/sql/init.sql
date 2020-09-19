@@ -53,9 +53,10 @@ create table credit_card
 (
     id          bigint auto_increment comment '아이디'
         primary key,
-    card_number varchar(16) not null comment '카드 번호',
-    card_name   varchar(45) not null comment '카드 회사',
     payment_id  bigint      not null comment '결제 아이디',
+    card_number varchar(45) not null comment '카드 번호',
+    card_name   varchar(45) not null comment '카드 회사',
+    status      varchar(30) not null comment '상태',
     created_at  datetime    not null comment '추가일',
     updated_at  datetime    not null comment '수정일',
     constraint credit_card_payment_id_fk
@@ -67,9 +68,10 @@ create table deposit
 (
     id             bigint auto_increment comment '아이디'
         primary key,
-    account_number varchar(45) not null comment '계좌 번호',
-    account_name   varchar(45) not null comment '입금 은행',
     payment_id     bigint      not null comment '결제 아이디',
+    account_number varchar(45) not null comment '입금 계좌 번호',
+    account_name   varchar(45) not null comment '입금 은행',
+    status         varchar(30) not null comment '상태',
     created_at     datetime    not null comment '추가일',
     updated_at     datetime    not null comment '수정일',
     constraint deposit_payment_id_fk
@@ -81,9 +83,10 @@ create table kakao_pay
 (
     id          bigint auto_increment comment '아이디'
         primary key,
-    card_number varchar(16) not null comment '카드 번호',
-    card_name   varchar(45) not null comment '카드 회사',
     payment_id  bigint      not null comment '결제 아이디',
+    card_number varchar(45) not null comment '카드 번호',
+    card_name   varchar(45) not null comment '카드 회사',
+    status      varchar(30) not null comment '상태',
     created_at  datetime    not null comment '추가일',
     updated_at  datetime    not null comment '수정일',
     constraint kakao_pay_payment_id_fk

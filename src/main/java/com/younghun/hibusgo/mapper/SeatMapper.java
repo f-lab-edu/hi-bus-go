@@ -10,5 +10,5 @@ public interface SeatMapper {
 
   boolean existEmptySeatByRoutIdAndNumber(long routeId, long seatNumber);
 
-  void updateStatus(long routeId, long seatNumber);
+  void updateStatus(long id, long seatNumber);
 }

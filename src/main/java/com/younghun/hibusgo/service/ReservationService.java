@@ -1,15 +1,20 @@
 package com.younghun.hibusgo.service;
 
+
+
 import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.domain.Payment;
+import com.younghun.hibusgo.domain.PaymentMeans;
 import com.younghun.hibusgo.domain.PaymentMeansType;
+import com.younghun.hibusgo.domain.PaymentStatus;
 import com.younghun.hibusgo.domain.Reservation;
 import com.younghun.hibusgo.domain.RouteGrade;
 import com.younghun.hibusgo.dto.PaymentDto;
-import com.younghun.hibusgo.dto.PaymentMeansDto;
 import com.younghun.hibusgo.dto.ReservationDto;
+import com.younghun.hibusgo.mapper.PaymentMapper;
 import com.younghun.hibusgo.mapper.ReservationMapper;
 import com.younghun.hibusgo.mapper.SeatMapper;
+import com.younghun.hibusgo.utils.PaymentMeansFactory;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReservationService {
 
   private final ReservationMapper reservationMapper;
-  private final PaymentService paymentService;
-  private final PaymentMeansService paymentMeansService;
+  private final PaymentMapper paymentMapper;
   private final SeatMapper seatMapper;
+
+  private final PaymentMeansFactory paymentMeansFactory;
 
   public Optional<Reservation> findById(long id) {
     return Optional.ofNullable(reservationMapper.findById(id))
@@ -35,37 +41,41 @@ public class ReservationService {
   }
 
   @Transactional
-  public void addReservation(ReservationDto reservationDto, PaymentDto paymentDto, PaymentMeansDto paymentMeansDtoDto) {
+  public void addReservation(PaymentDto paymentDto) {
+    long routeId = paymentDto.getRouteId(); // 노선 아아디
+    long accountId = paymentDto.getAccountId(); // 회원 아이디
+    long seatId = paymentDto.getRouteId(); // 좌석 아이디
+    long seatNumber = paymentDto.getSeatNumber(); // 좌석 번호
+
     PaymentMeansType meansType = paymentDto.getMeans();
-
-    long routeId = reservationDto.getRouteId();
-    long seatNumber = reservationDto.getSeatNumber();
-
-    RouteGrade routeGrade = reservationDto.getRouteGrade();
+    RouteGrade routeGrade = paymentDto.getGrade();
 
     // 좌석 상태(사용중) 변경
-    seatMapper.updateStatus(routeId, seatNumber);
+    seatMapper.updateStatus(seatId, seatNumber);
 
     // 결제 금액 계산
     long payCharge = calculatePaymentCharge(routeGrade);
 
     // 결제 금액 전달
-    paymentDto.transPayCharge(payCharge);
-    paymentDto.updateStatus(meansType);
-    Payment payment = paymentDto.toEntity();
+    Payment payment = paymentDto.transPayChargeAndMeans(payCharge, meansType);
+
+    // 결제 상태 전달
+    final PaymentStatus paymentStatus = paymentMeansFactory.getStatus(meansType);
+    payment.transStatus(paymentStatus);
 
     // 결제 추가(무통장 입금은 결제 대기 상태)
-    long paymentId = paymentService.addPayment(payment);
+    long paymentId = paymentMapper.addPayment(payment);
 
     // 예매 정보에 결제 아이디 전달
-    reservationDto.transPaymentId(paymentId);
-    Reservation reservation = reservationDto.toEntity();
+    ReservationDto reservationDto = new ReservationDto();
+    Reservation reservation = reservationDto.transIds(routeId, accountId, paymentId);
 
-    // 결제 수단 정보에 결제 아이디 전달
-    paymentMeansDtoDto.transPaymentId(paymentId);
+    // 결제 수단 정보 생성
+    PaymentMeans paymentMeans = paymentMeansFactory.getMeans(paymentId, meansType, paymentDto);
 
     // 결제 수단 추가
-    paymentMeansService.addPaymentMeans(meansType, paymentMeansDtoDto);
+    final PaymentMeansService paymentMeansService = paymentMeansFactory.getType(meansType);
+    paymentMeansService.addPaymentMeans(paymentMeans);
 
     // 예매 추가
     reservationMapper.addReservation(reservation);
@@ -74,14 +84,16 @@ public class ReservationService {
   public long calculatePaymentCharge(RouteGrade routeGrade) {
     long payCharge = 0;
 
-    if (RouteGrade.PREMIUM == routeGrade) {
-      payCharge = 30000;
-    }
-    else if (RouteGrade.FIRST == routeGrade) {
-      payCharge = 20000;
-    }
-    else if (RouteGrade.ECONOMY == routeGrade) {
-      payCharge = 10000;
+    switch (routeGrade) {
+      case PREMIUM:
+        payCharge = 30000;
+        break;
+      case FIRST:
+        payCharge = 20000;
+        break;
+      case ECONOMY:
+        payCharge = 10000;
+        break;
     }
 
     return payCharge;

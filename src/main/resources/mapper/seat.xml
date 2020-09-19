@@ -47,7 +47,7 @@
     <update id="updateStatus">
       UPDATE seat
       SET status = 'USED'
-      WHERE route_id = #{routeId}
+      WHERE id = #{id}
       AND number = #{seatNumber}
     </update>
 

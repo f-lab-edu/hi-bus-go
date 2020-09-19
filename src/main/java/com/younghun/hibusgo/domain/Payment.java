@@ -32,4 +32,15 @@ public class Payment {
     // 결제 수정일
     private LocalDateTime updatedAt;
 
+
+    public Payment transStatus(PaymentStatus status) {
+        return Payment.builder()
+            .id(this.id)
+            .accountId(this.accountId)
+            .paymentCharge(this.paymentCharge)
+            .means(this.means)
+            .status(status)
+            .build();
+    }
+
 }

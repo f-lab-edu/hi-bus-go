@@ -37,36 +37,36 @@ public class PaymentMeansDto {
     private DataStatus status;
 
     // 카카오 페이
-    public KakaoPay toEntityOfKakaoPay() {
+    public KakaoPay toEntityOfKakaoPay(PaymentDto paymentDto, long paymentId) {
         return KakaoPay.builder()
             .id(this.id)
-            .cardNumber(this.cardNumber)
-            .cardName(this.cardName)
-            .status(this.status)
+            .paymentId(paymentId)
+            .cardNumber(paymentDto.getCardNumber())
+            .cardName(paymentDto.getCardName())
+            .status(DataStatus.DEFAULT)
             .build();
     }
 
     // 무통장 입금
-    public Deposit toEntityOfDeposit() {
+    public Deposit toEntityOfDeposit(PaymentDto paymentDto, long paymentId) {
         return Deposit.builder()
             .id(this.id)
-            .accountNumber(this.accountNumber)
-            .accountName(this.accountName)
-            .status(this.status)
+            .paymentId(paymentId)
+            .accountNumber(paymentDto.getAccountNumber())
+            .accountName(paymentDto.getAccountName())
+            .status(DataStatus.DEFAULT)
             .build();
     }
 
     // 신용카드
-    public CreditCard toEntityOfCreditCard() {
+    public CreditCard toEntityOfCreditCard(PaymentDto paymentDto, long paymentId) {
         return CreditCard.builder()
             .id(this.id)
-            .cardNumber(this.cardNumber)
-            .cardName(this.cardName)
-            .status(this.status)
+            .paymentId(paymentId)
+            .cardNumber(paymentDto.getCardNumber())
+            .cardName(paymentDto.getCardName())
+            .status(DataStatus.DEFAULT)
             .build();
     }
 
-    public void transPaymentId(long paymentId) {
-        this.paymentId = paymentId;
-    }
 }

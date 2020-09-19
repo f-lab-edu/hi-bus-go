@@ -1,6 +1,5 @@
 package com.younghun.hibusgo.mapper;
 
-import com.younghun.hibusgo.domain.Deposit;
 import com.younghun.hibusgo.domain.PaymentMeans;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,9 +8,9 @@ public interface DepositMapper {
 
   PaymentMeans findById (long id);
 
-  void addPaymentMeans(Deposit deposit);
+  void addPaymentMeans(PaymentMeans paymentMeans);
 
-  void updatePaymentMeans(Deposit deposit);
+  void updatePaymentMeans(PaymentMeans paymentMeans);
 
   void deletePaymentMeans(long id);
 
