@@ -11,6 +11,7 @@ import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
 import com.younghun.hibusgo.domain.Account;
 import com.younghun.hibusgo.domain.Mileage;
 import com.younghun.hibusgo.domain.Payment;
+import com.younghun.hibusgo.domain.Reservation;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.dto.PasswordDto;
 import com.younghun.hibusgo.dto.ProfileDto;
@@ -18,6 +19,7 @@ import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
 import com.younghun.hibusgo.service.MileageService;
 import com.younghun.hibusgo.service.PaymentService;
+import com.younghun.hibusgo.service.ReservationService;
 import com.younghun.hibusgo.utils.LoginUserId;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import com.younghun.hibusgo.validator.PasswordValidator;
@@ -49,6 +51,7 @@ public class AccountController {
     private final LoginService loginService;
     private final MileageService mileageService;
     private final PaymentService paymentService;
+    private final ReservationService reservationService;
 
     private final AccountDtoValidator accountDtoValidator;
     private final PasswordValidator passwordValidator;
@@ -184,6 +187,33 @@ public class AccountController {
         Optional<Payment> payment = paymentService.findById(id);
 
         return ResponseEntity.ok().body(payment.get());
+    }
+
+
+    /**
+     * 회원의 예매 목록 조회 메서드
+     * @param accountId 회원의 아이디
+     * @return List<Reservation>
+     */
+    @LoginCheck(userLevel = UserLevel.ADMIN)
+    @GetMapping("/reservations")
+    public ResponseEntity<List<Reservation>> getReservations(@LoginUserId long accountId) {
+        List<Reservation> reservations = reservationService.findByAccountId(accountId);
+
+        return ResponseEntity.ok().body(reservations);
+    }
+
+    /**
+     * 회원의 예매 정보 조회 메서드
+     * @param id 예매 아이디
+     * @return ResponseEntity<?>
+     */
+    @LoginCheck(userLevel = UserLevel.ADMIN)
+    @GetMapping("/reservations/{id}")
+    public ResponseEntity<?> getReservation(@PathVariable long id) {
+        Optional<Reservation> reservation = reservationService.findById(id);
+
+        return ResponseEntity.ok().body(reservation.get());
     }
 
 }
