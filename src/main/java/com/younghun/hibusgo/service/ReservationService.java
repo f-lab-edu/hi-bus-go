@@ -2,6 +2,10 @@ package com.younghun.hibusgo.service;
 
 
 
+import static com.younghun.hibusgo.utils.payCharges.ECONOMY_CHARGE;
+import static com.younghun.hibusgo.utils.payCharges.FIRST_CHARGE;
+import static com.younghun.hibusgo.utils.payCharges.PREMIUM_CHARGE;
+
 import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.domain.Payment;
 import com.younghun.hibusgo.domain.PaymentMeans;
@@ -86,13 +90,13 @@ public class ReservationService {
 
     switch (routeGrade) {
       case PREMIUM:
-        payCharge = 30000;
+        payCharge = PREMIUM_CHARGE;
         break;
       case FIRST:
-        payCharge = 20000;
+        payCharge = FIRST_CHARGE;
         break;
       case ECONOMY:
-        payCharge = 10000;
+        payCharge = ECONOMY_CHARGE;
         break;
     }
 
