@@ -32,14 +32,14 @@ public class Route {
     //도착 터미널 아이디
     private int arriveTerminalId;
 
+    //소요시간
+    private String timeRequired;
+
     //출발시간
     private LocalDateTime departureTime;
 
     //도착시간
     private LocalDateTime arriveTime;
-
-    //소요시간
-    private LocalDateTime timeRequired;
 
     //추가일
     private LocalDateTime createAt;
