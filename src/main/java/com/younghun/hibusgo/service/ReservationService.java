@@ -2,9 +2,9 @@ package com.younghun.hibusgo.service;
 
 
 
-import static com.younghun.hibusgo.utils.payCharges.ECONOMY_CHARGE;
-import static com.younghun.hibusgo.utils.payCharges.FIRST_CHARGE;
-import static com.younghun.hibusgo.utils.payCharges.PREMIUM_CHARGE;
+import static com.younghun.hibusgo.utils.PayCharges.ECONOMY_CHARGE;
+import static com.younghun.hibusgo.utils.PayCharges.FIRST_CHARGE;
+import static com.younghun.hibusgo.utils.PayCharges.PREMIUM_CHARGE;
 
 import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.domain.Payment;
