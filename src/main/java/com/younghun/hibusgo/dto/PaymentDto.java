@@ -4,6 +4,7 @@ import com.younghun.hibusgo.domain.Payment;
 import com.younghun.hibusgo.domain.PaymentMeansType;
 import com.younghun.hibusgo.domain.PaymentStatus;
 import com.younghun.hibusgo.domain.RouteGrade;
+import com.younghun.hibusgo.domain.SeatGrade;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,11 +49,19 @@ public class PaymentDto {
 
     // 노선 등급
     @NotBlank
-    private RouteGrade grade;
+    private RouteGrade routeGrade;
+
+    // 좌석 등급
+    @NotBlank
+    private SeatGrade seatGrade;
 
     // 좌석 번호
     @NotBlank
     private long seatNumber;
+
+    // 결제 금액
+    @NotBlank
+    private long paymentCharge;
 
     // 결제 상태(대기, 완료, 취소, 삭제)
     private PaymentStatus status;
@@ -61,17 +70,9 @@ public class PaymentDto {
         return Payment.builder()
             .id(this.id)
             .accountId(this.accountId)
+            .paymentCharge(paymentCharge)
             .means(this.means)
             .status(this.status)
-            .build();
-    }
-
-    public Payment transPayChargeAndMeans(long payCharge, PaymentMeansType meansType) {
-        return Payment.builder()
-            .id(this.id)
-            .accountId(this.accountId)
-            .paymentCharge(payCharge)
-            .means(meansType)
             .build();
     }
 

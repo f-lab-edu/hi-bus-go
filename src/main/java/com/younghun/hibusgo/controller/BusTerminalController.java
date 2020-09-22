@@ -6,6 +6,7 @@ import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREAT
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_REGION_BAD_REQUEST;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_TERMINAL_BAD_REQUEST;
 
 import com.younghun.hibusgo.aop.LoginCheck;
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
@@ -112,7 +113,7 @@ public class BusTerminalController {
     boolean isExistsTerminal =  busTerminalService.existsById(id);
 
     if (!isExistsTerminal) {
-      return ResponseEntity.badRequest().body("이미 삭제된 터미널이거나, 잘못된 터미널 입니다.");
+      return RESPONSE_TERMINAL_BAD_REQUEST;
     }
 
     busTerminalService.deleteBusTerminal(id);

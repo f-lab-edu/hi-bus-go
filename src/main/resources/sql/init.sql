@@ -154,6 +154,25 @@ create table route
 )
     comment '노선';
 
+create table charge
+(
+    id          bigint auto_increment comment '아이디'
+        primary key,
+    route_id    bigint      not null comment '노선 아이디',
+    route_grade varchar(45) not null comment '노선 등급',
+    seat_grade  varchar(45) not null comment '좌석 등급',
+    charge      bigint      not null comment '요금',
+    status      varchar(45) not null comment '상태',
+    create_at   datetime    not null comment '추가일',
+    updated_at  datetime    not null comment '수정일',
+    constraint charge_route_id_fk
+        foreign key (route_id) references route (id)
+)
+    comment '요금';
+
+create index charge_route_id_route_grade_seat_grade_index
+    on charge (route_id, route_grade, seat_grade);
+
 create table reservation
 (
     id         bigint auto_increment comment '예매 아이디'

@@ -1,18 +1,11 @@
 package com.younghun.hibusgo.service;
 
-
-
-import static com.younghun.hibusgo.utils.PayCharges.ECONOMY_CHARGE;
-import static com.younghun.hibusgo.utils.PayCharges.FIRST_CHARGE;
-import static com.younghun.hibusgo.utils.PayCharges.PREMIUM_CHARGE;
-
 import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.domain.Payment;
 import com.younghun.hibusgo.domain.PaymentMeans;
 import com.younghun.hibusgo.domain.PaymentMeansType;
 import com.younghun.hibusgo.domain.PaymentStatus;
 import com.younghun.hibusgo.domain.Reservation;
-import com.younghun.hibusgo.domain.RouteGrade;
 import com.younghun.hibusgo.dto.PaymentDto;
 import com.younghun.hibusgo.dto.ReservationDto;
 import com.younghun.hibusgo.mapper.PaymentMapper;
@@ -52,16 +45,12 @@ public class ReservationService {
     long seatNumber = paymentDto.getSeatNumber(); // 좌석 번호
 
     PaymentMeansType meansType = paymentDto.getMeans();
-    RouteGrade routeGrade = paymentDto.getGrade();
 
     // 좌석 상태(사용중) 변경
     seatMapper.updateStatus(seatId, seatNumber);
 
-    // 결제 금액 계산
-    long payCharge = calculatePaymentCharge(routeGrade);
-
-    // 결제 금액 전달
-    Payment payment = paymentDto.transPayChargeAndMeans(payCharge, meansType);
+    // 결제 객체 생성
+    Payment payment = paymentDto.toEntity();
 
     // 결제 상태 전달
     final PaymentStatus paymentStatus = paymentMeansFactory.getStatus(meansType);
@@ -83,24 +72,6 @@ public class ReservationService {
 
     // 예매 추가
     reservationMapper.addReservation(reservation);
-  }
-
-  public long calculatePaymentCharge(RouteGrade routeGrade) {
-    long payCharge = 0;
-
-    switch (routeGrade) {
-      case PREMIUM:
-        payCharge = PREMIUM_CHARGE;
-        break;
-      case FIRST:
-        payCharge = FIRST_CHARGE;
-        break;
-      case ECONOMY:
-        payCharge = ECONOMY_CHARGE;
-        break;
-    }
-
-    return payCharge;
   }
 
 }
