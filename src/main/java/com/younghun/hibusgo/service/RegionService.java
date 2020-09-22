@@ -19,11 +19,11 @@ public class RegionService {
 
   private final RegionMapper regionMapper;
 
-  public Region findById(int id) {
+  public Region findById(long id) {
     return regionMapper.findById(id);
   }
   
-  public boolean existsById(int id) {
+  public boolean existsById(long id) {
     return regionMapper.existsById(id);
   }
 
@@ -49,7 +49,7 @@ public class RegionService {
     regionMapper.addRegion(region);
   }
 
-  public void deleteRegion(int id) {
+  public void deleteRegion(long id) {
     regionMapper.deleteRegion(id);
   }
 }

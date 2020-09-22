@@ -10,6 +10,6 @@ public enum RouteGrade {
   // 우등
   FIRST,
 
-  //일반
-  ECONOMY
+  // 일반
+  ECONOMY;
 }

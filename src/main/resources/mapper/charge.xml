@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.ChargeMapper">
+
+    <resultMap id="chargeMap" type="com.younghun.hibusgo.domain.Charge">
+        <result property="id"         column="id"/>
+        <result property="routeId"    column="route_id"/>
+        <result property="routeGrade" column="route_grade"/>
+        <result property="seatGrade"  column="seat_grade"/>
+        <result property="charge"     column="charge"/>
+        <result property="status"     column="status"/>
+    </resultMap>
+
+    <select id="existsById" resultType="boolean" parameterType="Integer">
+      SELECT COUNT(*)
+      FROM charge
+      WHERE id   = #{id}
+      AND status != 'DELETE'
+    </select>
+
+    <select id="findById" resultMap="chargeMap">
+        SELECT id
+             , route_id
+             , route_grade
+             , seat_grade
+             , charge
+             , status
+        FROM charge
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByRouteIdAndGrades" resultMap="chargeMap">
+      SELECT id
+           , route_id
+           , route_grade
+           , seat_grade
+           , charge
+           , status
+      FROM charge
+      WHERE route_id = #{routeId}
+      AND route_grade = #{routeGrade}
+      AND seat_grade = #{seatGrade}
+    </select>
+
+    <insert id="addCharge">
+        INSERT INTO charge (route_id, route_grade, seat_grade, charge, status, create_at, updated_at)
+        VALUES (#{routId}, #{routeGrade}, #{seateGrade}, #{charge}, #{status}, NOW(), NOW())
+    </insert>
+
+    <update id="updateCharge">
+      UPDATE charge
+      SET route_grade = #{routeGrade}
+      AND seat_grade = #{seatGrade}
+      AND charge = #{charge}
+      WHERE route_id = #{routeId}
+    </update>
+
+    <update id="deleteCharge">
+      UPDATE charge
+      SET status = 'DELETE'
+      WHERE id = #{id}
+      AND status != 'DELETE'
+    </update>
+
+    <update id="deleteCharge">
+      UPDATE charge
+      SET  status    = 'DELETE'
+      AND updated_at = NOW()
+      WHERE id       = #{id}
+      AND status     != 'DELETE'
+    </update>
+
+</mapper>
+

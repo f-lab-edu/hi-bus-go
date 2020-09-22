@@ -53,8 +53,8 @@ public class RouteController {
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PostMapping()
   public ResponseEntity<?> addRoute(@RequestBody @Valid RouteDto routeDto) {
-    int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
-    int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
+    long departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
+    long arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
 
     //출발 터미널 존재 여부
     boolean existDepartureTerminal = busTerminalService.existsById(departureTerminalId);
@@ -84,8 +84,8 @@ public class RouteController {
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @PutMapping()
   public ResponseEntity<?> updateRoute(@RequestBody @Valid RouteDto routeDto) {
-    int departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
-    int arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
+    long departureTerminalId = routeDto.getDepartureTerminalId(); //출발 터미널 아이디
+    long arriveTerminalId = routeDto.getArriveTerminalId(); //도착 터미널 아이디
 
     //출발 터미널 존재 여부
     boolean existDepartureTerminal = busTerminalService.existsById(departureTerminalId);
@@ -101,7 +101,7 @@ public class RouteController {
       return RESPONSE_TERMINAL_BAD_REQUEST;
     }
 
-    int id = routeDto.getId();
+    long id = routeDto.getId();
 
     //노선 존재 여부
     boolean existRoute = routeService.existsById(id);
@@ -123,7 +123,7 @@ public class RouteController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteRoute(@PathVariable int id) {
+  public ResponseEntity<?> deleteRoute(@PathVariable long id) {
     boolean existRoute = routeService.existsById(id);
 
     //노선 존재 여부

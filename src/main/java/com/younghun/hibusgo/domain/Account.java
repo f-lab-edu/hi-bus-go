@@ -18,13 +18,13 @@ public class Account {
     // 회원 아이디(이메일)
     private String userId;
 
-    //비밀번호
+    // 비밀번호
     private String password;
 
-    //이름
+    // 이름
     private String name;
 
-    //휴대폰 번호
+    // 휴대폰 번호
     private String phoneNumber;
 
     // 사용자 레벨 USER(사용자), ADMIN(관리자)

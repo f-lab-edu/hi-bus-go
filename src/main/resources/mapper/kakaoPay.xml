@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.KakaPayMapper">
+
+    <resultMap id="seatMap" type="com.younghun.hibusgo.domain.KakaoPay">
+        <result property="id"            column="id"/>
+        <result property="cardNumber"    column="card_number"/>
+        <result property="cardName"      column="card_name"/>
+        <result property="paymentId"     column="payment_id"/>
+        <result property="createdAt"     column="created_at"/>
+        <result property="updatedAt"     column="updated_at"/>
+    </resultMap>
+
+    <select id="findById" resultMap="seatMap">
+        SELECT id
+             , card_number
+             , card_name
+             , payment_id
+             , created_at
+             , updated_at
+        FROM kakao_pay
+        WHERE id = #{id}
+    </select>
+
+    <insert id="addPaymentMeans">
+      INSERT INTO kakao_pay (card_number, card_name, payment_id, created_at, updated_at)
+      VALUES (#{cardNumber}, #{cardName}, #{paymentId}, NOW(), NOW())
+    </insert>
+
+</mapper>

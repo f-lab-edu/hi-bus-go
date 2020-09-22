@@ -39,5 +39,14 @@
       AND status != 'DELETE'
     </select>
 
+  <insert id="addPayment">
+    INSERT INTO payment (account_id, payment_charge, means, status, created_at, updated_at)
+    VALUES (#{accountId}, #{paymentCharge}, #{means}, #{status}, NOW(), NOW())
+
+    <selectKey keyProperty="id" resultType="Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+
 
 </mapper>
