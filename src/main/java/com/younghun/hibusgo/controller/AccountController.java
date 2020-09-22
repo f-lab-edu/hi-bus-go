@@ -5,6 +5,8 @@ import com.younghun.hibusgo.aop.LoginCheck;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ROUTE_BAD_REQUEST;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_SEAT_BAD_REQUEST;
 
 
 import com.younghun.hibusgo.aop.LoginCheck.UserLevel;
@@ -14,12 +16,17 @@ import com.younghun.hibusgo.domain.Payment;
 import com.younghun.hibusgo.domain.Reservation;
 import com.younghun.hibusgo.dto.AccountDto;
 import com.younghun.hibusgo.dto.PasswordDto;
+import com.younghun.hibusgo.dto.PaymentDto;
+import com.younghun.hibusgo.dto.PaymentMeansDto;
 import com.younghun.hibusgo.dto.ProfileDto;
+import com.younghun.hibusgo.dto.ReservationDto;
 import com.younghun.hibusgo.service.AccountService;
 import com.younghun.hibusgo.service.LoginService;
 import com.younghun.hibusgo.service.MileageService;
 import com.younghun.hibusgo.service.PaymentService;
 import com.younghun.hibusgo.service.ReservationService;
+import com.younghun.hibusgo.service.RouteService;
+import com.younghun.hibusgo.service.SeatService;
 import com.younghun.hibusgo.utils.LoginUserId;
 import com.younghun.hibusgo.validator.AccountDtoValidator;
 import com.younghun.hibusgo.validator.PasswordValidator;
@@ -52,6 +59,8 @@ public class AccountController {
     private final MileageService mileageService;
     private final PaymentService paymentService;
     private final ReservationService reservationService;
+    private final RouteService routeService;
+    private final SeatService seatService;
 
     private final AccountDtoValidator accountDtoValidator;
     private final PasswordValidator passwordValidator;
@@ -195,7 +204,7 @@ public class AccountController {
      * @param accountId 회원의 아이디
      * @return List<Reservation>
      */
-    @LoginCheck(userLevel = UserLevel.ADMIN)
+    @LoginCheck(userLevel = UserLevel.USER)
     @GetMapping("/reservations")
     public ResponseEntity<List<Reservation>> getReservations(@LoginUserId long accountId) {
         List<Reservation> reservations = reservationService.findByAccountId(accountId);
@@ -208,12 +217,45 @@ public class AccountController {
      * @param id 예매 아이디
      * @return ResponseEntity<?>
      */
-    @LoginCheck(userLevel = UserLevel.ADMIN)
+    @LoginCheck(userLevel = UserLevel.USER)
     @GetMapping("/reservations/{id}")
     public ResponseEntity<?> getReservation(@PathVariable long id) {
         Optional<Reservation> reservation = reservationService.findById(id);
 
+        if (!reservation.isPresent()) {
+            return RESPONSE_NOT_FOUND;
+        }
+
         return ResponseEntity.ok().body(reservation.get());
+    }
+
+    /**
+     * 회원의 예매 정보 추가 메서드
+     * @param
+     * @return ResponseEntity<?>
+     */
+    @LoginCheck(userLevel = UserLevel.USER)
+    @PostMapping("/reservations")
+    public ResponseEntity<?> addReservation(@RequestBody @Valid PaymentDto paymentDto) {
+        long routeId = paymentDto.getRouteId();
+        long seatNumber = paymentDto.getSeatNumber();
+
+        boolean existRoute = routeService.existsById(routeId);
+
+        if (!existRoute) {
+            return RESPONSE_ROUTE_BAD_REQUEST;
+        }
+
+        // 좌석 번호가 비어 있는 좌석인지
+        boolean existEmptySeat = seatService.existEmptySeatByRoutIdAndNumber(routeId, seatNumber);
+
+        if (!existEmptySeat) {
+            return RESPONSE_SEAT_BAD_REQUEST;
+        }
+
+        reservationService.addReservation(paymentDto);
+
+        return RESPONSE_ENTITY_CREATED;
     }
 
 }

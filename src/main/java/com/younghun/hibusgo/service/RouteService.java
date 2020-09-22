@@ -14,7 +14,7 @@ public class RouteService {
 
   private final RouteMapper routeMapper;
 
-  public boolean existsById(int id) {
+  public boolean existsById(long id) {
     return routeMapper.existsById(id);
   }
 
@@ -30,7 +30,7 @@ public class RouteService {
     routeMapper.updateRoute(route);
   }
 
-  public void deleteRoute(int id) {
+  public void deleteRoute(long id) {
     routeMapper.deleteRoute(id);
   }
 }

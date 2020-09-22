@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RegionMapper {
 
-  Region findById(int id);
+  Region findById(long id);
   
-  boolean existsById(int id);
+  boolean existsById(long id);
 
   boolean existsByName(String name);
 
@@ -21,6 +21,6 @@ public interface RegionMapper {
 
   void updateRegion(Region region);
 
-  void deleteRegion(int id);
+  void deleteRegion(long id);
 
 }

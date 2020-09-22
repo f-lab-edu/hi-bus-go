@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.DepositMapper">
+
+    <resultMap id="seatMap" type="com.younghun.hibusgo.domain.Deposit">
+        <result property="id"            column="id"/>
+        <result property="accountNumber" column="account_number"/>
+        <result property="accountName"   column="account_name"/>
+        <result property="paymentId"     column="payment_id"/>
+        <result property="createdAt"     column="created_at"/>
+        <result property="updatedAt"     column="updated_at"/>
+    </resultMap>
+
+    <select id="findById" resultMap="seatMap">
+        SELECT id
+             , account_number
+             , account_name
+             , payment_id
+             , created_at
+             , updated_at
+        FROM deposit
+        WHERE id = #{id}
+    </select>
+
+    <insert id="addPaymentMeans">
+      INSERT INTO deposit (account_number, account_name, payment_id, created_at, updated_at)
+      VALUES (#{accountNumber}, #{accountName}, #{paymentId}, NOW(), NOW())
+    </insert>
+
+</mapper>

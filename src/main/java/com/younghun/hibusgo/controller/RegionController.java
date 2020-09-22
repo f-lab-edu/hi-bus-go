@@ -86,7 +86,7 @@ public class  RegionController {
    */
   @LoginCheck(userLevel = UserLevel.ADMIN)
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteRegion(@PathVariable int id) {
+  public ResponseEntity<?> deleteRegion(@PathVariable long id) {
     boolean isExistsRegion =  regionService.existsById(id);
 
     if (!isExistsRegion) {
