@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface BusTerminalMapper {
 
-    BusTerminal findById(int id);
+    BusTerminal findById(long id);
 
     BusTerminal findByNameAndRegion(String name, String region);
 
@@ -17,11 +17,11 @@ public interface BusTerminalMapper {
 
     void addBusTerminal(BusTerminal busTerminal);
 
-    void deleteBusTerminal(int id);
+    void deleteBusTerminal(long id);
 
     void updateBusTerminal(BusTerminal busTerminal);
 
     boolean existsByName(String name);
 
-    boolean existsById(int id);
+    boolean existsById(long id);
 }

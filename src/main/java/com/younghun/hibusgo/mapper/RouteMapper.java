@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RouteMapper {
 
-  boolean existsById(int id);
+  boolean existsById(long id);
 
   List<Route> searchRoute(Route route);
 
@@ -15,5 +15,5 @@ public interface RouteMapper {
 
   void updateRoute(Route route);
 
-  void deleteRoute(int id);
+  void deleteRoute(long id);
 }

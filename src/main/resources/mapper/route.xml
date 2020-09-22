@@ -4,10 +4,11 @@
 
     <resultMap id="routeMap" type="com.younghun.hibusgo.domain.Route">
         <result property="id"                  column="id"/>
+        <result property="seatId"              column="seat_id"/>
+        <result property="seatNumber"          column="seat_number"/>
         <result property="name"                column="name"/>
         <result property="distance"            column="distance"/>
-        <result property="timeRequired"       column="time_required"/>
-        <result property="searResidual"        column="sear_residual"/>
+        <result property="timeRequired"        column="time_required"/>
         <result property="grade"               column="grade"/>
         <result property="departureTerminalId" column="departure_terminal_id"/>
         <result property="arriveTerminalId"    column="arrive_terminal_id"/>
@@ -27,6 +28,7 @@
 
     <select id="searchRoute" resultMap="routeMap" resultType="java.util.ArrayList">
         SELECT id
+             , number as seat_number
              , name
              , distance
              , time_required
@@ -38,7 +40,9 @@
              , created_at
              , updated_at
              , status
-        FROM route
+        FROM route r
+        INNER JOIN seat s
+        ON r.id = s.route_id
         WHERE departure_terminal_id = #{departureTerminalId}
         AND arrive_terminal_id = #{arriveTerminalId}
         AND grade = #{grade}
@@ -47,8 +51,8 @@
     </select>
 
     <insert id="addRoute">
-        INSERT INTO route (name, distance, time_required, seat_residual, grade, departure_terminal_id, arrive_terminal_id, departure_time, arrive_time, created_at, updated_at, status)
-        values (#{name}, #{distance}, #{timeRequired}, #{seatResidual}, #{grade}, #{departureTerminalId}, #{arriveTerminalId}, #{departureTime}, #{arriveTime}, NOW(), NOW(), #{status});
+        INSERT INTO route (name, distance, time_required, grade, departure_terminal_id, arrive_terminal_id, departure_time, arrive_time, created_at, updated_at, status)
+        values (#{name}, #{distance}, #{timeRequired}, #{grade}, #{departureTerminalId}, #{arriveTerminalId}, #{departureTime}, #{arriveTime}, NOW(), NOW(), #{status});
     </insert>
 
     <update id="updateRoute">
@@ -56,7 +60,6 @@
       SET name                  = #{name}
       AND distance              = #{distance}
       AND time_required         = #{timeRequired}
-      AND seat_residual         = #{seatResidual}
       AND grade                 = #{grade}
       AND departure_terminal_id = #{departureTerminalId}
       AND arrive_terminal_id    = #{arriveTerminalId}

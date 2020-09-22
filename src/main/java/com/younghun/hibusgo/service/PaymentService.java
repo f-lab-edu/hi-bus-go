@@ -23,4 +23,7 @@ public class PaymentService {
     return paymentMapper.findByAccountId(id);
   }
 
+  public long addPayment(Payment payment) {
+    return paymentMapper.addPayment(payment);
+  }
 }

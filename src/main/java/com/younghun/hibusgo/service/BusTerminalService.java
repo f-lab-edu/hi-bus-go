@@ -20,7 +20,7 @@ public class BusTerminalService {
 
     private final BusTerminalMapper terminalMapper;
 
-    public BusTerminal findById(int id) {
+    public BusTerminal findById(long id) {
         return terminalMapper.findById(id);
     }
 
@@ -49,7 +49,7 @@ public class BusTerminalService {
         terminalMapper.addBusTerminal(busTerminal);
     }
 
-    public void deleteBusTerminal(int id) {
+    public void deleteBusTerminal(long id) {
         terminalMapper.deleteBusTerminal(id);
     }
 
@@ -61,7 +61,7 @@ public class BusTerminalService {
         return terminalMapper.existsByName(name);
     }
 
-    public boolean existsById(int id) {
+    public boolean existsById(long id) {
         return terminalMapper.existsById(id);
     }
 }

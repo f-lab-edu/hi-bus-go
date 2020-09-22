@@ -15,13 +15,13 @@ public class Payment {
     private long id;
 
     // 회원 아이디
-    private String accountId;
+    private long accountId;
 
     // 결제 금액
     private long paymentCharge;
 
     // 결제 수단
-    private String means;
+    private PaymentMeansType means;
 
     // 결제 상태(대기, 완료, 취소, 삭제)
     private PaymentStatus status;
@@ -31,5 +31,15 @@ public class Payment {
 
     // 결제 수정일
     private LocalDateTime updatedAt;
+
+    public Payment transStatus(PaymentStatus status) {
+        return Payment.builder()
+            .id(this.id)
+            .accountId(this.accountId)
+            .paymentCharge(this.paymentCharge)
+            .means(this.means)
+            .status(status)
+            .build();
+    }
 
 }
