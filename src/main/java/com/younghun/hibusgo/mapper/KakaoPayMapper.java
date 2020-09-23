@@ -12,6 +12,6 @@ public interface KakaoPayMapper {
 
   void updatePaymentMeans(PaymentMeans paymentMeans);
 
-  void deletePaymentMeans(long id);
+  void deletePaymentMeansByPaymentId(long paymentId);
 
 }

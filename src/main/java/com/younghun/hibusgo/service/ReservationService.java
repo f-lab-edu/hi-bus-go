@@ -74,4 +74,32 @@ public class ReservationService {
     reservationMapper.addReservation(reservation);
   }
 
+  public boolean existsById(long id) {
+    return reservationMapper.existsById(id);
+  }
+
+  @Transactional
+  public void deleteReservation(long id) {
+    Reservation reservation = reservationMapper.findById(id);
+
+    long paymentId = reservation.getPaymentId();
+
+    Payment payment = paymentMapper.findById(id);
+    PaymentMeansType meansType = payment.getMeans();
+
+    // 결제 수단 삭제
+    final PaymentMeansService paymentMeansService = paymentMeansFactory.getType(meansType);
+    paymentMeansService.deletePaymentMeansByPaymentId(paymentId);
+
+    // 결제 삭제
+    paymentMapper.deletePayment(id);
+
+    // 예약 삭제
+    reservationMapper.deleteReservation(id);
+
+  }
+
+  public boolean existsByIdAndAccountId(long reservationId, long accountId) {
+    return reservationMapper.existsByIdAndAccountId(reservationId, accountId);
+  }
 }

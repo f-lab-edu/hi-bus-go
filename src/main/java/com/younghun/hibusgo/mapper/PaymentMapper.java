@@ -12,4 +12,6 @@ public interface PaymentMapper {
   List<Payment> findByAccountId(long id);
 
   long addPayment(Payment payment);
+
+  void deletePayment(long id);
 }

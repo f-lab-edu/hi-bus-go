@@ -27,7 +27,7 @@ public class DepositService implements PaymentMeansService {
   }
 
   @Override
-  public void deletePaymentMeans(long id) {
-    depositMapper.deletePaymentMeans(id);
+  public void deletePaymentMeansByPaymentId(long paymentId) {
+    depositMapper.deletePaymentMeansByPaymentId(paymentId);
   }
 }

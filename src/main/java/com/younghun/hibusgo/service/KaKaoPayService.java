@@ -27,7 +27,7 @@ public class KaKaoPayService implements PaymentMeansService {
   }
 
   @Override
-  public void deletePaymentMeans(long id) {
-    kakaoPayMapper.deletePaymentMeans(id);
+  public void deletePaymentMeansByPaymentId(long paymentId) {
+    kakaoPayMapper.deletePaymentMeansByPaymentId(paymentId);
   }
 }

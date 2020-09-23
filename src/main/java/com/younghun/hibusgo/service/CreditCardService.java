@@ -27,7 +27,7 @@ public class CreditCardService implements PaymentMeansService {
   }
 
   @Override
-  public void deletePaymentMeans(long id) {
-    creditCardMapper.deletePaymentMeans(id);
+  public void deletePaymentMeansByPaymentId(long paymentId) {
+    creditCardMapper.deletePaymentMeansByPaymentId(paymentId);
   }
 }

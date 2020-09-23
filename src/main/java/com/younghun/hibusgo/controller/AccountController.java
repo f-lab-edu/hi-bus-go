@@ -5,6 +5,7 @@ import com.younghun.hibusgo.aop.LoginCheck;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_CREATED;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ENTITY_NO_CONTENT;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_NOT_FOUND;
+import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_RESERVATION_BAD_REQUEST;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_ROUTE_BAD_REQUEST;
 import static com.younghun.hibusgo.utils.ResponseConstants.RESPONSE_SEAT_BAD_REQUEST;
 
@@ -256,6 +257,25 @@ public class AccountController {
         reservationService.addReservation(paymentDto);
 
         return RESPONSE_ENTITY_CREATED;
+    }
+
+    /**
+     * 회원의 예매 정보 취소(삭제) 메서드
+     * @param id 예약 아이디
+     * @return ResponseEntity<?>
+     */
+    @LoginCheck(userLevel = UserLevel.USER)
+    @DeleteMapping("/reservations/{id}")
+    public ResponseEntity<?> deleteReservation(@PathVariable long id) {
+        boolean existReservation = reservationService.existsById(id);
+
+        if (!existReservation) {
+            return RESPONSE_RESERVATION_BAD_REQUEST;
+        }
+
+        reservationService.deleteReservation(id);
+
+        return RESPONSE_ENTITY_NO_CONTENT;
     }
 
 }
