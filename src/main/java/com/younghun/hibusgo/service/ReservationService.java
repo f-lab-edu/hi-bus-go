@@ -76,11 +76,20 @@ public class ReservationService {
     // 예매 추가
     reservationMapper.addReservation(reservation);
 
-    // 마일리지 추가
+    // 이전 마일리지 조회
+    Mileage mileage = mileageMapper.findByAccountId(accountId);
+    long beforeMileage = mileage.getMileage();
+
+    // 마일리지 계산
     long charge = payment.getCharge();
-    long calculateMileage = calculateMileage(charge);
-    Mileage mileage = paymentDto.toEntityOfMileage(calculateMileage);
-    mileageMapper.updateMileage(mileage);
+    long calculateMileage = calculateMileage(charge, beforeMileage);
+
+    // 마일리지 적립 금액이 0원 보다 큰 경우에 적립
+    if (calculateMileage > 0) {
+      mileage = paymentDto.toEntityOfMileage(calculateMileage);
+      mileageMapper.updateMileage(mileage);
+    }
+
   }
 
   public boolean existsById(long id) {
@@ -112,7 +121,7 @@ public class ReservationService {
     return reservationMapper.existsByIdAndAccountId(reservationId, accountId);
   }
 
-  public long calculateMileage(long charge) {
-    return (long) (charge * 0.001);
+  public long calculateMileage(long charge, long beforeMileage) {
+    return (long) (charge * 0.001) + beforeMileage;
   }
 }
