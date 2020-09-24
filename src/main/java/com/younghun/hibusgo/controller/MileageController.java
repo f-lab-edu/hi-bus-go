@@ -85,5 +85,4 @@ public class MileageController {
     return RESPONSE_ENTITY_NO_CONTENT;
   }
 
-
 }

@@ -9,5 +9,4 @@ public interface MileageMapper {
   Mileage findByAccountId(long accountId);
 
   void updateMileage(Mileage mileage);
-
 }

@@ -1,5 +1,7 @@
 package com.younghun.hibusgo.dto;
 
+import com.younghun.hibusgo.domain.DataStatus;
+import com.younghun.hibusgo.domain.Mileage;
 import com.younghun.hibusgo.domain.Payment;
 import com.younghun.hibusgo.domain.PaymentMeansType;
 import com.younghun.hibusgo.domain.PaymentStatus;
@@ -61,7 +63,7 @@ public class PaymentDto {
 
     // 결제 금액
     @NotBlank
-    private long paymentCharge;
+    private long charge;
 
     // 결제 상태(대기, 완료, 취소, 삭제)
     private PaymentStatus status;
@@ -70,9 +72,17 @@ public class PaymentDto {
         return Payment.builder()
             .id(this.id)
             .accountId(this.accountId)
-            .paymentCharge(paymentCharge)
+            .charge(charge)
             .means(this.means)
             .status(this.status)
+            .build();
+    }
+
+    public Mileage toEntityOfMileage(long mileage) {
+        return Mileage.builder()
+            .accountId(this.accountId)
+            .mileage(mileage)
+            .status(DataStatus.DEFAULT)
             .build();
     }
 

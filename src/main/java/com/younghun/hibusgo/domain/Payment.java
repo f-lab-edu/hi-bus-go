@@ -17,8 +17,8 @@ public class Payment {
     // 회원 아이디
     private long accountId;
 
-    // 결제 금액
-    private long paymentCharge;
+    // 결제 요금
+    private long charge;
 
     // 결제 수단
     private PaymentMeansType means;
@@ -36,7 +36,7 @@ public class Payment {
         return Payment.builder()
             .id(this.id)
             .accountId(this.accountId)
-            .paymentCharge(this.paymentCharge)
+            .charge(this.charge)
             .means(this.means)
             .status(status)
             .build();

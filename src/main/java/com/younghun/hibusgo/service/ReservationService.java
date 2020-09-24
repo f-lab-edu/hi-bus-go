@@ -1,6 +1,8 @@
 package com.younghun.hibusgo.service;
 
+import com.younghun.hibusgo.domain.Config;
 import com.younghun.hibusgo.domain.DataStatus;
+import com.younghun.hibusgo.domain.Mileage;
 import com.younghun.hibusgo.domain.Payment;
 import com.younghun.hibusgo.domain.PaymentMeans;
 import com.younghun.hibusgo.domain.PaymentMeansType;
@@ -8,6 +10,8 @@ import com.younghun.hibusgo.domain.PaymentStatus;
 import com.younghun.hibusgo.domain.Reservation;
 import com.younghun.hibusgo.dto.PaymentDto;
 import com.younghun.hibusgo.dto.ReservationDto;
+import com.younghun.hibusgo.mapper.ConfigMapper;
+import com.younghun.hibusgo.mapper.MileageMapper;
 import com.younghun.hibusgo.mapper.PaymentMapper;
 import com.younghun.hibusgo.mapper.ReservationMapper;
 import com.younghun.hibusgo.mapper.SeatMapper;
@@ -25,6 +29,8 @@ public class ReservationService {
   private final ReservationMapper reservationMapper;
   private final PaymentMapper paymentMapper;
   private final SeatMapper seatMapper;
+  private final MileageMapper mileageMapper;
+  private final ConfigMapper configMapper;
 
   private final PaymentMeansFactory paymentMeansFactory;
 
@@ -72,6 +78,21 @@ public class ReservationService {
 
     // 예매 추가
     reservationMapper.addReservation(reservation);
+
+    // 이전 마일리지 조회
+    Mileage mileage = mileageMapper.findByAccountId(accountId);
+    long beforeMileage = mileage.getMileage();
+
+    // 마일리지 계산
+    long charge = payment.getCharge();
+    long calculateMileage = calculateMileage(charge, beforeMileage);
+
+    // 마일리지 적립 금액이 0원 보다 큰 경우에 적립
+    if (calculateMileage > 0) {
+      mileage = paymentDto.toEntityOfMileage(calculateMileage);
+      mileageMapper.updateMileage(mileage);
+    }
+
   }
 
   public boolean existsById(long id) {
@@ -101,5 +122,13 @@ public class ReservationService {
 
   public boolean existsByIdAndAccountId(long reservationId, long accountId) {
     return reservationMapper.existsByIdAndAccountId(reservationId, accountId);
+  }
+
+  public long calculateMileage(long charge, long beforeMileage) {
+    // 설정 정보 조회(마일리지 적립 비율)
+    Config config = configMapper.findConfig();
+    double mileageRate = config.getMileageRate();
+
+    return (long) (charge * mileageRate) + beforeMileage;
   }
 }

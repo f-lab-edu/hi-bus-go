@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.younghun.hibusgo.mapper.ConfigMapper">
+
+    <resultMap id="configMap" type="com.younghun.hibusgo.domain.Config">
+        <result property="id"          column="id"/>
+        <result property="mileageRate" column="mileage_rate"/>
+        <result property="mileage"     column="mileage"/>
+        <result property="status"      column="status"/>
+    </resultMap>
+
+    <select id="findConfig" resultMap="configMap">
+        SELECT id
+             , mileage_rate
+             , create_at
+             , updated_at
+        FROM config
+    </select>
+
+    <update id="updateConfig">
+        INSERT INTO config (id, mileage_rate, create_at, updated_at)
+        VALUES (#{id}, #{mileageRate}, NOW(), NOW())
+        ON DUPLICATE KEY UPDATE
+        mileage_rate = #{mileageRate}
+        , updated_at = NOW()
+    </update>
+
+</mapper>
