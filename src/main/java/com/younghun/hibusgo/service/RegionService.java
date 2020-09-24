@@ -35,12 +35,12 @@ public class RegionService {
    * @Cacheable : 동일 값이 Cache에 있는 경우 Cache에서 데이터를 return합니다.
    * 만약 동일 key 값이 없을 경우 메소드를 실행하고 반환된 결과 값을 Cache에 저장합니다.
    */
-  @Cacheable(value = REGIONS_NAME, key = "#name", cacheManager = "redisCacheManager")
+  @Cacheable(value = REGIONS_NAME, key = "#name", unless = "#result == null", cacheManager = "redisCacheManager")
   public List<Region> searchByName(String name) {
     return regionMapper.searchByName(name);
   }
 
-  @Cacheable(value = REGIONS_TOTAL, key = "'total'", cacheManager = "redisCacheManager")
+  @Cacheable(value = REGIONS_TOTAL, key = "'total'", unless = "#result == null", cacheManager = "redisCacheManager")
   public List<Region> searchTotal() {
     return regionMapper.searchTotal();
   }
