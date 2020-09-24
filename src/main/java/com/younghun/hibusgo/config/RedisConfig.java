@@ -129,6 +129,8 @@ public class RedisConfig {
 
     cacheConfigurationMap.put(CacheKeys.ROUTE_SEARCH, redisCacheConfiguration.entryTtl(Duration.ofDays(1L)));
 
+    cacheConfigurationMap.put(CacheKeys.RESERVATION_ACCOUNT, redisCacheConfiguration.entryTtl(Duration.ofMinutes(5L)));
+
     RedisCacheManager redisCacheManager = RedisCacheManager
         .RedisCacheManagerBuilder
         .fromConnectionFactory(cacheRedisConnectionFactory)

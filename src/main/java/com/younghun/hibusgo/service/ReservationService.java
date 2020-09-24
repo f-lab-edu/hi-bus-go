@@ -11,10 +11,12 @@ import com.younghun.hibusgo.dto.ReservationDto;
 import com.younghun.hibusgo.mapper.PaymentMapper;
 import com.younghun.hibusgo.mapper.ReservationMapper;
 import com.younghun.hibusgo.mapper.SeatMapper;
+import com.younghun.hibusgo.utils.CacheKeys;
 import com.younghun.hibusgo.utils.PaymentMeansFactory;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,12 @@ public class ReservationService {
         .filter(o -> o.getStatus() != DataStatus.DELETED);
   }
 
+  /**
+   * @Cacheable : 동일 값이 Cache에 있는 경우 Cache에서 데이터를 return합니다.
+   * 만약 동일 key 값이 없을 경우 메소드를 실행하고 반환된 결과 값을 Cache에 저장합니다.
+   * unless = "#result == null" -> 조회 결과 값이 null이 아닐 경우에만 캐싱
+   */
+  @Cacheable(value = CacheKeys.RESERVATION_ACCOUNT, key = "#id", unless = "#result == null" ,cacheManager = "redisCacheManager")
   public List<Reservation> findByAccountId(long id) {
     return reservationMapper.findByAccountId(id);
   }
