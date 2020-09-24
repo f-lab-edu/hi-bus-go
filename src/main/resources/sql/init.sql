@@ -18,6 +18,16 @@ create table account
 create index account_id_name_index
     on account (id, name);
 
+create table config
+(
+    id           bigint auto_increment comment '아이디'
+        primary key,
+    mileage_rate double   not null comment '마일리지 적립 비율',
+    create_at    datetime not null comment '추가일',
+    updated_at   datetime not null comment '수정일'
+)
+    comment '설정 정보';
+
 create table mileage
 (
     id         bigint auto_increment comment '아이디'

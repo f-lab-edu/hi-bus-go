@@ -1,5 +1,6 @@
 package com.younghun.hibusgo.service;
 
+import com.younghun.hibusgo.domain.Config;
 import com.younghun.hibusgo.domain.DataStatus;
 import com.younghun.hibusgo.domain.Mileage;
 import com.younghun.hibusgo.domain.Payment;
@@ -9,6 +10,7 @@ import com.younghun.hibusgo.domain.PaymentStatus;
 import com.younghun.hibusgo.domain.Reservation;
 import com.younghun.hibusgo.dto.PaymentDto;
 import com.younghun.hibusgo.dto.ReservationDto;
+import com.younghun.hibusgo.mapper.ConfigMapper;
 import com.younghun.hibusgo.mapper.MileageMapper;
 import com.younghun.hibusgo.mapper.PaymentMapper;
 import com.younghun.hibusgo.mapper.ReservationMapper;
@@ -28,6 +30,7 @@ public class ReservationService {
   private final PaymentMapper paymentMapper;
   private final SeatMapper seatMapper;
   private final MileageMapper mileageMapper;
+  private final ConfigMapper configMapper;
 
   private final PaymentMeansFactory paymentMeansFactory;
 
@@ -122,6 +125,10 @@ public class ReservationService {
   }
 
   public long calculateMileage(long charge, long beforeMileage) {
-    return (long) (charge * 0.001) + beforeMileage;
+    // 설정 정보 조회(마일리지 적립 비율)
+    Config config = configMapper.findConfig();
+    double mileageRate = config.getMileageRate();
+
+    return (long) (charge * mileageRate) + beforeMileage;
   }
 }
