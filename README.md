@@ -40,7 +40,7 @@ Git Flow를 사용하여 branch를 관리
 ### ERD
 읽기 전용 url(비밀번호 5ez653)
 https://aquerytool.com:443/aquerymain/index/?rurl=70475dc0-1cb5-4573-a864-93e68f4ddcaa
-![hi-bus-go_20200922_55_50](https://user-images.githubusercontent.com/29122916/93879065-0bf5fe00-fd16-11ea-8350-3c9be260548a.png)
+![hi-bus-go_20200924_48_32](https://user-images.githubusercontent.com/29122916/94105843-21356e80-fe75-11ea-9ea4-d513ea74c368.png)
 
 
 
