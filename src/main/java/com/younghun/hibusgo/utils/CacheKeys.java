@@ -14,4 +14,5 @@ public class CacheKeys {
   public static final String TERMINALS_TOTAL = "terminals.total";
   public static final String REGIONS_NAME = "regions.name";
   public static final String REGIONS_TOTAL = "regions.total";
+  public static final String ROUTE_SEARCH = "route.search";
 }
