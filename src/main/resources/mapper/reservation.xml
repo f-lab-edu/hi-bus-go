@@ -17,6 +17,21 @@
         <result property="updatedAt"     column="updated_at"/>
     </resultMap>
 
+    <select id="existsById" resultType="boolean" parameterType="Integer">
+      SELECT COUNT(*)
+      FROM reservation
+      WHERE id   = #{id}
+      AND status != 'DELETE'
+    </select>
+
+    <select id="existsByIdAndAccountId" resultType="boolean" parameterType="Integer">
+      SELECT COUNT(*)
+      FROM reservation
+      WHERE id   = #{id}
+      AND account_id = #{accountId}
+      AND status != 'DELETE'
+    </select>
+
     <select id="findById" resultMap="reservationMap">
       SELECT  r.id
             , r.route_id
@@ -26,7 +41,6 @@
             , r.account_id
             , r.payment_id
             , s.number as seat_number
-            , s.grade
             , r.status
             , r.created_at
             , r.updated_at
@@ -48,7 +62,6 @@
            , r.account_id
            , r.payment_id
            , s.number as seat_number
-           , s.grade
            , r.status
            , r.created_at
            , r.updated_at
@@ -65,5 +78,13 @@
      INSERT INTO reservation (route_id, account_id, payment_id, status, created_at, updated_at)
      VALUES (#{routeId}, #{accountId}, #{paymentId}, #{status}, NOW(), NOW())
    </insert>
+
+    <update id="deleteReservation">
+      UPDATE reservation
+      SET status = 'DELETE'
+      AND updated_at = NOW()
+      WHERE id = #{id}
+      AND status != 'DELETE'
+    </update>
 
 </mapper>

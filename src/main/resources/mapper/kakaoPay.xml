@@ -27,4 +27,13 @@
       VALUES (#{cardNumber}, #{cardName}, #{paymentId}, NOW(), NOW())
     </insert>
 
+    <update id="deletePaymentMeansByPaymentId">
+      UPDATE kakao_pay
+      SET status = 'DELETE'
+      AND updated_at = NOW()
+      WHERE payment_id = #{paymentId}
+      AND status != 'DELETE'
+    </update>
+
+
 </mapper>

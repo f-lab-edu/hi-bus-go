@@ -23,8 +23,16 @@
     </select>
 
     <insert id="addPaymentMeans">
-      INSERT INTO kakao_pay (card_number, card_name, payment_id, created_at, updated_at)
+      INSERT INTO credit_card (card_number, card_name, payment_id, created_at, updated_at)
       VALUES (#{cardNumber}, #{cardName}, #{paymentId}, NOW(), NOW())
     </insert>
+
+    <update id="deletePaymentMeansByPaymentId">
+      UPDATE credit_card
+      SET status = 'DELETE'
+      AND updated_at = NOW()
+      WHERE payment_id = #{paymentId}
+      AND status != 'DELETE'
+    </update>
 
 </mapper>
