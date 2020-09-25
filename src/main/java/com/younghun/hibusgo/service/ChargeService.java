@@ -32,7 +32,6 @@ public class ChargeService {
     chargeMapper.updateCharge(charge);
   }
 
-
   public void deleteCharge(long id) {
     chargeMapper.deleteCharge(id);
   }
