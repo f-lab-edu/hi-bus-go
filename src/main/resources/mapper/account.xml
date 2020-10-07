@@ -101,4 +101,8 @@
         AND status       != 'DELETE'
     </update>
 
+    <delete id="deleteAccountAll">
+      DELETE FROM account;
+    </delete>
+
 </mapper>
