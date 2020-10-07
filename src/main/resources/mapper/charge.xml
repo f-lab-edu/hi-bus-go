@@ -62,13 +62,5 @@
       AND status != 'DELETE'
     </update>
 
-    <update id="deleteCharge">
-      UPDATE charge
-      SET  status    = 'DELETE'
-      AND updated_at = NOW()
-      WHERE id       = #{id}
-      AND status     != 'DELETE'
-    </update>
-
 </mapper>
 
