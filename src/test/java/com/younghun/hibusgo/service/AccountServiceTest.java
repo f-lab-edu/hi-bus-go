@@ -133,6 +133,7 @@ class AccountServiceTest {
     then(accountMapper)
         .should()
         .updateAccountInfo(account);
+
   }
 
 }
